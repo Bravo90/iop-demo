@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sitech.billing.helloworld.dao.HelloWorldMapper">
+
+    <resultMap id="baseResultMap" type="com.sitech.billing.helloworld.model.HelloWorld">
+        <id property="id" column="hw_id"/>
+        <result property="name" column="hw_name"/>
+        <result property="description" column="description"/>
+        <result property="developers" column="developers"/>
+        <result property="contributors" column="contributors"/>
+        <result property="company" column="company"/>
+        <result property="tel" column="tel"/>
+        <result property="eMail" column="e_mail"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="baseResultMap">
+        select * from iop_hello_world
+    </select>
+
+    <select id="selectOne" resultMap="baseResultMap">
+        select * from iop_hello_world WHERE  hw_id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.sitech.billing.helloworld.model.HelloWorld">
+        INSERT INTO iop_hello_world (hw_id,hw_name,description,developers,CONTRIBUTORS,company,tel,e_mail)
+        VALUES ( #{helloWorld.id},
+                #{helloWorld.name},
+                #{helloWorld.description},
+                #{helloWorld.developers},
+                #{helloWorld.contributors},
+                #{helloWorld.company},
+                #{helloWorld.tel},
+                #{helloWorld.eMail})
+    </insert>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sitech.billing.system.rbac.dao.UserMapper">
+
+    <resultMap id="baseResult" type="com.sitech.billing.system.rbac.model.User">
+        <id property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <select id="listAllUser" resultMap="baseResult">
+      SELECT * FROM iop_sys_user
+    </select>
+
+    <select id="getUserById" resultMap="baseResult">
+        SELECT * FROM iop_sys_user WHERE user_id = #{userId}
+    </select>
+
+    <insert id="saveUser" parameterType="com.sitech.billing.system.rbac.model.User">
+        INSERT INTO iop_sys_user (username,nickname,password)
+        VALUES (#{user.username},#{user.nickname},#{user.password})
+    </insert>
+
+    <update id="updateUser" parameterType="com.sitech.billing.system.rbac.model.User">
+        UPDATE iop_sys_user
+        <set>
+            <if test="user.username != null and user.username != ''">
+                username = #{user.username}
+            </if>
+            <if test="user.nickname != null and user.nickname != ''">
+                nickname = #{user.nickname}
+            </if>
+            <if test="user.password != null and user.password != ''">
+                password = #{user.password}
+            </if>
+        </set>
+        WHERE user_id = #{user.userId}
+    </update>
+
+    <delete id="deleteUserById" parameterType="Integer">
+        DELETE FROM iop_sys_user WHERE user_id = #{userId}
+    </delete>
+
+</mapper>

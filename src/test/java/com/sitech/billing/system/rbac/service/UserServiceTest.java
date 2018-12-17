@@ -1,6 +1,5 @@
 package com.sitech.billing.system.rbac.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.sitech.billing.MainApplication;
 import com.sitech.billing.system.rbac.model.User;
@@ -10,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = MainApplication.class)
@@ -35,9 +32,15 @@ public class UserServiceTest {
     }
 
     @Test
+    public void getPasswordByUsername() {
+        User u = userService.getUserByUsername("admin");
+        System.out.println(u);
+    }
+
+    @Test
     public void saveUser() {
         User u = new User();
-        u.setUsername("authcAdmin2");
+        u.setUsername("authc-admin");
         u.setPassword("123456");
         u.setNickname("权限管理员");
         Integer i = userService.saveUser(u);
@@ -48,7 +51,7 @@ public class UserServiceTest {
     public void updateUser() {
         User u = new User();
         u.setUserId(2);
-        u.setUsername("AuthcAdmin");
+        u.setUsername("authcAdmin");
         Integer i = userService.updateUser(u);
         System.out.println(i);
     }
@@ -57,4 +60,6 @@ public class UserServiceTest {
     public void deleteUserById() {
         System.out.println(userService.deleteUserById(3));
     }
+
+
 }

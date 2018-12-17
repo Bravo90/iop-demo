@@ -28,16 +28,16 @@ public class HelloWorldController extends BaseController {
         return "error";
     }
 
-    @RequiresPermissions(value = "user:insert")
+    @RequiresPermissions(value = "sys:helloWord:openPage")
     @GetMapping("/helloworld/{id}")
-    public String welcome(Model model,@PathVariable(value = "id",required = true) Integer id) {
+    public String welcome(Model model, @PathVariable(value = "id", required = true) Integer id) {
         HelloWorld hw = helloWorldService.getHelloWordMsgById(id);
         model.addAttribute("hw", hw);
         return "helloworld/helloworld";
     }
 
     @SystemLog(module = "Hello:Ajax测试", LogMessage = "测试对ajax请求异常处理")
-    @RequiresPermissions(value = "user:insert")
+    @RequiresPermissions(value = "sys:helloWord:testAjax")
     @GetMapping("/ajaxRequest")
     @ResponseBody
     public JsonResult ajaxRequest() {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sitech.billing.system.rbac.dao.RoleMapper">
+
+    <resultMap id="baseResultMap" type="com.sitech.billing.system.rbac.model.Role">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleDesc" column="role_desc"/>
+    </resultMap>
+
+    <select id="listAllRole" resultMap="baseResultMap">
+        SELECT * FROM iop_sys_role
+    </select>
+
+    <insert id="saveRole" parameterType="com.sitech.billing.system.rbac.model.Role">
+        INSERT INTO iop_sys_role (role_name,role_desc) VALUES (#{role.roleName},#{role.roleDesc})
+    </insert>
+
+    <delete id="delRoleByRoleId" parameterType="int">
+        DELETE FROM iop_sys_role WHERE role_id = #{roleId}
+    </delete>
+
+    <update id="updateRole">
+        UPDATE iop_sys_role
+        <set>
+            <if test="role.roleName != null and role.roleName != ''">
+                role_name = #{role.roleName}
+            </if>
+            <if test="role.roleDesc != null and role.roleDesc != ''">
+                role_desc = #{role.roleDesc}
+            </if>
+        </set>
+        WHERE role_id = #{role.roleId}
+    </update>
+
+    <select id="getRoleByRoleId" resultMap="baseResultMap">
+        SELECT * FROM iop_sys_role WHERE role_id = #{roleId}
+    </select>
+
+    <select id="listRoleByUser" resultMap="baseResultMap">
+        SELECT a.* FROM iop_sys_role a,iop_sys_user_role b
+        WHERE a.role_id = b.role_id and b.user_id = #{user.userId}
+    </select>
+
+</mapper>

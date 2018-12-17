@@ -4,6 +4,7 @@ package com.sitech.billing.system.rbac.service.impl;
 import com.github.pagehelper.PageHelper;
 
 import com.github.pagehelper.PageInfo;
+import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.system.rbac.dao.UserMapper;
 import com.sitech.billing.system.rbac.model.User;
 import com.sitech.billing.system.rbac.service.UserService;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
+
 
     @Autowired
     private UserMapper userMapper;
@@ -32,13 +34,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return userMapper.getUserByUsername(username);
+    }
+
+    @Override
     public Integer saveUser(User user) {
         return userMapper.saveUser(user);
     }
 
     @Override
     public Integer updateUser(User user) {
-        return userMapper.updateUser(user);
+        if (user.getUserId() != null) {
+            return userMapper.updateUser(user);
+        } else {
+            throw new IopException("用户Id不可为空");
+        }
     }
 
     @Override

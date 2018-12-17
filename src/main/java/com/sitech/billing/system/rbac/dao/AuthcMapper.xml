@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sitech.billing.system.rbac.dao.AuthcMapper">
+
+    <resultMap id="baseResult" type="com.sitech.billing.system.rbac.model.Authc">
+        <id property="authcId" column="authc_id"/>
+        <result property="authcName" column="authc_name"/>
+        <result property="authcDesc" column="authc_desc"/>
+    </resultMap>
+
+    <select id="listAllAuthc" resultMap="baseResult">
+      SELECT * FROM iop_sys_authc
+    </select>
+
+    <insert id="saveAuthc" parameterType="com.sitech.billing.system.rbac.model.Authc">
+        INSERT INTO iop_sys_authc (authc_name,authc_desc)
+        VALUES (#{authc.authcName},#{authc.authcDesc})
+    </insert>
+
+    <delete id="delAuthcByAuthcId" parameterType="Integer">
+        DELETE FROM iop_sys_authc WHERE authc_id = #{authcId}
+    </delete>
+
+    <update id="updateAuthc" parameterType="com.sitech.billing.system.rbac.model.Authc">
+        UPDATE iop_sys_authc
+        <set>
+            <if test="authc.authcName != null and authc.authcName != ''">
+                authc_name = #{authc.authcName}
+            </if>
+            <if test="authc.authcDesc != null and authc.authcDesc != ''">
+                authc_desc = #{authc.authcDesc}
+            </if>
+        </set>
+        WHERE authc_id = #{authc.authcId}
+    </update>
+
+    <select id="getAuthcByAuthcId" resultMap="baseResult">
+        SELECT * FROM iop_sys_authc WHERE authc_id = #{authcId}
+    </select>
+    
+    <select id="listAuthcByRole" resultMap="baseResult">
+        SELECT a.* From iop_sys_authc a,iop_sys_role_authc b
+        WHERE a.authc_id = b.authc_id AND b.role_id = #{role.roleId};
+    </select>
+
+
+</mapper>

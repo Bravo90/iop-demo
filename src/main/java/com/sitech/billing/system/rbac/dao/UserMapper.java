@@ -13,6 +13,8 @@ public interface UserMapper {
 
     User getUserById(@Param("userId") Integer userId);
 
+    User getUserByUsername(@Param("username") String username);
+
     Integer saveUser(@Param("user") User user);
 
     Integer updateUser(@Param("user") User user);

@@ -6,4 +6,10 @@ package com.sitech.billing.common.exception;
  * @date 2018-11-30 11:40:21
  */
 public class IopException extends RuntimeException{
+
+    private String msg;
+
+    public IopException(String msg){
+        super(msg);
+    }
 }

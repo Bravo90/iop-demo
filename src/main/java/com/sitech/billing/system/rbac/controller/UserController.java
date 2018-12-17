@@ -6,6 +6,7 @@ import com.sitech.billing.system.base.BaseController;
 import com.sitech.billing.system.rbac.model.User;
 import com.sitech.billing.system.rbac.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,11 +18,18 @@ public class UserController extends BaseController {
     @Resource
     private UserService userService;
 
-    @RequestMapping("/getAllUsers")
+    @GetMapping("/users")
     @ResponseBody
-    public JsonResult getAllUsers(){
-        PageInfo<User> users =  userService.listAllUser(1,10);
+    public JsonResult getUsers() {
+        PageInfo<User> users = userService.listAllUser(1, 10);
         System.out.println(users);
         return JsonResult.success(users);
+    }
+
+    @GetMapping("/update")
+    @ResponseBody
+    public JsonResult updateUser() {
+
+        return null;
     }
 }

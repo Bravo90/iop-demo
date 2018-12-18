@@ -3,12 +3,12 @@ package com.sitech.billing.common.handler;
 import com.sitech.billing.common.bean.JsonResult;
 import com.sitech.billing.common.exception.IopException;
 import org.apache.shiro.ShiroException;
-import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,21 +26,52 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class IopExceptionHandler {
 
+    private Logger logger = LoggerFactory.getLogger(IopExceptionHandler.class);
+
+    private static final String X_REQUESTED_WITH = "X-Requested-With";
+    private static final String XML_HTTP_REQUEST = "XMLHttpRequest";
+
     @ExceptionHandler(IopException.class)
     public JsonResult exceptionHand(IopException e) {
+        logger.error(e.getMessage());
         return JsonResult.error(e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public JsonResult exceptionHand(Exception e) {
-        e.printStackTrace();
+        logger.error(e.getMessage());
         return JsonResult.error(e.getMessage());
     }
 
-    @ExceptionHandler({UnauthorizedException.class })
+    @ExceptionHandler(UnknownAccountException.class)
+    public Object handleUnknownAccountException(UnknownAccountException e, HttpServletRequest request) {
+        logger.error(e.getMessage());
+        String requestType = request.getHeader(X_REQUESTED_WITH);
+        if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {
+            return JsonResult.error("用户不存在");
+        } else {
+            return new ModelAndView("login/login")
+                    .addObject("msg", "用户不存在");
+        }
+    }
+
+    @ExceptionHandler(IncorrectCredentialsException.class)
+    public Object handleIncorrectCredentialsException(IncorrectCredentialsException e, HttpServletRequest request) {
+        logger.error(e.getMessage());
+        String requestType = request.getHeader(X_REQUESTED_WITH);
+        if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {
+            return JsonResult.error("密码不正确");
+        } else {
+            return new ModelAndView("login/login")
+                    .addObject("msg", "密码不正确");
+        }
+    }
+
+    @ExceptionHandler({UnauthorizedException.class})
     public Object handleUnauthorized(ShiroException e, HttpServletRequest request) {
-        String requestType = request.getHeader("X-Requested-With");
-        if ("XMLHttpRequest".equalsIgnoreCase(requestType)) {
+        logger.error(e.getMessage());
+        String requestType = request.getHeader(X_REQUESTED_WITH);
+        if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {
             return JsonResult.error("用户权限不足");
         } else {
             return new ModelAndView("error").addObject("msg", "用户权限不足");

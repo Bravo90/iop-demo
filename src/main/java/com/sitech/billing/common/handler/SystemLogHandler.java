@@ -7,7 +7,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import sun.misc.JavaIOAccess;
 
 /**
  *  注解处理类，使用AOP记录每次访问操作

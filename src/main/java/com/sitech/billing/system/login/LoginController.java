@@ -34,37 +34,43 @@ public class LoginController extends BaseController {
             if ("XMLHttpRequest".equalsIgnoreCase(requestType)) {
                 return JsonResult.error("登录失效，请重新登录");
             } else {
-                return new ModelAndView("login");
+                return new ModelAndView("login/login");
             }
         }
     }
 
     @GetMapping("/loginout")
     public ModelAndView loginOut() {
-        return null;
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return new ModelAndView("login/login");
     }
 
     @GetMapping("/sublogin")
     public ModelAndView sublogin(String username, String password, HttpServletRequest request) {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            SecurityUtils.getSubject().getSession().setTimeout(60 * 1000);
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-            subject.login(token);
 
-            SavedRequest savedRequest = WebUtils.getSavedRequest(request);
-            String url = "/";
-            if (savedRequest != null) {
-                url = savedRequest.getRequestUrl().substring(request.getContextPath().length());
-            }
-            if ("/favicon.ico".equalsIgnoreCase(url)) {
-                url = "/";
-            }
-            return new ModelAndView("redirect:" + url);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return new ModelAndView("login")
-                    .addObject("msg", "用户密码不正确");
+        Subject subject = SecurityUtils.getSubject();
+        SecurityUtils.getSubject().getSession().setTimeout(60 * 1000);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        subject.login(token);
+
+        SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+        String url = "/";
+        if (savedRequest != null) {
+            url = savedRequest.getRequestUrl().substring(request.getContextPath().length());
         }
+        if ("/favicon.ico".equalsIgnoreCase(url)) {
+            url = "/";
+        }
+        return new ModelAndView("redirect:" + url);
+    }
+
+    @GetMapping("/registe")
+    @ResponseBody
+    public JsonResult registe(String username, String password, String ensurePassword) {
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println(ensurePassword);
+        return JsonResult.success("");
     }
 }

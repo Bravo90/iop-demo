@@ -1,6 +1,7 @@
 package com.sitech.billing.system.login;
 
 import com.sitech.billing.common.bean.JsonResult;
+import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.system.base.BaseController;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -48,6 +49,10 @@ public class LoginController extends BaseController {
 
     @GetMapping("/sublogin")
     public ModelAndView sublogin(String username, String password, HttpServletRequest request) {
+
+        if("".equals(username) || "".equals(password)){
+            throw new IopException("用户名密码不可为空");
+        }
 
         Subject subject = SecurityUtils.getSubject();
         SecurityUtils.getSubject().getSession().setTimeout(60 * 1000);

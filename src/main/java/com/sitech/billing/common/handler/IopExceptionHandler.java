@@ -32,9 +32,15 @@ public class IopExceptionHandler {
     private static final String XML_HTTP_REQUEST = "XMLHttpRequest";
 
     @ExceptionHandler(IopException.class)
-    public JsonResult exceptionHand(IopException e) {
+    public Object exceptionHand(IopException e, HttpServletRequest request) {
         logger.error(e.getMessage());
-        return JsonResult.error(e.getMessage());
+        String requestType = request.getHeader(X_REQUESTED_WITH);
+        if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {
+            return JsonResult.error(e.getMessage());
+        } else {
+            return new ModelAndView("login/login")
+                    .addObject("msg", e.getMessage());
+        }
     }
 
     @ExceptionHandler(Exception.class)

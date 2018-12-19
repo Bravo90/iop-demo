@@ -3,35 +3,45 @@
 }
 
 .login-div {
-    position: fixed;
-    width: 240px;
-    height: 250px;
-    right: 200px;
-    bottom: 100px;
+    width: 220px;
+    height: 240px;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
     border-radius: 10px;
     border: 0.5px solid rgba(41, 211, 224, 0.5);
     background-color: rgba(41, 211, 224, 0.2);
     box-shadow: 0 0 2px rgba(41, 211, 224, 0.2);
-    padding: 10px;
 }
 
 .login-div-title {
-    width: 90%;
     height: 40px;
     text-align: center;
     font-size: 22px;
-    color: #00BFFF;
+    color: white;
 }
 
 .login-div-from input, div {
-    width: 90%;
-    margin-left: 5%;
+    width: 100%;
     height: 25px;
-    color: black;
+    color: white;
 }
 
 .login-div-from input[name=username] {
     margin-bottom: 10px;
+    background-color: transparent;
+    padding-left: 5px;
+    border: 1px solid #00BFFF;
+}
+
+.login-div-from input[name=password] {
+    background-color: transparent;
+    padding-left: 5px;
+    border: 1px solid #00BFFF;
 }
 
 .login-div-from input[type=submit] {
@@ -44,4 +54,5 @@
 
 .login-err-msg {
     color: red;
+    font-size: 12px;
 }

@@ -15,13 +15,12 @@
 <div class="login-div">
     <div class="login-div-title">登录界面</div>
     <form class="login-div-from" action="${ctx}/sublogin">
-        <div>用户名:</div>
+        <div>用户名</div>
         <input type="text" name="username">
-        <div>密码:</div>
+        <div>密码</div>
         <input type="password" name="password">
         <div class="login-err-msg">${msg}</div>
         <input type="submit" value="立即登录">
-
     </form>
 </div>
 </body>

@@ -7,9 +7,25 @@
 <html lang="en">
 <head>
     <jsp:include page="common/head.jsp"/>
-    <link href="${ctx}/resources/css/model/login/login.css" rel="stylesheet">
+    <link href="${ctx}/resources/css/index/index.css" rel="stylesheet">
+    <script type="text/javascript" src="${ctx}/resources/js/index/index.js"></script>
 </head>
-<body class="login-bg">
-    <h2 class="name-color">登录成功</h2>
+<body class="bg-image">
+<div class="index-container">
+    <ul class="ul-content" style="width: 100%;height: 100%">
+        <li class="ul-content" style="width: 50%;height: 50%">
+            <div></div>
+        </li>
+        <li class="ul-content" style="width: 50%;height: 50%">
+            <div></div>
+        </li>
+        <li class="ul-content" style="width: 50%;height: 50%">
+            <div></div>
+        </li>
+        <li class="ul-content" style="width: 50%;height: 50%">
+            <div></div>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

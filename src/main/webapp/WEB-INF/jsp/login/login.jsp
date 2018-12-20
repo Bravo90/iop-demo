@@ -7,11 +7,11 @@
 <html lang="en">
 <head>
     <jsp:include page="../common/head.jsp"/>
-    <link href="${ctx}/resources/css/model/login/login.css" rel="stylesheet">
+    <link href="${ctx}/resources/css/login/login.css" rel="stylesheet">
+    <script type="text/javascript" src="${ctx}/resources/js/login/login.js"></script>
     <title>登录界面</title>
 </head>
 <body class="login-bg">
-
 <div class="login-div">
     <div class="login-div-title">登录界面</div>
     <form class="login-div-from" action="${ctx}/sublogin">

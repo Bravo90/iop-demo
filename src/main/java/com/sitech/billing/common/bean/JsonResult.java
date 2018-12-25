@@ -1,5 +1,7 @@
 package com.sitech.billing.common.bean;
 
+import com.sitech.billing.common.enums.ErrorMsgEnum;
+
 /**
  * 封装Controller返回对象
  *
@@ -64,6 +66,17 @@ public class JsonResult {
         return JsonResult.newInstance(OK, code, message, data);
     }
 
+    /**
+     * 请求失败，返回失败信息
+     *
+     * @param errorMsgEnum 系统自定义错误信息
+     * @return
+     * @see ErrorMsgEnum
+     */
+
+    public static JsonResult error(ErrorMsgEnum errorMsgEnum) {
+        return error(errorMsgEnum.getErrorCode(), errorMsgEnum.getErrorMsg());
+    }
 
     /**
      * 请求失败，返回失败信息

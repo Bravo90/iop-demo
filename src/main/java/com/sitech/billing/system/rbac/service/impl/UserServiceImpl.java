@@ -4,6 +4,7 @@ package com.sitech.billing.system.rbac.service.impl;
 import com.github.pagehelper.PageHelper;
 
 import com.github.pagehelper.PageInfo;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
 import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.system.rbac.dao.UserMapper;
 import com.sitech.billing.system.rbac.model.User;
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
         if (user.getUserId() != null) {
             return userMapper.updateUser(user);
         } else {
-            throw new IopException("用户Id不可为空");
+            throw new IopException(ErrorMsgEnum.USER_ID_IS_NULL);
         }
     }
 

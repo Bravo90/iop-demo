@@ -1,6 +1,7 @@
 package com.sitech.billing.common.handler;
 
 import com.sitech.billing.common.bean.JsonResult;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
 import com.sitech.billing.common.exception.IopException;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -54,10 +55,10 @@ public class IopExceptionHandler {
         logger.error(e.getMessage());
         String requestType = request.getHeader(X_REQUESTED_WITH);
         if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {
-            return JsonResult.error("用户不存在");
+            return JsonResult.error(ErrorMsgEnum.UNKNOWN_ACCOUNT);
         } else {
             return new ModelAndView("login/login")
-                    .addObject("msg", "用户不存在");
+                    .addObject("msg", ErrorMsgEnum.UNKNOWN_ACCOUNT.getErrorMsg());
         }
     }
 
@@ -66,10 +67,10 @@ public class IopExceptionHandler {
         logger.error(e.getMessage());
         String requestType = request.getHeader(X_REQUESTED_WITH);
         if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {
-            return JsonResult.error("密码不正确");
+            return JsonResult.error(ErrorMsgEnum.INCORRECT_CREDENTIALS);
         } else {
             return new ModelAndView("login/login")
-                    .addObject("msg", "密码不正确");
+                    .addObject("msg", ErrorMsgEnum.INCORRECT_CREDENTIALS.getErrorMsg());
         }
     }
 
@@ -78,9 +79,10 @@ public class IopExceptionHandler {
         logger.error(e.getMessage());
         String requestType = request.getHeader(X_REQUESTED_WITH);
         if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {
-            return JsonResult.error("用户权限不足");
+            return JsonResult.error(ErrorMsgEnum.UNAUTHORIZED);
         } else {
-            return new ModelAndView("error").addObject("msg", "用户权限不足");
+            return new ModelAndView("error")
+                    .addObject("msg", ErrorMsgEnum.UNAUTHORIZED.getErrorMsg());
         }
     }
 }

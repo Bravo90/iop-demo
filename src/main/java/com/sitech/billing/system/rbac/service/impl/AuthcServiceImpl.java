@@ -2,6 +2,7 @@ package com.sitech.billing.system.rbac.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
 import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.system.rbac.dao.AuthcMapper;
 import com.sitech.billing.system.rbac.model.Authc;
@@ -41,7 +42,7 @@ public class AuthcServiceImpl implements AuthcService {
         if (authc.getAuthcId() != null) {
             return authcMapper.updateAuthc(authc);
         } else {
-            throw new IopException("权限Id不可为空");
+            throw new IopException(ErrorMsgEnum.AUTHC_ID_IS_NULL);
         }
     }
 

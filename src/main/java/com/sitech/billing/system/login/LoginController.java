@@ -1,6 +1,7 @@
 package com.sitech.billing.system.login;
 
 import com.sitech.billing.common.bean.JsonResult;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
 import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.system.base.BaseController;
 import org.apache.shiro.SecurityUtils;
@@ -23,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private static long TIMEOUT = 30 * 60 * 1000;
+
     @GetMapping("/login")
     @ResponseBody
     public Object login(HttpServletRequest request) {
@@ -33,7 +36,7 @@ public class LoginController extends BaseController {
         } else {
             String requestType = request.getHeader("X-Requested-With");
             if ("XMLHttpRequest".equalsIgnoreCase(requestType)) {
-                return JsonResult.error("登录失效，请重新登录");
+                return JsonResult.error(ErrorMsgEnum.LOGIN_TIMEOUT);
             } else {
                 return new ModelAndView("login/login");
             }
@@ -50,12 +53,12 @@ public class LoginController extends BaseController {
     @GetMapping("/sublogin")
     public ModelAndView sublogin(String username, String password, HttpServletRequest request) {
 
-        if("".equals(username) || "".equals(password)){
-            throw new IopException("用户名密码不可为空");
+        if ("".equals(username) || "".equals(password)) {
+            throw new IopException(ErrorMsgEnum.USERNAME_OR_PASSWORD_IS_EMPTY);
         }
 
         Subject subject = SecurityUtils.getSubject();
-        SecurityUtils.getSubject().getSession().setTimeout(60 * 1000);
+        SecurityUtils.getSubject().getSession().setTimeout(TIMEOUT);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         subject.login(token);
 

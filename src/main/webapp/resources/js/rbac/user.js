@@ -40,27 +40,29 @@ var User = {
                 skin: 'layui-layer-molv',
                 area: ['290px', '230px'], //宽高
                 content: '<div class="rbac-user-update bg-image">' +
-                '<div>用户名称：<input id="user-add-username"></div>' +
-                '<div>用户密码：<input id="user-add-password"></div>' +
-                '<div>用户昵称：<input id="user-add-nickname"></div>' +
-                '<button class="layui-btn layui-btn-sm" id="user-add-confirm">确定</button>' +
-                '</div>'
+                    '<div>用户名称：<input id="user-add-username"></div>' +
+                    '<div>用户密码：<input id="user-add-password"></div>' +
+                    '<div>用户昵称：<input id="user-add-nickname"></div>' +
+                    '<button class="layui-btn layui-btn-sm" id="user-add-confirm">确定</button>' +
+                    '</div>'
             });
 
             $('#user-add-username').on('blur', function () {
                 var username = $(this).val();
-                $.get(User.URL.checkExistByUsername(username), {}, function (result) {
-                    var success = result['success'];
-                    if (success == 0) {
-                        layer.tips('用户名已存在', '#user-add-username');
-                        $('#user-add-confirm').addClass('layui-btn-disabled');
-                    }
-                });
+                if (username != "") {
+                    $.get(User.URL.checkExistByUsername(username), {}, function (result) {
+                        var success = result['success'];
+                        if (success == 0) {
+                            layer.tips('用户名已存在', '#user-add-username');
+                            $('#user-add-confirm').addClass('layui-btn-disabled');
+                        }
+                    });
+                }
             }).on('focus', function () {
                 $('#user-add-confirm').removeClass('layui-btn-disabled');
             });
 
-            $(document).one('click', '#user-add-confirm', function () {
+            $('#user-add-confirm').unbind("click").on('click', function () {
                 var username = $.trim($('#user-add-username').val());
                 var password = $.trim($('#user-add-password').val());
                 var nickname = $.trim($('#user-add-nickname').val());
@@ -129,14 +131,14 @@ var User = {
          */
         $(document).on('click', '.user-update', function () {
             var userId = $(this).attr('user-id');
-            var username = '';
-            var password = '';
-            var nickname = '';
+            var usernameOld = '';
+            var passwordOld = '';
+            var nicknameOld = '';
             $.get(User.URL.userSingle(userId), {}, function (result) {
                 if (result['success'] == 1) {
-                    username = result.data['username'];
-                    password = result.data['password'];
-                    nickname = result.data['nickname'];
+                    usernameOld = result.data['username'];
+                    passwordOld = result.data['password'];
+                    nicknameOld = result.data['nickname'];
                 }
                 var updateLayer = layer.open({
                     type: 1,
@@ -145,28 +147,31 @@ var User = {
                     anim: 1,
                     area: ['290px', '230px'], //宽高
                     content: '<div class="rbac-user-update bg-image">' +
-                    '<div>用户名称：<input id="user-update-username" value="' + username + '"></div>' +
-                    '<div>用户密码：<input id="user-update-password" value="' + password + '"></div>' +
-                    '<div>用户昵称：<input id="user-update-nickname" value="' + nickname + '"></div>' +
-                    '<button class="layui-btn layui-btn-sm" id="user-update-confirm">确定</button>' +
-                    '</div>'
+                        '<div>用户名称：<input id="user-update-username" value="' + usernameOld + '"></div>' +
+                        '<div>用户密码：<input id="user-update-password" value="' + passwordOld + '"></div>' +
+                        '<div>用户昵称：<input id="user-update-nickname" value="' + nicknameOld + '"></div>' +
+                        '<button class="layui-btn layui-btn-sm" id="user-update-confirm">确定</button>' +
+                        '</div>'
                 });
 
 
-                $(document).on('click', '#user-update-confirm', function () {
+                $('#user-update-confirm').unbind("click").on('click', function () {
 
                     var username = $.trim($('#user-update-username').val());
                     var password = $.trim($('#user-update-password').val());
                     var nickname = $.trim($('#user-update-nickname').val());
+
 
                     if (!Globals.validate.validateNull(username, password, nickname)) {
                         layer.msg('请填写完整');
                         return false;
                     }
 
-                    if (User.methods.checkUsernameExist(username)) {
-                        layer.msg('用户名已存在');
-                        return false;
+                    if (username != usernameOld) {
+                        if (User.methods.checkUsernameExist(username)) {
+                            layer.msg('用户名已存在');
+                            return false;
+                        }
                     }
 
                     var user = {

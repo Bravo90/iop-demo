@@ -10,9 +10,11 @@ html, body {
     -moz-box-sizing: border-box; /* Firefox */
     -webkit-box-sizing: border-box; /* Safari */
 }
-ul,ol {
+
+ul, ol {
     list-style: none
 }
+
 .bg-image {
     background: url(../../images/login-bg.png) center/cover fixed no-repeat;
 }

@@ -11,6 +11,9 @@
 </head>
 <body class="page-bg">
 <h2 class="name-color">系统错误</h2>
+<c:if test="${msg != null}">
+    <div>${msg}</div>
+</c:if>
 <div>请联系:1098***033@qq.com</div>
 </body>
 

@@ -30,13 +30,13 @@
         UPDATE iop_sys_user
         <set>
             <if test="user.username != null and user.username != ''">
-                username = #{user.username}
+                username = #{user.username},
             </if>
             <if test="user.nickname != null and user.nickname != ''">
-                nickname = #{user.nickname}
+                nickname = #{user.nickname},
             </if>
             <if test="user.password != null and user.password != ''">
-                password = #{user.password}
+                password = #{user.password},
             </if>
         </set>
         WHERE user_id = #{user.userId}

@@ -5,5 +5,6 @@
 <script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery-1.11.3.min.js"
         type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common/common.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/resources/lib/layui/layui.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/lib/layui/layui.all.js" type="text/javascript"></script>
 
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico">

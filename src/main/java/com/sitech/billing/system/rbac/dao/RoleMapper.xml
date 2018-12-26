@@ -24,10 +24,10 @@
         UPDATE iop_sys_role
         <set>
             <if test="role.roleName != null and role.roleName != ''">
-                role_name = #{role.roleName}
+                role_name = #{role.roleName},
             </if>
             <if test="role.roleDesc != null and role.roleDesc != ''">
-                role_desc = #{role.roleDesc}
+                role_desc = #{role.roleDesc},
             </if>
         </set>
         WHERE role_id = #{role.roleId}

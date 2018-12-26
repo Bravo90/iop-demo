@@ -25,10 +25,10 @@
         UPDATE iop_sys_authc
         <set>
             <if test="authc.authcName != null and authc.authcName != ''">
-                authc_name = #{authc.authcName}
+                authc_name = #{authc.authcName},
             </if>
             <if test="authc.authcDesc != null and authc.authcDesc != ''">
-                authc_desc = #{authc.authcDesc}
+                authc_desc = #{authc.authcDesc},
             </if>
         </set>
         WHERE authc_id = #{authc.authcId}

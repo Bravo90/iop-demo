@@ -24,6 +24,16 @@ public class JsonResult {
 
 
     /**
+     * 请求成功，无返回数据和提示信息
+     *
+     * @return
+     */
+
+    public static JsonResult success(){
+        return success(null);
+    }
+
+    /**
      * 请求成功，无返回数据，仅有提示信息
      *
      * @param message 提示信息

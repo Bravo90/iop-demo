@@ -1,0 +1,27 @@
+.rbac-container {
+    width: 100%;
+    padding: 10px 10px;
+}
+.rbac-title{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    color: black;
+    font-size: 20px;
+}
+.rbac-user-update{
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    font-size: 14px;
+}
+.rbac-user-update div {
+    margin: 10px auto;
+}
+.rbac-user-update input{
+
+    height: 30px;
+}
+.rbac-user-update button{
+   margin-left: 210px;
+}

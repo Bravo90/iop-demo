@@ -8,7 +8,18 @@ var Globals = {
         var strPath = window.document.location.pathname;
         var postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
         return postPath;
+    },
+    validate: {
+        validateNull: function () {
+            var argLength = arguments.length;
+            for (var i = 0; i < argLength; i++) {
+                if (arguments[i] == undefined || arguments[i] == "") {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
-
 Globals.yearMonthDay = "yyyyMMdd";
+

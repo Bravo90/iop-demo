@@ -16,18 +16,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 public class LoginController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static long TIMEOUT = 30 * 60 * 1000;
 
     @GetMapping("/login")
-    @ResponseBody
     public Object login(HttpServletRequest request) {
         Session session = SecurityUtils.getSubject().getSession();
         Object obj = session.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);

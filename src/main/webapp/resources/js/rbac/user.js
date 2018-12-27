@@ -202,6 +202,31 @@ var User = {
                 });
             });
         });
+        //分页
+        var laypage = layui.laypage;
+        var option = {
+            elem: 'user-page',
+            count: 100,
+            limit: 5,
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+            jump: function (obj) {
+                console.log(obj);
+                obj.conut = 20;
+            }
+        };
+        laypage.render(option);
+        $('#test-page').on('click', function () {
+            laypage.render({
+                elem: 'user-page',
+                count: 200,
+                limit: 5,
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                jump: function (obj) {
+                    console.log(obj);
+                    obj.conut = 20;
+                }
+            });
+        });
     },
     methods: {
         renderTable: function () {

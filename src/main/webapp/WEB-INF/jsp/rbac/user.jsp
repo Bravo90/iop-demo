@@ -11,8 +11,9 @@
     <script type="text/javascript" src="${ctx}/resources/js/rbac/user.js"></script>
     <title>用户管理界面</title>
 </head>
-<body class="bg-image">
+<body>
 <div class="rbac-container">
+    <button id="test-page">测试分页</button>
     <div class="rbac-title">用户管理</div>
     <button id="user-add" class="layui-btn layui-btn-sm">新增用户</button>
 
@@ -36,6 +37,7 @@
         <tbody id="tbody">
         </tbody>
     </table>
+    <div id="user-page" class="rbac-page"></div>
 </div>
 </body>
 </html>

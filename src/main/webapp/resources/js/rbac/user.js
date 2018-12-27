@@ -52,7 +52,7 @@ var User = {
                 if (User.methods.checkUsernameExist(username)) {
                     layer.tips('用户名已存在', '#user-add-username');
                 }
-            })
+            });
 
             $('#user-add-confirm').unbind("click").on('click', function () {
                 var username = $.trim($('#user-add-username').val());
@@ -68,7 +68,6 @@ var User = {
                     layer.msg('用户名已存在');
                     return false;
                 }
-
 
                 var user = {
                     "username": username,

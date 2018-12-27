@@ -1,0 +1,26 @@
+.error-container {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
+.error-msg {
+    color: yellow;
+    font-size: 20px;
+    margin: 20px;
+}
+
+.error-admin {
+    color: yellow;
+    font-size: 20px;
+    margin: 20px;
+}
+
+.error-404 {
+    width: 100%;
+    height: 400px;
+    line-height: 400px;
+    font-size: 300px;
+    color: white;
+    text-align: center;
+}

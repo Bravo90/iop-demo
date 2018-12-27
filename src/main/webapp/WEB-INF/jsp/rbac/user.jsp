@@ -15,7 +15,15 @@
 <div class="rbac-container">
     <div class="rbac-title">用户管理</div>
     <button id="user-add" class="layui-btn layui-btn-sm">新增用户</button>
+
     <table class="layui-table">
+        <colgroup>
+            <col width="10%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="15%">
+        </colgroup>
         <thead>
         <tr>
             <th>用户ID</th>
@@ -26,7 +34,6 @@
         </tr>
         </thead>
         <tbody id="tbody">
-
         </tbody>
     </table>
 </div>

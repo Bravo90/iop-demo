@@ -49,18 +49,10 @@ var User = {
 
             $('#user-add-username').on('blur', function () {
                 var username = $(this).val();
-                if (username != "") {
-                    $.get(User.URL.checkExistByUsername(username), {}, function (result) {
-                        var success = result['success'];
-                        if (success == 0) {
-                            layer.tips('用户名已存在', '#user-add-username');
-                            $('#user-add-confirm').addClass('layui-btn-disabled');
-                        }
-                    });
+                if (User.methods.checkUsernameExist(username)) {
+                    layer.tips('用户名已存在', '#user-add-username');
                 }
-            }).on('focus', function () {
-                $('#user-add-confirm').removeClass('layui-btn-disabled');
-            });
+            })
 
             $('#user-add-confirm').unbind("click").on('click', function () {
                 var username = $.trim($('#user-add-username').val());
@@ -68,9 +60,15 @@ var User = {
                 var nickname = $.trim($('#user-add-nickname').val());
 
                 if (!Globals.validate.validateNull(username, password, nickname)) {
-                    layer.msg('请填写完整');
+                    layer.msg('请将界面信息填写完整');
                     return false;
                 }
+                /*判断用户是否已存在*/
+                if (User.methods.checkUsernameExist(username)) {
+                    layer.msg('用户名已存在');
+                    return false;
+                }
+
 
                 var user = {
                     "username": username,
@@ -86,13 +84,14 @@ var User = {
                     dataType: "json",
                     success: function (result) {
                         var success = result['success'];
+                        var msg = result['message'];
                         if (success == 1) {
                             layer.close(addLayer);
-                            layer.msg('新增成功', {icon: 1});
+                            layer.msg(msg, {icon: 1});
                             User.methods.renderTable();
                         } else {
                             console.log(result['message']);
-                            layer.msg('新增失败', {icon: 2});
+                            layer.msg(msg, {icon: 2});
                         }
                     }
                 });
@@ -115,11 +114,12 @@ var User = {
                     dataType: "json",
                     success: function (result) {
                         var success = result['success'];
+                        var msg = result['message'];
                         if (success == 1) {
-                            layer.msg('删除成功', {icon: 1});
+                            layer.msg(msg, {icon: 1});
                             User.methods.renderTable();
                         } else {
-                            layer.msg('删除失败，请联系管理员', {icon: 2});
+                            layer.msg(msg, {icon: 2});
                         }
                     }
                 });
@@ -147,13 +147,16 @@ var User = {
                     anim: 1,
                     area: ['290px', '230px'], //宽高
                     content: '<div class="rbac-user-update bg-image">' +
-                        '<div>用户名称：<input id="user-update-username" value="' + usernameOld + '"></div>' +
-                        '<div>用户密码：<input id="user-update-password" value="' + passwordOld + '"></div>' +
-                        '<div>用户昵称：<input id="user-update-nickname" value="' + nicknameOld + '"></div>' +
+                        '<div>用户名称：<input id="user-update-username"></div>' +
+                        '<div>用户密码：<input type="password" id="user-update-password"></div>' +
+                        '<div>用户昵称：<input id="user-update-nickname"></div>' +
                         '<button class="layui-btn layui-btn-sm" id="user-update-confirm">确定</button>' +
                         '</div>'
                 });
 
+                $('#user-update-username').val(usernameOld);
+                $('#user-update-password').val(passwordOld);
+                $('#user-update-nickname').val(nicknameOld);
 
                 $('#user-update-confirm').unbind("click").on('click', function () {
 
@@ -161,17 +164,14 @@ var User = {
                     var password = $.trim($('#user-update-password').val());
                     var nickname = $.trim($('#user-update-nickname').val());
 
-
                     if (!Globals.validate.validateNull(username, password, nickname)) {
-                        layer.msg('请填写完整');
+                        layer.msg('请将界面信息填写完整');
                         return false;
                     }
 
-                    if (username != usernameOld) {
-                        if (User.methods.checkUsernameExist(username)) {
-                            layer.msg('用户名已存在');
-                            return false;
-                        }
+                    if (username != usernameOld && User.methods.checkUsernameExist(username)) {
+                        layer.msg('用户名已存在');
+                        return false;
                     }
 
                     var user = {
@@ -189,20 +189,20 @@ var User = {
                         dataType: "json",
                         success: function (result) {
                             var success = result['success'];
+                            var msg = result['message'];
                             if (success == 1) {
                                 layer.close(updateLayer);
-                                layer.msg('修改成功', {icon: 1});
+                                layer.msg(msg, {icon: 1});
                                 User.methods.renderTable();
                             } else {
                                 console.log(result['message']);
-                                layer.msg('修改失败', {icon: 2});
+                                layer.msg(msg, {icon: 2});
                             }
                         }
                     });
                 });
             });
         });
-
     },
     methods: {
         renderTable: function () {
@@ -215,7 +215,7 @@ var User = {
                             '<th>' + this.userId + '</th>' +
                             '<th>' + this.username + '</th>' +
                             '<th>' + this.nickname + '</th>' +
-                            '<th>' + this.password + '</th>' +
+                            '<th>  ******  </th>' +
                             '<th>' +
                             '<button  class="layui-btn layui-btn-xs user-delete" user-id="' + this.userId + '">删除</button>' +
                             '<button class="layui-btn layui-btn-xs user-update" user-id="' + this.userId + '">更新</button>' +

@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 @RequestMapping("/user")
 public class UserController extends BaseController {
 
+    private static final String PERMISSION_USER_PAGE = "sys:user:page";
     private static final String PERMISSION_USER_LIST = "sys:user:list";
     private static final String PERMISSION_USER_SINGLE = "sys:user:single";
     private static final String PERMISSION_USER_ADD = "sys:user:add";
@@ -29,6 +30,7 @@ public class UserController extends BaseController {
 
 
     @GetMapping("/page")
+    @RequiresPermissions(value = {PERMISSION_USER_PAGE}, logical = Logical.OR)
     public ModelAndView page() {
         return new ModelAndView("rbac/user");
     }
@@ -54,7 +56,7 @@ public class UserController extends BaseController {
         if (user == null) {
             return JsonResult.success();
         }
-        return JsonResult.error("用户已存在");
+        return JsonResult.error(ErrorMsgEnum.USERNAME_ALREADY_EXIST);
     }
 
     @PostMapping(value = "/add")
@@ -64,20 +66,20 @@ public class UserController extends BaseController {
             throw new IopException(ErrorMsgEnum.USERNAME_OR_PASSWORD_IS_EMPTY);
         }
         userService.saveUser(user);
-        return JsonResult.success();
+        return JsonResult.success("添加成功");
     }
 
     @PutMapping("/update")
     @RequiresPermissions(value = {PERMISSION_USER_UPDATE}, logical = Logical.OR)
     public JsonResult updateUser(@RequestBody User user) {
         userService.updateUser(user);
-        return JsonResult.success();
+        return JsonResult.success("更新成功");
     }
 
     @DeleteMapping("/{userId}")
     @RequiresPermissions(value = {PERMISSION_USER_DELETE}, logical = Logical.OR)
     public JsonResult deleteUser(@PathVariable(value = "userId") Integer userId) {
         userService.deleteUserById(userId);
-        return JsonResult.success();
+        return JsonResult.success("删除成功");
     }
 }

@@ -47,7 +47,7 @@ public class IopExceptionHandler {
     @ExceptionHandler(Exception.class)
     public JsonResult exceptionHand(Exception e) {
         logger.error(e.getMessage());
-        return JsonResult.error(e.getMessage());
+        return JsonResult.error(ErrorMsgEnum.SYSTEM_ERROR);
     }
 
     @ExceptionHandler(UnknownAccountException.class)

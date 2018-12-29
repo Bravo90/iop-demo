@@ -11,13 +11,29 @@
     <script type="text/javascript" src="${ctx}/resources/js/rbac/authc.js"></script>
     <title>权限管理界面</title>
 </head>
-<style>
-
-
-</style>
 <body>
 <div class="rbac-container">
     <div class="rbac-title">权限管理</div>
+    <button id="authc-add" class="layui-btn layui-btn-sm">新增权限</button>
+    <table class="layui-table">
+        <colgroup>
+            <col width="20%">
+            <col width="20%">
+            <col width="20%">
+            <col width="40%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>权限ID</th>
+            <th>权限名称</th>
+            <th>权限描述</th>
+            <th>操作</th>
+        </tr>
+
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
 </div>
 
 </body>

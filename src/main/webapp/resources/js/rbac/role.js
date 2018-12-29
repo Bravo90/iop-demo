@@ -72,7 +72,7 @@ var Role = {
             //检验用户存在与否
             $(document).on('blur', '#role-add-rolename', function () {
                 var roleName = $('#role-add-rolename').val();
-                if (Role.URL.checkRoleNameExist(roleName)) {
+                if (Role.methods.checkRoleNameExist(roleName)) {
                     layer.tips('角色名已存在', '#role-add-rolename');
                 }
             });

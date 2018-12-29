@@ -30,4 +30,7 @@ public interface RoleMapper {
 
     int deleteUserRolesByUserId(@Param("userId") Integer userId);
 
+    int deleteUserRolesByRoleId(@Param("roleId") Integer roleId);
+
+    void deleteRoleAuthcByRoleId(@Param("roleId") Integer roleId);
 }

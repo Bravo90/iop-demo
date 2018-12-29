@@ -38,8 +38,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional
     public Integer delRoleByRoleId(Integer roleId) {
-        return roleMapper.delRoleByRoleId(roleId);
+        int rows = roleMapper.delRoleByRoleId(roleId);
+        //删除关联表 iop_sys_user_role
+        roleMapper.deleteUserRolesByRoleId(roleId);
+        //删除关联表 iop_sys_role_authc
+        roleMapper.deleteRoleAuthcByRoleId(roleId);
+        return rows;
     }
 
     @Override

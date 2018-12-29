@@ -5,29 +5,21 @@ import com.sitech.billing.common.bean.JsonResult;
 import com.sitech.billing.common.enums.ErrorMsgEnum;
 import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.system.base.BaseController;
+import com.sitech.billing.system.rbac.model.Role;
 import com.sitech.billing.system.rbac.model.User;
-import com.sitech.billing.system.rbac.service.UserService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
 public class UserController extends BaseController {
-
-    private static final String PERMISSION_USER_PAGE = "sys:user:page";
-    private static final String PERMISSION_USER_LIST = "sys:user:list";
-    private static final String PERMISSION_USER_SINGLE = "sys:user:single";
-    private static final String PERMISSION_USER_ADD = "sys:user:add";
-    private static final String PERMISSION_USER_UPDATE = "sys:user:update";
-    private static final String PERMISSION_USER_DELETE = "sys:user:delete";
-
-    @Resource
-    private UserService userService;
-
 
     @GetMapping("/page")
     @RequiresPermissions(value = {PERMISSION_USER_PAGE}, logical = Logical.OR)
@@ -81,5 +73,43 @@ public class UserController extends BaseController {
     public JsonResult deleteUser(@PathVariable(value = "userId") Integer userId) {
         userService.deleteUserById(userId);
         return JsonResult.success("删除成功");
+    }
+
+    @GetMapping("/assign/{userId}")
+    @RequiresPermissions(value = {PERMISSION_USER_ROLE}, logical = Logical.OR)
+    public JsonResult assignRole(@PathVariable Integer userId) {
+
+        User user = new User();
+        user.setUserId(userId);
+
+        List<Role> allRoles = roleService.listRoles();
+
+        List<Role> userRoles = roleService.listRoleByUser(user);
+
+        Map<String, List<Role>> roleMap = new HashMap<>();
+
+        roleMap.put("userRoles", userRoles);
+        roleMap.put("allRoles", allRoles);
+
+        return JsonResult.success(roleMap);
+    }
+
+    @PostMapping("/assign")
+    @RequiresPermissions(value = {PERMISSION_USER_ASSIGN}, logical = Logical.OR)
+    public JsonResult saveAssignRole(@RequestParam Integer userId, @RequestParam String roleIds) {
+
+        User user = new User();
+        user.setUserId(userId);
+        List<Role> roles = new ArrayList<>();
+        if (!"".equals(roleIds) && roleIds != null) {
+            String[] roleIdArr = roleIds.split(",");
+            for (String roleId : roleIdArr) {
+                Role role = new Role();
+                role.setRoleId(Integer.parseInt(roleId));
+                roles.add(role);
+            }
+        }
+        roleService.saveUserRoles(user, roles);
+        return JsonResult.success("角色分配成功");
     }
 }

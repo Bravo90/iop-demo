@@ -26,4 +26,17 @@ public interface AuthcService {
      */
     List<Authc> listAuthcByRole(List<Role> roleList);
 
+    /**
+     * 获取父级节点集合
+     *
+     * @return
+     */
+    List<Authc> listParentAuthc();
+
+    /**
+     * 根据父级节点的ID获得子节点集合
+     * @param parentId
+     * @return
+     */
+    List<Authc> listAuthcByParentId(Integer parentId);
 }

@@ -6,14 +6,14 @@
 
 .error-msg {
     color: yellow;
-    font-size: 20px;
-    margin: 20px;
+    font-size: 18px;
+    margin: 10px;
 }
 
 .error-admin {
     color: yellow;
-    font-size: 20px;
-    margin: 20px;
+    font-size: 18px;
+    margin: 10px;
 }
 
 .error-404 {

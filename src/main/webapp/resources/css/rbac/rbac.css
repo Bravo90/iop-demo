@@ -36,3 +36,42 @@
     width: 100%;
     text-align: center;
 }
+
+/*自定义checkbox样式*/
+
+.checkbox-style {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    padding: 5px;
+    float: left;
+}
+
+.checkbox-style input[type=checkbox] {
+    zoom: 150%;
+}
+
+.checkbox-text {
+    line-height: 40px;
+    height: 40px !important;
+    color: #FF5722;
+}
+
+.assign-role-box {
+    padding: 10px;
+    width: 290px;
+    height: 350px;
+}
+
+.assign-role-box-inner {
+
+    height: 300px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    overflow: auto;
+}
+
+.assign-role-box button {
+    margin-top: 10px;
+    margin-left: 220px;
+}

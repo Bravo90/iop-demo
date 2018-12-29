@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface RoleService {
 
+    List<Role> listRoles();
+
     PageInfo<Role> listAllRoles(Integer pageNum, Integer pageSize);
 
     Integer saveRole(Role role);
@@ -18,6 +20,8 @@ public interface RoleService {
 
     Role getRoleByRoleId(Integer roleId);
 
+    Role getRoleByRoleName(String roleName);
+
     /**
      * 根据用户获得用户的所有角色
      *
@@ -26,5 +30,14 @@ public interface RoleService {
      */
     List<Role> listRoleByUser(User user);
 
+
+    int deleteUserRolesByUserId(Integer userId);
+    /**
+     * 增加用户权限
+     * @param user
+     * @param roles
+     * @return
+     */
+    int saveUserRoles(User user, List<Role> roles);
 
 }

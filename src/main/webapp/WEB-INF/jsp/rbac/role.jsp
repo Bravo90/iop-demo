@@ -8,28 +8,26 @@
 <head>
     <jsp:include page="../common/head.jsp"/>
     <link href="${ctx}/resources/css/rbac/rbac.css" rel="stylesheet">
-    <script type="text/javascript" src="${ctx}/resources/js/rbac/user.js"></script>
-    <title>用户管理界面</title>
+    <script type="text/javascript" src="${ctx}/resources/js/rbac/role.js"></script>
+    <title>角色管理界面</title>
 </head>
 <body>
 <div class="rbac-container">
-    <div class="rbac-title">用户管理</div>
-    <button id="user-add" class="layui-btn layui-btn-sm">新增用户</button>
+    <div class="rbac-title">角色管理</div>
+    <button id="role-add" class="layui-btn layui-btn-sm">新增角色</button>
 
     <table class="layui-table">
         <colgroup>
             <col width="10%">
+            <col width="20%">
+            <col width="45%">
             <col width="25%">
-            <col width="25%">
-            <col width="25%">
-            <col width="15%">
         </colgroup>
         <thead>
         <tr>
-            <th>用户ID</th>
-            <th>用户名</th>
-            <th>昵称</th>
-            <th>用密码</th>
+            <th>角色ID</th>
+            <th>角色名称</th>
+            <th>角色描述</th>
             <th>操作</th>
         </tr>
         </thead>

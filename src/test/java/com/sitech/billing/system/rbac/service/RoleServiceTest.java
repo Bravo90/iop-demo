@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -59,10 +60,31 @@ public class RoleServiceTest {
     }
 
     @Test
+    public void getRoleByRoleName(){
+        System.out.println(roleService.getRoleByRoleName("普通用户"));
+        System.out.println(roleService.getRoleByRoleName("123"));
+    }
+    @Test
     public void listRoleByUser() {
         User user = new User();
         user.setUserId(1);
         List<Role> roles = roleService.listRoleByUser(user);
         System.out.println(roles.toString());
+    }
+
+
+    @Test
+    public void saveUserRoles() {
+
+        User user = new User();
+        user.setUserId(2);
+
+        List<Role> roles = new ArrayList<>();
+       /* Role r1 = new Role();r1.setRoleId(1);
+        roles.add(r1);
+        Role r2 = new Role();r2.setRoleId(2);
+        roles.add(r2);*/
+
+        roleService.saveUserRoles(user,roles);
     }
 }

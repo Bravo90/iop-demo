@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sitech.billing.system.rbac.dao.AuthcMapper">
 
-    <resultMap id="baseResult" type="com.sitech.billing.system.rbac.model.Authc">
+    <resultMap id="baseResultMap" type="com.sitech.billing.system.rbac.model.Authc">
         <id property="authcId" column="authc_id"/>
         <result property="authcName" column="authc_name"/>
         <result property="authcDesc" column="authc_desc"/>
     </resultMap>
 
-    <select id="listAllAuthc" resultMap="baseResult">
+    <select id="listAllAuthc" resultMap="baseResultMap">
       SELECT * FROM iop_sys_authc
     </select>
 
@@ -34,14 +34,22 @@
         WHERE authc_id = #{authc.authcId}
     </update>
 
-    <select id="getAuthcByAuthcId" resultMap="baseResult">
+    <select id="getAuthcByAuthcId" resultMap="baseResultMap">
         SELECT * FROM iop_sys_authc WHERE authc_id = #{authcId}
     </select>
     
-    <select id="listAuthcByRole" resultMap="baseResult">
+    <select id="listAuthcByRole" resultMap="baseResultMap">
         SELECT a.* From iop_sys_authc a,iop_sys_role_authc b
         WHERE a.authc_id = b.authc_id AND b.role_id = #{role.roleId};
     </select>
+    
+    <select id="listParentAuthc" resultMap="baseResultMap">
+        SELECT * FROM iop_sys_authc WHERE authc_id > 1000 AND authc_id &lt; 2000
+    </select>
 
+    <select id="listAuthcByParentId" resultMap="baseResultMap">
+        SELECT * FROM iop_sys_authc
+        WHERE authc_id > 1000 * #{parentId} AND authc_id &lt; (#{parentId} + 1) * 1000
+    </select>
 
 </mapper>

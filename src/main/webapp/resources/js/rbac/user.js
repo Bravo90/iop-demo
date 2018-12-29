@@ -5,22 +5,28 @@ var User = {
 
     URL: {
         userList: function () {
-            return Globals.contextPath() + "/user/list";
+            return Globals.contextPath() + '/user/list';
         },
         userSingle: function (userId) {
-            return Globals.contextPath() + "/user/" + userId;
+            return Globals.contextPath() + '/user/' + userId;
         },
         checkExistByUsername: function (username) {
-            return Globals.contextPath() + "/user/username/" + username;
+            return Globals.contextPath() + '/user/username/' + username;
         },
         userAdd: function () {
-            return Globals.contextPath() + "/user/add";
+            return Globals.contextPath() + '/user/add';
         },
         userUpdate: function () {
-            return Globals.contextPath() + "/user/update";
+            return Globals.contextPath() + '/user/update';
         },
         userDelete: function (userId) {
-            return Globals.contextPath() + "/user/" + userId;
+            return Globals.contextPath() + '/user/' + userId;
+        },
+        userAssign: function (userId) {
+            return Globals.contextPath() + '/user/assign/' + userId;
+        },
+        userAssignUpdate: function () {
+            return Globals.contextPath() + '/user/assign';
         }
     },
     init: function () {
@@ -29,6 +35,10 @@ var User = {
          * 查询用户列表
          */
         User.methods.renderTable();
+        /**
+         * 角色分配
+         */
+        User.methods.assignRole(layer);
         /**
          * 新增用户
          */
@@ -40,11 +50,11 @@ var User = {
                 skin: 'layui-layer-molv',
                 area: ['290px', '230px'], //宽高
                 content: '<div class="rbac-user-update bg-image">' +
-                    '<div>用户名称：<input id="user-add-username"></div>' +
-                    '<div>用户密码：<input id="user-add-password"></div>' +
-                    '<div>用户昵称：<input id="user-add-nickname"></div>' +
-                    '<button class="layui-btn layui-btn-sm" id="user-add-confirm">确定</button>' +
-                    '</div>'
+                '<div>用户名称：<input id="user-add-username"></div>' +
+                '<div>用户密码：<input id="user-add-password"></div>' +
+                '<div>用户昵称：<input id="user-add-nickname"></div>' +
+                '<button class="layui-btn layui-btn-sm" id="user-add-confirm">确定</button>' +
+                '</div>'
             });
 
             $('#user-add-username').on('blur', function () {
@@ -89,7 +99,6 @@ var User = {
                             layer.msg(msg, {icon: 1});
                             User.methods.renderTable();
                         } else {
-                            console.log(result['message']);
                             layer.msg(msg, {icon: 2});
                         }
                     }
@@ -146,11 +155,11 @@ var User = {
                     anim: 1,
                     area: ['290px', '230px'], //宽高
                     content: '<div class="rbac-user-update bg-image">' +
-                        '<div>用户名称：<input id="user-update-username"></div>' +
-                        '<div>用户密码：<input type="password" id="user-update-password"></div>' +
-                        '<div>用户昵称：<input id="user-update-nickname"></div>' +
-                        '<button class="layui-btn layui-btn-sm" id="user-update-confirm">确定</button>' +
-                        '</div>'
+                    '<div>用户名称：<input id="user-update-username"></div>' +
+                    '<div>用户密码：<input type="password" id="user-update-password"></div>' +
+                    '<div>用户昵称：<input id="user-update-nickname"></div>' +
+                    '<button class="layui-btn layui-btn-sm" id="user-update-confirm">确定</button>' +
+                    '</div>'
                 });
 
                 $('#user-update-username').val(usernameOld);
@@ -202,31 +211,7 @@ var User = {
                 });
             });
         });
-        //分页
-        var laypage = layui.laypage;
-        var option = {
-            elem: 'user-page',
-            count: 100,
-            limit: 5,
-            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-            jump: function (obj) {
-                console.log(obj);
-                obj.conut = 20;
-            }
-        };
-        laypage.render(option);
-        $('#test-page').on('click', function () {
-            laypage.render({
-                elem: 'user-page',
-                count: 200,
-                limit: 5,
-                layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-                jump: function (obj) {
-                    console.log(obj);
-                    obj.conut = 20;
-                }
-            });
-        });
+
     },
     methods: {
         renderTable: function () {
@@ -243,6 +228,7 @@ var User = {
                             '<th>' +
                             '<button  class="layui-btn layui-btn-xs user-delete" user-id="' + this.userId + '">删除</button>' +
                             '<button class="layui-btn layui-btn-xs user-update" user-id="' + this.userId + '">更新</button>' +
+                            '<button class="layui-btn layui-btn-xs user-role" user-id="' + this.userId + '">分配角色</button>' +
                             '</th>' +
                             '</tr>'
                         );
@@ -267,6 +253,75 @@ var User = {
                 }
             });
             return exist;
+        },
+        assignRole: function (layer) {
+            var userId;
+            var assignLayer;
+            $(document).on('click', '.user-role', function () {
+                userId = $(this).attr('user-id');
+                $.get(User.URL.userAssign(userId), {}, function (result) {
+                    var success = result['success'];
+                    var msg = result['message'];
+                    if (success == 0) {
+                        layer.msg(msg, {icon: 2});
+                        layer.close(assignLayer);
+                        return false;
+                    }
+
+                    var userRoles = result.data['userRoles'];
+                    var roles = result.data['allRoles'];
+                    //渲染所有角色
+                    var content = User.methods.assignUserContent(roles);
+                    assignLayer = layer.open({
+                        type: 1,
+                        title: '角色分配',
+                        anim: 1,
+                        skin: 'layui-layer-molv',
+                        area: ['290px', '400px'], //宽高
+                        content: content
+                    });
+                    //渲染已有的角色
+                    $(userRoles).each(function () {
+                        var roleId = this.roleId;
+                        $('input[role-id=' + roleId + ']').attr("checked", 'true');
+                    });
+                });
+            });
+            //分配角色确定
+            $(document).on('click', '#user-role-confirm', function () {
+                var checkBoxes = $('input[role-id]');
+                var roleIds = new Array();
+                $(checkBoxes).each(function () {
+                    if ($(this).is(':checked')) {
+                        roleIds.push($(this).attr('role-id'));
+                    }
+                });
+                $.post(User.URL.userAssignUpdate(), {
+                    'userId': userId,
+                    'roleIds': roleIds.join(",")
+                }, function (result) {
+                    var success = result['success'];
+                    var msg = result['message'];
+                    if (success == 1) {
+                        layer.msg(msg, {icon: 1});
+                        layer.close(assignLayer);
+                    } else {
+                        layer.msg(msg, {icon: 2});
+                    }
+                });
+
+            });
+        },
+        assignUserContent: function (roles) {
+            var content = '<div class="assign-role-box"><div class="assign-role-box-inner">';
+            $(roles).each(function () {
+                content += '<div class="checkbox-style"><input type="checkbox" role-id="' +
+                    this.roleId + '"></div><div class="checkbox-text">' +
+                    this.roleName +
+                    '</div>';
+            });
+            var button = '<button id="user-role-confirm" class="layui-btn layui-btn-sm">确定</button>';
+            return content + '</div>' + button + '</div>';
         }
     }
 

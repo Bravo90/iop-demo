@@ -10,6 +10,8 @@ import java.util.List;
 @Mapper
 public interface RoleMapper {
 
+    List<Role> listRoles();
+
     List<Role> listAllRole();
 
     Integer saveRole(@Param("role") Role role);
@@ -20,7 +22,12 @@ public interface RoleMapper {
 
     Role getRoleByRoleId(@Param("roleId") Integer roleId);
 
+    Role getRoleByRoleName(@Param("roleName") String roleName);
+
     List<Role> listRoleByUser(@Param("user") User user);
 
+    int saveUserRoles(@Param("user") User user, @Param("roles") List<Role> roles);
+
+    int deleteUserRolesByUserId(@Param("userId") Integer userId);
 
 }

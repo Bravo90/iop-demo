@@ -70,4 +70,17 @@ public class AuthcServiceTest {
         List<Authc> set = authcService.listAuthcByRole(list);
         System.out.println(set);
     }
+
+    @Test
+    public void listParentAuthc() {
+        List<Authc> authcs = authcService.listParentAuthc();
+        System.out.println(authcs);
+    }
+
+    @Test
+    public void listAuthcByParentId() {
+        Integer id = 1001;
+        List<Authc> authcs = authcService.listAuthcByParentId(id);
+        System.out.println(authcs);
+    }
 }

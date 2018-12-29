@@ -7,6 +7,10 @@
         <result property="roleName" column="role_name"/>
         <result property="roleDesc" column="role_desc"/>
     </resultMap>
+    
+    <select id="listRoles" resultMap="baseResultMap">
+        SELECT * FROM iop_sys_role
+    </select>
 
     <select id="listAllRole" resultMap="baseResultMap">
         SELECT * FROM iop_sys_role
@@ -37,9 +41,23 @@
         SELECT * FROM iop_sys_role WHERE role_id = #{roleId}
     </select>
 
+    <select id="getRoleByRoleName" resultMap="baseResultMap">
+        SELECT * FROM iop_sys_role WHERE role_name = #{roleName}
+    </select>
+
     <select id="listRoleByUser" resultMap="baseResultMap">
         SELECT a.* FROM iop_sys_role a,iop_sys_user_role b
         WHERE a.role_id = b.role_id and b.user_id = #{user.userId}
     </select>
 
+    <insert id="saveUserRoles">
+        INSERT INTO iop_sys_user_role (user_id,role_id) VALUES
+        <foreach collection="roles" item="role" open="" close="" separator="," index="index">
+            (#{user.userId},#{role.roleId})
+        </foreach>
+    </insert>
+    
+    <delete id="deleteUserRolesByUserId">
+        DELETE FROM iop_sys_user_role WHERE user_id = #{userId}
+    </delete>
 </mapper>

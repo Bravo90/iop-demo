@@ -64,4 +64,14 @@ public class AuthcServiceImpl implements AuthcService {
         }
         return list;
     }
+
+    @Override
+    public List<Authc> listParentAuthc() {
+        return authcMapper.listParentAuthc();
+    }
+
+    @Override
+    public List<Authc> listAuthcByParentId(Integer parentId) {
+        return authcMapper.listAuthcByParentId(parentId);
+    }
 }

@@ -21,4 +21,9 @@ public interface AuthcMapper {
     Authc getAuthcByAuthcId(@Param("authcId") Integer authcId);
 
     List<Authc> listAuthcByRole(@Param("role") Role role);
+
+    List<Authc> listParentAuthc();
+
+    List<Authc> listAuthcByParentId(@Param("parentId") Integer parentId);
+
 }

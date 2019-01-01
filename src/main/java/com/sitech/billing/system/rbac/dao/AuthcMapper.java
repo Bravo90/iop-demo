@@ -5,6 +5,7 @@ import com.sitech.billing.system.rbac.model.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import javax.swing.undo.AbstractUndoableEdit;
 import java.util.List;
 
 @Mapper
@@ -19,6 +20,8 @@ public interface AuthcMapper {
     Integer updateAuthc(@Param("authc") Authc authc);
 
     Authc getAuthcByAuthcId(@Param("authcId") Integer authcId);
+
+    Authc getAuthcByAuthcName(@Param("authcName") String authcName);
 
     List<Authc> listAuthcByRole(@Param("role") Role role);
 

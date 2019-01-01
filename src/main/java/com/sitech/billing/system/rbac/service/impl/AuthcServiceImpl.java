@@ -51,6 +51,11 @@ public class AuthcServiceImpl implements AuthcService {
         return authcMapper.getAuthcByAuthcId(authcId);
     }
 
+    @Override
+    public Authc getAuthcByAuthcName(String authcName) {
+        return authcMapper.getAuthcByAuthcName(authcName);
+    }
+
     /**
      * @param roleList
      * @return TODO:需要优化

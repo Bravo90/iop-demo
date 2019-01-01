@@ -37,6 +37,10 @@
     <select id="getAuthcByAuthcId" resultMap="baseResultMap">
         SELECT * FROM iop_sys_authc WHERE authc_id = #{authcId}
     </select>
+
+    <select id="getAuthcByAuthcName" resultMap="baseResultMap">
+        SELECT * FROM iop_sys_authc WHERE authc_name = #{authcName}
+    </select>
     
     <select id="listAuthcByRole" resultMap="baseResultMap">
         SELECT a.* From iop_sys_authc a,iop_sys_role_authc b

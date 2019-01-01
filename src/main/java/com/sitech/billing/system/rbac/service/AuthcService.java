@@ -18,6 +18,8 @@ public interface AuthcService {
 
     Authc getAuthcByAuthcId(Integer authcId);
 
+    Authc getAuthcByAuthcName(String authcName);
+
     /**
      * 根据角色列表获得权限列表
      *

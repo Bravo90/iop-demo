@@ -1,6 +1,7 @@
 package com.sitech.billing.common.handler;
 
 import com.sitech.billing.common.anno.SystemLog;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+@Slf4j
 public class SystemLogHandler {
 
 
@@ -32,7 +34,6 @@ public class SystemLogHandler {
 
        String mgs =  systemLog.LogMessage();
 
-        System.out.println("模块：" + module + ",方法：" + mgs);
-
+       log.info("模块{}，方法{}",module,mgs);
     }
 }

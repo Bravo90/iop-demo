@@ -83,7 +83,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.31</version>
         </dependency>
-
+        <!-- lombak -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- Provided -->
         <dependency>

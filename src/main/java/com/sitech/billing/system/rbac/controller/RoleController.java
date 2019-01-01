@@ -5,11 +5,13 @@ import com.sitech.billing.common.bean.JsonResult;
 import com.sitech.billing.common.enums.ErrorMsgEnum;
 import com.sitech.billing.system.base.BaseController;
 import com.sitech.billing.system.rbac.model.Role;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/role")
+@Slf4j
 public class RoleController extends BaseController {
 
 

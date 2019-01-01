@@ -7,6 +7,7 @@ import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.system.base.BaseController;
 import com.sitech.billing.system.rbac.model.Role;
 import com.sitech.billing.system.rbac.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController extends BaseController {
 
     @GetMapping("/page")

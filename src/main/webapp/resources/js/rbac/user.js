@@ -226,7 +226,7 @@ var User = {
                             '<th>' + this.nickname + '</th>' +
                             '<th>  ******  </th>' +
                             '<th>' +
-                            '<button  class="layui-btn layui-btn-xs user-delete" user-id="' + this.userId + '">删除</button>' +
+                            '<button class="layui-btn layui-btn-xs user-delete" user-id="' + this.userId + '">删除</button>' +
                             '<button class="layui-btn layui-btn-xs user-update" user-id="' + this.userId + '">更新</button>' +
                             '<button class="layui-btn layui-btn-xs user-role" user-id="' + this.userId + '">分配角色</button>' +
                             '</th>' +

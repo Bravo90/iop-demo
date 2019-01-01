@@ -34,7 +34,6 @@ var Role = {
     methods: {
         renderTable: function () {
             $.get(Role.URL.roleList(), {}, function (result) {
-                console.log(result)
                 $('tBody').empty();
                 var list = result.data.list;
                 $(list).each(function (index) {

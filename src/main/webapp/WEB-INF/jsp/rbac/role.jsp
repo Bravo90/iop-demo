@@ -8,7 +8,10 @@
 <head>
     <jsp:include page="../common/head.jsp"/>
     <link href="${ctx}/resources/css/rbac/rbac.css" rel="stylesheet">
+    <link href="${ctx}/resources/lib/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
     <script type="text/javascript" src="${ctx}/resources/js/rbac/role.js"></script>
+    <script type="text/javascript" src="${ctx}/resources/lib/ztree/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="${ctx}/resources/lib/ztree/js/jquery.ztree.excheck.js"></script>
     <title>角色管理界面</title>
 </head>
 <body>

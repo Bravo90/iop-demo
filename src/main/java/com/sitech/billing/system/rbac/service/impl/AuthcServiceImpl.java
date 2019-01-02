@@ -10,6 +10,7 @@ import com.sitech.billing.system.rbac.model.Role;
 import com.sitech.billing.system.rbac.service.AuthcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -33,7 +34,9 @@ public class AuthcServiceImpl implements AuthcService {
     }
 
     @Override
+    @Transactional
     public Integer delAuthcByAuthcId(Integer authcId) {
+        authcMapper.deleteRoleAuthcByAuthcId(authcId);
         return authcMapper.delAuthcByAuthcId(authcId);
     }
 
@@ -78,5 +81,24 @@ public class AuthcServiceImpl implements AuthcService {
     @Override
     public List<Authc> listAuthcByParentId(Integer parentId) {
         return authcMapper.listAuthcByParentId(parentId);
+    }
+
+    @Override
+    public Integer getParentAuthcId() {
+
+        Integer maxId = authcMapper.getMaxParentId();
+        if (maxId == null) {
+            return 1001;
+        }
+        return maxId + 1;
+    }
+
+    @Override
+    public Integer getChildAuthcId(Integer parentAuthcId) {
+        Integer maxId = authcMapper.getMaxChildId(parentAuthcId);
+        if (maxId == null) {
+            return parentAuthcId * 1000 + 1;
+        }
+        return maxId + 1;
     }
 }

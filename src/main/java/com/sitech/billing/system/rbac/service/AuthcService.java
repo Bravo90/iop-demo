@@ -37,8 +37,24 @@ public interface AuthcService {
 
     /**
      * 根据父级节点的ID获得子节点集合
+     *
      * @param parentId
      * @return
      */
     List<Authc> listAuthcByParentId(Integer parentId);
+
+    /**
+     * 获取父级节点ID
+     *
+     * @return
+     */
+    Integer getParentAuthcId();
+
+    /**
+     * 根据父级节点获取子节点ID
+     *
+     * @param parentAuthcId
+     * @return
+     */
+    Integer getChildAuthcId(Integer parentAuthcId);
 }

@@ -38,6 +38,7 @@ public class ShiroConfiguration {
     @Bean
     public IopShiroRealm iopShiroRealm() {
         IopShiroRealm iopShiroRealm = new IopShiroRealm();
+        iopShiroRealm.setAuthorizationCachingEnabled(false);
         return iopShiroRealm;
     }
 

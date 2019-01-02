@@ -80,19 +80,13 @@ public class UserController extends BaseController {
     @GetMapping("/assign/{userId}")
     @RequiresPermissions(value = {PERMISSION_USER_ROLE}, logical = Logical.OR)
     public JsonResult assignRole(@PathVariable Integer userId) {
-
         User user = new User();
         user.setUserId(userId);
-
         List<Role> allRoles = roleService.listRoles();
-
         List<Role> userRoles = roleService.listRoleByUser(user);
-
         Map<String, List<Role>> roleMap = new HashMap<>();
-
         roleMap.put("userRoles", userRoles);
         roleMap.put("allRoles", allRoles);
-
         return JsonResult.success(roleMap);
     }
 

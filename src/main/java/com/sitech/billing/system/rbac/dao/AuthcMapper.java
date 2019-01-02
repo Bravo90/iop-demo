@@ -29,4 +29,9 @@ public interface AuthcMapper {
 
     List<Authc> listAuthcByParentId(@Param("parentId") Integer parentId);
 
+    Integer getMaxParentId();
+
+    Integer getMaxChildId(@Param("parentAuthcId") Integer parentAuthcId);
+
+    Integer deleteRoleAuthcByAuthcId(@Param("authcId") Integer authcId);
 }

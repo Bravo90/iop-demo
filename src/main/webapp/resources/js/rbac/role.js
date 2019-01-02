@@ -71,8 +71,10 @@ var Role = {
             //检验用户存在与否
             $(document).on('blur', '#role-add-rolename', function () {
                 var roleName = $('#role-add-rolename').val();
-                if (Role.methods.checkRoleNameExist(roleName)) {
-                    layer.tips('角色名已存在', '#role-add-rolename');
+                if (roleName != '') {
+                    if (Role.methods.checkRoleNameExist(roleName)) {
+                        layer.tips('角色名已存在', '#role-add-rolename');
+                    }
                 }
             });
 
@@ -169,7 +171,7 @@ var Role = {
                         '</div>'
                     });
                     $('#role-update-rolename').val(roleNameOld);
-                    $('#role-update-roledesc').val(roleDescOld)
+                    $('#role-update-roledesc').val(roleDescOld);
                 });
 
 
@@ -187,7 +189,7 @@ var Role = {
                 }
 
                 if (roleName != roleNameOld && Role.methods.checkRoleNameExist(roleName)) {
-                    layer.msg('用户名已存在');
+                    layer.msg('角色名已存在');
                     return false;
                 }
 

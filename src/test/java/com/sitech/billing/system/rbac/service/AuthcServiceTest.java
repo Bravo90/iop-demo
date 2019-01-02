@@ -83,4 +83,16 @@ public class AuthcServiceTest {
         List<Authc> authcs = authcService.listAuthcByParentId(id);
         System.out.println(authcs);
     }
+
+    @Test
+    public void getParentAuthcId() {
+        Integer parentAuthcId = authcService.getParentAuthcId();
+        System.out.println(parentAuthcId);
+    }
+
+    @Test
+    public void getChildAuthcId() {
+        Integer childAuthcId = authcService.getChildAuthcId(1001);
+        System.out.println(childAuthcId);
+    }
 }

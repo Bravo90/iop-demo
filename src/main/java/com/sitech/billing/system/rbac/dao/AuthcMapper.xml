@@ -13,8 +13,8 @@
     </select>
 
     <insert id="saveAuthc" parameterType="com.sitech.billing.system.rbac.model.Authc">
-        INSERT INTO iop_sys_authc (authc_name,authc_desc)
-        VALUES (#{authc.authcName},#{authc.authcDesc})
+        INSERT INTO iop_sys_authc (authc_id,authc_name,authc_desc)
+        VALUES (#{authc.authcId},#{authc.authcName},#{authc.authcDesc})
     </insert>
 
     <delete id="delAuthcByAuthcId" parameterType="Integer">
@@ -41,12 +41,12 @@
     <select id="getAuthcByAuthcName" resultMap="baseResultMap">
         SELECT * FROM iop_sys_authc WHERE authc_name = #{authcName}
     </select>
-    
+
     <select id="listAuthcByRole" resultMap="baseResultMap">
         SELECT a.* From iop_sys_authc a,iop_sys_role_authc b
-        WHERE a.authc_id = b.authc_id AND b.role_id = #{role.roleId};
+        WHERE a.authc_id = b.authc_id AND b.role_id = #{role.roleId}
     </select>
-    
+
     <select id="listParentAuthc" resultMap="baseResultMap">
         SELECT * FROM iop_sys_authc WHERE authc_id > 1000 AND authc_id &lt; 2000
     </select>
@@ -55,5 +55,18 @@
         SELECT * FROM iop_sys_authc
         WHERE authc_id > 1000 * #{parentId} AND authc_id &lt; (#{parentId} + 1) * 1000
     </select>
+
+    <select id="getMaxParentId" resultType="Integer">
+        SELECT MAX(authc_id) FROM iop_sys_authc WHERE authc_id > 1000 AND authc_id &lt; 2000
+    </select>
+
+    <select id="getMaxChildId" resultType="Integer">
+        SELECT MAX(authc_id) FROM iop_sys_authc
+        WHERE authc_id > 1000 * #{parentAuthcId} AND authc_id &lt; (#{parentAuthcId} + 1) * 1000
+    </select>
+
+    <delete id="deleteRoleAuthcByAuthcId">
+        DELETE FROM iop_sys_role_authc WHERE authc_id = #{authcId}
+    </delete>
 
 </mapper>

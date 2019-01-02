@@ -155,7 +155,7 @@ var User = {
                     anim: 1,
                     area: ['290px', '230px'], //宽高
                     content: '<div class="rbac-user-update bg-image">' +
-                    '<div>用户名称：<input id="user-update-username"></div>' +
+                    '<div>用户名称：<input id="user-update-username" readonly></div>' +
                     '<div>用户密码：<input type="password" id="user-update-password"></div>' +
                     '<div>用户昵称：<input id="user-update-nickname"></div>' +
                     '<button class="layui-btn layui-btn-sm" id="user-update-confirm">确定</button>' +
@@ -177,7 +177,9 @@ var User = {
                         return false;
                     }
 
-                    if (username != usernameOld && User.methods.checkUsernameExist(username)) {
+                    if (username != '' &&
+                            username != usernameOld &&
+                                User.methods.checkUsernameExist(username)) {
                         layer.msg('用户名已存在');
                         return false;
                     }

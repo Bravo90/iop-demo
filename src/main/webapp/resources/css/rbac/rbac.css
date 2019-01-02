@@ -31,6 +31,10 @@
 .rbac-user-update button {
     margin-left: 210px;
 }
+.rbac-user-update select {
+    height: 30px;
+    width: 180px;
+}
 
 .rbac-page {
     width: 100%;

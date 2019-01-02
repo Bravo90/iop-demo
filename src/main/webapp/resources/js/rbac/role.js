@@ -228,9 +228,9 @@ var Role = {
                     anim: 1,
                     skin: 'layui-layer-molv',
                     area: ['270px', '350px'], //宽高
-                    content: '<div class="rbac-user-update">' +
+                    content: '<div class="rbac-autch">' +
                     '<div><ul id="tree-demo" class="ztree"></ul></div>' +
-                    '<button>确定</button>' +
+                    '<button class="layui-btn layui-btn-sm">确定</button>' +
                     '</div>'
                 });
 
@@ -247,39 +247,32 @@ var Role = {
 
                 var zNodes = [
                     {
-                        name: "父节点1 - 展开", open: true,
+                        name: '用户管理页面', open: true,
                         children: [
-                            {name: "叶子节点111"},
-                            {name: "叶子节点112"},
-                            {name: "叶子节点113"},
-                            {name: "叶子节点114"}
+                            {name: '获得用户列表', checked:true },
+                            {name: '获得单个用户'},
+                            {name: '增加新用户'},
+                            {name: '更新用户'},
+                            {name: '删除用户'},
+                            {name: '用户角色查询'},
+                            {name: '用户角色分配'}
                         ]
                     }, {
-                        name: "父节点1 - 展开", open: true,
+                        name: "角色管理界面", open: true,
                         children: [
-                            {name: "叶子节点111"},
-                            {name: "叶子节点112"},
-                            {name: "叶子节点113"},
-                            {name: "叶子节点114"}
-                        ]
-                    }, {
-                        name: "父节点1 - 展开", open: true,
-                        children: [
-                            {name: "叶子节点111"},
-                            {name: "叶子节点112"},
-                            {name: "叶子节点113"},
-                            {name: "叶子节点114"}
-                        ]
-                    }, {
-                        name: "父节点1 - 展开", open: true,
-                        children: [
-                            {name: "叶子节点111"},
-                            {name: "叶子节点112"},
-                            {name: "叶子节点113"},
-                            {name: "叶子节点114"}
-                        ]
-                    }
+                            {name: '获得用户列表', checked:true },
+                            {name: '获得单个用户'},
+                            {name: '增加新用户'},
+                            {name: '更新用户'},
+                            {name: '删除用户'},
+                            {name: '用户角色查询'},
+                            {name: '用户角色分配'}
 
+                        ]
+                    }, {
+                        name: "权限管理界面", open: true,
+                        children: []
+                    }
                 ];
 
                 $.fn.zTree.init($("#tree-demo"), setting, zNodes);

@@ -30,6 +30,7 @@ var Role = {
         Role.methods.addRole(layer);
         Role.methods.deleteRole(layer);
         Role.methods.updateRole(layer);
+        Role.methods.assignAuthc();
     },
     methods: {
         renderTable: function () {
@@ -173,8 +174,6 @@ var Role = {
                     $('#role-update-rolename').val(roleNameOld);
                     $('#role-update-roledesc').val(roleDescOld);
                 });
-
-
             });
 
             //更新
@@ -217,6 +216,12 @@ var Role = {
                         }
                     }
                 });
+            });
+        },
+        assignAuthc: function () {
+            $(document).on('click','.role-authc',function () {
+                var roleId = $(this).attr('role-id');
+                layer.msg(roleId);
             });
         },
         checkRoleNameExist: function (roleName) {

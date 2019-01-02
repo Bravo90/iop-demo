@@ -30,7 +30,12 @@ public interface RoleService {
      */
     List<Role> listRoleByUser(User user);
 
-
+    /**
+     * 根据用户的id删除iop_sys_user_role表中的数据
+     *
+     * @param userId
+     * @return
+     */
     int deleteUserRolesByUserId(Integer userId);
     /**
      * 增加用户权限

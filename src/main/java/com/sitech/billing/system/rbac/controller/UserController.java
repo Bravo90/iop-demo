@@ -74,6 +74,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(value = {PERMISSION_USER_DELETE}, logical = Logical.OR)
     public JsonResult deleteUser(@PathVariable(value = "userId") Integer userId) {
         userService.deleteUserById(userId);
+        roleService.deleteUserRolesByUserId(userId);
         return JsonResult.success("删除成功");
     }
 

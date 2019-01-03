@@ -206,21 +206,24 @@ var Authc = {
                         if (result['success'] == 1) {
                             authcNameOld = result.data['authcName'];
                             authcDescOld = result.data['authcDesc'];
+
+                            updateLayer = layer.open({
+                                type: 1,
+                                title: '更新角色',
+                                anim: 1,
+                                skin: 'layui-layer-molv',
+                                area: ['290px', '190px'], //宽高
+                                content: '<div class="rbac-user-update bg-image">' +
+                                '<div>角色名称：<input id="authc-update-authcname"></div>' +
+                                '<div>角色描述：<input id="authc-update-authcdesc"></div>' +
+                                '<button class="layui-btn layui-btn-sm" id="authc-update-confirm">确定</button>' +
+                                '</div>'
+                            });
+                            $('#authc-update-authcname').val(authcNameOld);
+                            $('#authc-update-authcdesc').val(authcDescOld);
+                        } else {
+                            layer.msg(result['message'], {icon: 2});
                         }
-                        updateLayer = layer.open({
-                            type: 1,
-                            title: '更新角色',
-                            anim: 1,
-                            skin: 'layui-layer-molv',
-                            area: ['290px', '190px'], //宽高
-                            content: '<div class="rbac-user-update bg-image">' +
-                            '<div>角色名称：<input id="authc-update-authcname"></div>' +
-                            '<div>角色描述：<input id="authc-update-authcdesc"></div>' +
-                            '<button class="layui-btn layui-btn-sm" id="authc-update-confirm">确定</button>' +
-                            '</div>'
-                        });
-                        $('#authc-update-authcname').val(authcNameOld);
-                        $('#authc-update-authcdesc').val(authcDescOld);
                     });
                 });
                 //更新确定

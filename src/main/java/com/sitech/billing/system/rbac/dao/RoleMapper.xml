@@ -7,7 +7,7 @@
         <result property="roleName" column="role_name"/>
         <result property="roleDesc" column="role_desc"/>
     </resultMap>
-    
+
     <select id="listRoles" resultMap="baseResultMap">
         SELECT * FROM iop_sys_role
     </select>
@@ -56,7 +56,7 @@
             (#{user.userId},#{role.roleId})
         </foreach>
     </insert>
-    
+
     <delete id="deleteUserRolesByUserId">
         DELETE FROM iop_sys_user_role WHERE user_id = #{userId}
     </delete>
@@ -64,8 +64,25 @@
     <delete id="deleteUserRolesByRoleId">
       DELETE FROM iop_sys_user_role WHERE role_id = #{roleId}
     </delete>
-    
+
     <delete id="deleteRoleAuthcByRoleId">
         DELETE FROM iop_sys_role_authc WHERE role_id = #{roleId}
     </delete>
+
+    <insert id="batchAddRoleAuthc">
+        INSERT INTO iop_sys_role_authc (role_id,authc_id) VALUES
+        <foreach collection="list" item="item" open="" close="" separator="," index="index">
+            (#{roleId},#{item})
+        </foreach>
+    </insert>
+
+    <delete id="batchDelRoleAuthc">
+        DELETE FROM iop_sys_role_authc
+        WHERE role_id = #{roleId}
+        AND authc_id IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

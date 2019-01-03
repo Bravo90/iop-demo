@@ -60,10 +60,11 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void getRoleByRoleName(){
+    public void getRoleByRoleName() {
         System.out.println(roleService.getRoleByRoleName("普通用户"));
         System.out.println(roleService.getRoleByRoleName("123"));
     }
+
     @Test
     public void listRoleByUser() {
         User user = new User();
@@ -85,6 +86,18 @@ public class RoleServiceTest {
         Role r2 = new Role();r2.setRoleId(2);
         roles.add(r2);*/
 
-        roleService.saveUserRoles(user,roles);
+        roleService.saveUserRoles(user, roles);
+    }
+
+    @Test
+    public void assignRoleAuthc() {
+
+        List<Integer> addList = new ArrayList<>();
+        addList.add(1002);
+        addList.add(1003);
+        List<Integer> delList = new ArrayList<>();
+        delList.add(1001006);
+        delList.add(1001007);
+        roleService.assignRoleAuthc(1, addList, delList);
     }
 }

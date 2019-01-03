@@ -33,4 +33,8 @@ public interface RoleMapper {
     int deleteUserRolesByRoleId(@Param("roleId") Integer roleId);
 
     void deleteRoleAuthcByRoleId(@Param("roleId") Integer roleId);
+
+    Integer batchAddRoleAuthc(@Param("roleId")Integer roleId,@Param("list")List<Integer> list);
+
+    Integer batchDelRoleAuthc(@Param("roleId")Integer roleId,@Param("list")List<Integer> list);
 }

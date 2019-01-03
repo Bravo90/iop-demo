@@ -92,4 +92,16 @@ public class RoleServiceImpl implements RoleService {
         return rows;
     }
 
+    @Override
+    @Transactional
+    public Integer assignRoleAuthc(Integer roleId, List<Integer> add, List<Integer> del) {
+        int row = 0;
+        if (add.size() > 0) {
+            row += roleMapper.batchAddRoleAuthc(roleId, add);
+        }
+        if (del.size() > 0) {
+            row += roleMapper.batchDelRoleAuthc(roleId, del);
+        }
+        return row;
+    }
 }

@@ -51,6 +51,10 @@
         SELECT * FROM iop_sys_authc WHERE authc_id > 1000 AND authc_id &lt; 2000
     </select>
 
+    <select id="listChildrenAuthc" resultMap="baseResultMap">
+        SELECT * FROM iop_sys_authc WHERE authc_id > 1000 * 1000;
+    </select>
+
     <select id="listAuthcByParentId" resultMap="baseResultMap">
         SELECT * FROM iop_sys_authc
         WHERE authc_id > 1000 * #{parentId} AND authc_id &lt; (#{parentId} + 1) * 1000

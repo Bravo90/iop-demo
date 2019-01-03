@@ -37,12 +37,15 @@ public interface RoleService {
      * @return
      */
     int deleteUserRolesByUserId(Integer userId);
+
     /**
      * 增加用户权限
+     *
      * @param user
      * @param roles
      * @return
      */
     int saveUserRoles(User user, List<Role> roles);
 
+    Integer assignRoleAuthc(Integer roleId, List<Integer> add, List<Integer> del);
 }

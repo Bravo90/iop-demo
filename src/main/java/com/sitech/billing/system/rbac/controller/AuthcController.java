@@ -5,6 +5,8 @@ import com.sitech.billing.common.enums.ErrorMsgEnum;
 import com.sitech.billing.system.base.BaseController;
 import com.sitech.billing.system.rbac.model.Authc;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,30 +18,35 @@ import java.util.List;
 public class AuthcController extends BaseController {
 
     @RequestMapping("/page")
+    @RequiresPermissions(value = {PERMISSION_AUTHC_PAGE}, logical = Logical.OR)
     public ModelAndView page() {
         return new ModelAndView("rbac/authc");
     }
 
 
     @GetMapping("/{authcId}")
+    @RequiresPermissions(value = {PERMISSION_AUTHC_SINGLE}, logical = Logical.OR)
     public JsonResult getAuthcById(@PathVariable Integer authcId) {
         Authc authc = authcService.getAuthcByAuthcId(authcId);
         return JsonResult.success(authc);
     }
 
     @GetMapping("/plist")
+    @RequiresPermissions(value = {PERMISSION_AUTHC_LIST}, logical = Logical.OR)
     public JsonResult parentAuthcList() {
         List<Authc> parentAuthcs = authcService.listParentAuthc();
         return JsonResult.success(parentAuthcs);
     }
 
     @GetMapping("/clist/{parentAuthcId}")
+    @RequiresPermissions(value = {PERMISSION_AUTHC_LIST}, logical = Logical.OR)
     public JsonResult childrenAuthcList(@PathVariable Integer parentAuthcId) {
         List<Authc> authcs = authcService.listAuthcByParentId(parentAuthcId);
         return JsonResult.success(authcs);
     }
 
     @PostMapping("/add")
+    @RequiresPermissions(value = {PERMISSION_AUTHC_ADD}, logical = Logical.OR)
     public JsonResult addAuthc(@RequestBody Authc authc) {
         if ("".equals(authc.getAuthcName())) {
             return JsonResult.error(ErrorMsgEnum.AUTHC_NAME_ALREADY_EXIST);
@@ -66,12 +73,14 @@ public class AuthcController extends BaseController {
     }
 
     @DeleteMapping("/{authcId}")
+    @RequiresPermissions(value = {PERMISSION_AUTHC_DELETE}, logical = Logical.OR)
     public JsonResult deleteAuthc(@PathVariable Integer authcId) {
         authcService.delAuthcByAuthcId(authcId);
         return JsonResult.success("删除成功");
     }
 
     @PutMapping("/{authcId}")
+    @RequiresPermissions(value = {PERMISSION_AUTHC_UPDATE}, logical = Logical.OR)
     public JsonResult updateAuthc(@PathVariable Integer authcId, @RequestBody Authc authc) {
         authc.setAuthcId(authcId);
         authcService.updateAuthc(authc);

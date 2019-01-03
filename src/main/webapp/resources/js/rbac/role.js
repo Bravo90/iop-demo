@@ -21,6 +21,12 @@ var Role = {
         },
         roleUpdate: function (roleId) {
             return Globals.contextPath() + '/role/' + roleId;
+        },
+        roleAuthc: function (roleId) {
+            return Globals.contextPath() + '/role/authc/' + roleId;
+        },
+        roleAssignAuthc: function () {
+            return Globals.contextPath() + '/role/assign';
         }
 
     },
@@ -30,15 +36,15 @@ var Role = {
         Role.methods.addRole(layer);
         Role.methods.deleteRole(layer);
         Role.methods.updateRole(layer);
-        Role.methods.assignAuthc();
-        Role.methods.saveAuthc();
+        Role.methods.getRoleAuthc();
+        Role.methods.assignRoleAuthc();
     },
     methods: {
         renderTable: function () {
             $.get(Role.URL.roleList(), {}, function (result) {
                 $('tBody').empty();
                 var list = result.data.list;
-                $(list).each(function (index) {
+                $(list).each(function () {
                     $('#tbody').append('<tr>' +
                         '<th>' + this.roleId + '</th>' +
                         '<th>' + this.roleName + '</th>' +
@@ -64,10 +70,10 @@ var Role = {
                     skin: 'layui-layer-molv',
                     area: ['290px', '190px'], //宽高
                     content: '<div class="rbac-user-update bg-image">' +
-                        '<div>角色名称：<input id="role-add-rolename"></div>' +
-                        '<div>角色描述：<input id="role-add-roledesc"></div>' +
-                        '<button class="layui-btn layui-btn-sm" id="role-add-confirm">确定</button>' +
-                        '</div>'
+                    '<div>角色名称：<input id="role-add-rolename"></div>' +
+                    '<div>角色描述：<input id="role-add-roledesc"></div>' +
+                    '<button class="layui-btn layui-btn-sm" id="role-add-confirm">确定</button>' +
+                    '</div>'
                 });
             });
             //检验用户存在与否
@@ -159,21 +165,23 @@ var Role = {
                     if (result['success'] == 1) {
                         roleNameOld = result.data['roleName'];
                         roleDescOld = result.data['roleDesc'];
-                    }
-                    updateLayer = layer.open({
-                        type: 1,
-                        title: '更新角色',
-                        anim: 1,
-                        skin: 'layui-layer-molv',
-                        area: ['290px', '190px'], //宽高
-                        content: '<div class="rbac-user-update bg-image">' +
+                        updateLayer = layer.open({
+                            type: 1,
+                            title: '更新角色',
+                            anim: 1,
+                            skin: 'layui-layer-molv',
+                            area: ['290px', '190px'], //宽高
+                            content: '<div class="rbac-user-update bg-image">' +
                             '<div>角色名称：<input id="role-update-rolename"></div>' +
                             '<div>角色描述：<input id="role-update-roledesc"></div>' +
                             '<button class="layui-btn layui-btn-sm" id="role-update-confirm">确定</button>' +
                             '</div>'
-                    });
-                    $('#role-update-rolename').val(roleNameOld);
-                    $('#role-update-roledesc').val(roleDescOld);
+                        });
+                        $('#role-update-rolename').val(roleNameOld);
+                        $('#role-update-roledesc').val(roleDescOld);
+                    } else {
+                        layer.msg(result['message'], {icon: 2});
+                    }
                 });
             });
 
@@ -219,78 +227,84 @@ var Role = {
                 });
             });
         },
-        assignAuthc: function () {
-
+        getRoleAuthc: function () {
             $(document).on('click', '.role-authc', function () {
                 var roleId = $(this).attr('role-id');
-                layer.open({
-                    type: 1,
-                    title: '分配权限',
-                    anim: 1,
-                    skin: 'layui-layer-molv',
-                    area: ['270px', '350px'], //宽高
-                    content: '<div class="rbac-autch">' +
-                        '<div><ul id="tree-demo" class="ztree"></ul></div>' +
-                        '<button class="layui-btn layui-btn-sm" id="autch-role-confirm">确定</button>' +
-                        '</div>'
+                $.get(Role.URL.roleAuthc(roleId), {}, function (result) {
+                    var success = result['success'];
+                    if (success == 1) {
+                        layer.open({
+                            type: 1,
+                            title: '分配权限',
+                            anim: 1,
+                            skin: 'layui-layer-molv',
+                            area: ['270px', '350px'], //宽高
+                            content: '<div class="rbac-autch">' +
+                            '<div><ul id="tree-demo" class="ztree"></ul></div>' +
+                            '<button class="layui-btn layui-btn-sm" id="autch-role-confirm">确定</button>' +
+                            '</div>'
+                        });
+                        var setting = {
+                            role: roleId,
+                            check: {
+                                enable: true
+                            },
+                            data: {
+                                simpleData: {
+                                    enable: true
+                                }
+                            }
+                        };
+                        $.fn.zTree.init($("#tree-demo"), setting, result['data']);
+                    } else {
+                        layer.msg(result['message'], {icon: 2});
+                    }
                 });
-
-                var setting = {
-                    check: {
-                        enable: true
-                    },
-                    data: {
-                        simpleData: {
-                            enable: true
-                        }
-                    }
-                };
-
-                var zNodes = [
-                    {
-                        name: '用户管理页面', open: true,
-                        children: [
-                            {name: '获得用户列表'},
-                            {name: '获得单个用户'},
-                            {name: '增加新用户'},
-                            {name: '更新用户'},
-                            {name: '删除用户'},
-                            {name: '用户角色查询'},
-                            {name: '用户角色分配'}
-                        ]
-                    }, {
-                        name: "角色管理界面", open: true,
-                        children: [
-                            {name: '获得用户列表'},
-                            {name: '获得单个用户'},
-                            {name: '增加新用户'},
-                            {name: '更新用户'},
-                            {name: '删除用户'},
-                            {name: '用户角色查询'},
-                            {name: '用户角色分配'}
-
-                        ]
-                    }, {
-                        name: "权限管理界面", open: true,
-                        children: []
-                    }
-                ];
-
-                $.fn.zTree.init($("#tree-demo"), setting, zNodes);
             });
         },
-        saveAuthc: function () {
-            $(document).on('click','#autch-role-confirm',function(){
-                layer.msg(1);
-                var treeObj = $.fn.zTree.getZTreeObj('tree-demo');
-                var nodes = treeObj.getCheckedNodes(true);
-                console.log(nodes)
+        assignRoleAuthc: function () {
+            $(document).on('click', '#autch-role-confirm', function () {
+                var tree = $.fn.zTree.getZTreeObj('tree-demo');
+                var roleId = tree.setting['role'];
+                var nodesChanges = tree.getChangeCheckedNodes();
+                var del = new Array();
+                var add = new Array();
+                if (nodesChanges.length > 0) {
+                    for (var i = 0; i < nodesChanges.length; i++) {
+                        if (nodesChanges[i]['checked']) {
+                            add.push(nodesChanges[i]['authcId'])
+                        } else {
+                            del.push(nodesChanges[i]['authcId']);
+                        }
+                    }
+                    //保存
+                    $.ajax({
+                        type: 'PUT',
+                        url: Role.URL.roleAssignAuthc(),
+                        dataType: 'json',
+                        data: {
+                            'roleId': roleId,
+                            'add': add.join(','),
+                            'del': del.join(',')
+                        },
+                        success: function (result) {
+                            var msg = result['message'];
+                            if (result['success'] == 1) {
+                                layer.msg(msg, {icon: 1});
+                            } else {
+                                layer.msg(msg, {icon: 2});
+                            }
+                        }
+                    });
+                }else{
+                    layer.msg('未有改动！');
+                }
             });
         },
         checkRoleNameExist: function (roleName) {
             var exist = true;
             $.ajax({
-                method: "GET",
+                method: 'GET',
                 url: Role.URL.checkRoleNameExist(roleName),
                 dataType: 'json',
                 async: false,

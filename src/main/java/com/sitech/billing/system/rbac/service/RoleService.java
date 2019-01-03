@@ -47,5 +47,13 @@ public interface RoleService {
      */
     int saveUserRoles(User user, List<Role> roles);
 
+    /**
+     * 角色权限分配保存
+     *
+     * @param roleId 角色ID
+     * @param add    增加的权限id列表
+     * @param del    删除的权限id列表
+     * @return
+     */
     Integer assignRoleAuthc(Integer roleId, List<Integer> add, List<Integer> del);
 }

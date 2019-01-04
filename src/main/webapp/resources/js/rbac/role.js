@@ -103,7 +103,7 @@ var Role = {
                 var role = {
                     roleName: roleName,
                     roleDesc: roleDesc
-                }
+                };
 
                 $.ajax({
                     type: "POST",

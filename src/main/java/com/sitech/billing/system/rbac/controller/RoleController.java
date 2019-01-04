@@ -99,7 +99,7 @@ public class RoleController extends BaseController {
         for (Authc authc : childernAuthc) {
             ZTreeVO vo = new ZTreeVO();
             Integer autchId = authc.getAuthcId();
-            Integer pId = autchId / 1000;
+            Integer pId = autchId / AUTHC_MIN_LIMIT;
             if (roleAuthcMap.get(autchId) != null && roleAuthcMap.get(autchId)) {
                 vo.setChecked(true);
             }

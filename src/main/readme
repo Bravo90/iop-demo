@@ -33,8 +33,8 @@
        其中的HttpServletRequest对象request统一在父类注入,方便controller直接使用
        而子类controller中及controller的方法参数中不要再声明HttpServletRequest,
        子类也不要声明任何service对象！
-3.1.2 login:
-3.1.3 rbac:功能角色权限
+3.1.2 login:登录功能
+3.1.3 rbac:用户角色权限功能
 
 3.2 common包:
 3.2.1 bean:pojo对象,例如统一返回类
@@ -45,7 +45,7 @@
     (1)IopException:自定义系统异常,关于业务已知的异常,例如查询某项查不到...
 3.2.4 handler:处理类
     (1)IopExceptionHandler:异常处理类
-    (2)SystemLogHandler:系统操作注解解析处理类
+    (2)SystemLogHandler:系统操作日志注解解析处理类
 3.2.5 configurations:配置类
 3.2.6 shiro:有关shiro的类,例如realm等
 3.2.7 anno:自定义注解

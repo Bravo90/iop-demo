@@ -23,7 +23,6 @@ public class AuthcController extends BaseController {
         return new ModelAndView("rbac/authc");
     }
 
-
     @GetMapping("/{authcId}")
     @RequiresPermissions(value = {PERMISSION_AUTHC_SINGLE}, logical = Logical.OR)
     public JsonResult getAuthcById(@PathVariable Integer authcId) {

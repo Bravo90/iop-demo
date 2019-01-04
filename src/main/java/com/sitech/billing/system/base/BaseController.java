@@ -14,7 +14,7 @@ public class BaseController {
     @Autowired
     protected HttpServletRequest request;
 
-    /*权限父级id下限*/
+    /*权限ID大于1000,从1001开始*/
     protected static final Integer AUTHC_MIN_LIMIT = 1000;
 
     /*用户管理相关权限*/

@@ -26,7 +26,7 @@
         </li>
         <li class="ul-content" style="width: 5%;height: 8%">
             <div style="text-align:center;line-height: 40px;color: yellow;">
-              <a class="site-fork">退出</a>
+                <a class="site-fork">退出</a>
             </div>
         </li>
 
@@ -46,7 +46,21 @@
             <div></div>
         </li>
         <li class="ul-content" style="width: 50%;height: 40%">
-            <div></div>
+            <div class="layui-carousel" id="test1">
+                <div carousel-item>
+                    <div style="background-color: transparent;text-align: center">
+                        <img src="${ctx}/resources/images/login.jpg"
+                             style="width: 100%;height: 100%;">
+                    </div>
+                    <div style="background-color: transparent">
+                        <img src="${ctx}/resources/images/timg.jpg"
+                             style="width: 100%;height: 100%;">
+                    </div>
+                    <div style="background-color: transparent"></div>
+                    <div style="background-color: transparent"></div>
+                    <div style="background-color: transparent"></div>
+                </div>
+            </div>
         </li>
         <li class="ul-content" style="width: 50%;height: 40%">
             <div></div>

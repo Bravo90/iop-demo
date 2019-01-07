@@ -10,6 +10,7 @@ import com.sitech.billing.system.rbac.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -66,6 +67,8 @@ public class UserController extends BaseController {
     @PutMapping("/update")
     @RequiresPermissions(value = {PERMISSION_USER_UPDATE}, logical = Logical.OR)
     public JsonResult updateUser(@RequestBody User user) {
+        String password = user.getPassword();
+        user.setPassword(new Md5Hash(password).toString());
         userService.updateUser(user);
         return JsonResult.success("更新成功");
     }

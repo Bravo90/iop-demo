@@ -6,6 +6,7 @@ import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.system.base.BaseController;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
@@ -59,7 +60,7 @@ public class LoginController extends BaseController {
 
         Subject subject = SecurityUtils.getSubject();
         SecurityUtils.getSubject().getSession().setTimeout(TIMEOUT);
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, new Md5Hash(password).toString());
         subject.login(token);
 
         SavedRequest savedRequest = WebUtils.getSavedRequest(request);

@@ -14,7 +14,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Searcher {
+    /* 查询顺位 */
     private Integer orderNo;
+    /* 是否支持查询*/
     private boolean searchable;
+    /* 查询方式 */
     private String searchType;
+    /* 是否为必选条件 */
+    private boolean required;
 }

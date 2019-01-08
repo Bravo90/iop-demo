@@ -1,5 +1,6 @@
 package com.sitech.billing.customization.table.api;
 
+import com.alibaba.fastjson.JSON;
 import com.sitech.billing.common.bean.JsonResult;
 import com.sitech.billing.system.base.BaseController;
 import org.apache.ibatis.annotations.Select;
@@ -16,22 +17,23 @@ import org.springframework.web.bind.annotation.*;
 public class TableController extends BaseController {
 
     @GetMapping("/query")
-    public JsonResult query(){
+    public JsonResult query(@RequestParam String param){
+        System.out.println(JSON.parseObject(param));
         return JsonResult.success();
     }
 
     @PutMapping("/insert")
-    public JsonResult insert(){
+    public JsonResult insert(@RequestParam String param){
         return  JsonResult.success();
     }
 
     @DeleteMapping("/delete")
-    public JsonResult delete(){
+    public JsonResult delete(@RequestParam String param){
         return  JsonResult.success();
     }
 
     @PutMapping("/update")
-    public JsonResult update(){
+    public JsonResult update(@RequestParam String param){
         return  JsonResult.success();
     }
 }

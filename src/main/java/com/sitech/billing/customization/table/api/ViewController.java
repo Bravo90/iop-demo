@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * 界面调转控制类
+ * 界面跳转控制类
  * @author sunzhen
  * @date 2019/1/8 12:49
  */

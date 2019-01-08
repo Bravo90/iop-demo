@@ -14,7 +14,7 @@
 <body>
 <div class="rbac-container">
     <div class="rbac-title">菜单管理</div>
-    <button id="menu-add" class="layui-btn layui-btn-sm">新增菜单</button>
+    <button id="menu-add" class="layui-btn layui-btn-sm">新增根菜单</button>
     <table class="layui-table">
         <colgroup>
             <col width="20%">

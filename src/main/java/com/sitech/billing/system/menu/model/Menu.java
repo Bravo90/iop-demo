@@ -10,9 +10,9 @@ import lombok.ToString;
 public class Menu {
     private int menuId;
     private String menuName;
-    private String menuUrl;
-    private int menuLevel;
-    private int  parentMenuId;
+    private String menuUrl = "#";
+    private int menuLevel = 1;
+    private int parentMenuId = 0;
     private int menuOrder;
-    private int aucthcId;
+    private int aucthcId = 0;
 }

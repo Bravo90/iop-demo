@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/menu")
@@ -27,6 +28,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping("/plist")
     public JsonResult getParentMenus() {
+
         List<Menu> menus = new ArrayList<>();
         Menu menu = new Menu();
         menu.setMenuId(1001);

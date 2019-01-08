@@ -4,6 +4,7 @@ import com.sitech.billing.system.rbac.service.AuthcService;
 import com.sitech.billing.system.rbac.service.RoleService;
 import com.sitech.billing.system.rbac.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,9 @@ public class BaseController {
     /*自动注入的request对象*/
     @Autowired
     protected HttpServletRequest request;
+
+    @Autowired
+    protected JdbcTemplate jdbcTemplate;
 
     /*权限ID大于1000,从1001开始*/
     protected static final Integer AUTHC_MIN_LIMIT = 1000;

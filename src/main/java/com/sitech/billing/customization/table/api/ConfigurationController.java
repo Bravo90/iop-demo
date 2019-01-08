@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @description TODO
- * @authc sunzhen
+ * 用于配置的API接口
+ * @author sunzhen
  * @date 2019/1/8 12:49
  */
 @RestController

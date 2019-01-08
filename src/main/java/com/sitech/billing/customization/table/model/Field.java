@@ -1,5 +1,6 @@
 package com.sitech.billing.customization.table.model;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,5 +30,7 @@ public class Field {
     private Searcher searcher;
     /* 字段是否为主键 */
     private boolean keyFiled;
+    /* 字段映射（考虑多级联动的实现） */
+    private FieldMapping fieldMapping;
 
 }

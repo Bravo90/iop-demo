@@ -12,5 +12,5 @@ public class Configuration {
 
     private Table table;
     private String sql;
-    
+
 }

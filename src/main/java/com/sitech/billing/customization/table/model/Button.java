@@ -10,5 +10,5 @@ public class Button {
     /* 按钮名称 */
     private String btnName;
     /* 按钮描述 */
-    private String btnDesc;
+    private String btnClass;
 }

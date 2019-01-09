@@ -1,6 +1,5 @@
 package com.sitech.billing.customization.table.model;
 
-import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,10 +19,10 @@ public class Field {
     private String fieldName;
     /* 字段转义 如："user_name"转义为"用户名称" */
     private String fieldDesc;
-    /* 字段别名 如：sql语句中字段的别名*/
-    private String aliasName;
+    /* 字段别名：sql语句中字段的别名*/
+    private String fieldAlias;
     /* 字段顺位 */
-    private int orderNum;
+    private int fieldOrder;
     /* 字段是否支持排序 */
     private boolean sortable;
     /* 字段查询条件信息 */

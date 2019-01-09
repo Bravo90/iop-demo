@@ -19,6 +19,8 @@ public class Field {
     private String fieldName;
     /* 字段转义 如："user_name"转义为"用户名称" */
     private String fieldDesc;
+    /* 字段是否显示 */
+    private boolean viewable;
     /* 字段别名：sql语句中字段的别名*/
     private String fieldAlias;
     /* 字段顺位 */

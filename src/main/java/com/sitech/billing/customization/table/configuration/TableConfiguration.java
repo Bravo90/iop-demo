@@ -2,6 +2,9 @@ package com.sitech.billing.customization.table.configuration;
 
 import com.sitech.billing.customization.table.model.Button;
 import com.sitech.billing.customization.table.model.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,9 @@ import java.util.List;
  * @author sunzhen
  * @date 2019/1/9 10:20
  */
+@Getter
+@Setter
+@ToString
 public class TableConfiguration {
 
     private static final int DEFAULT_PAGE_SIZE = 10;

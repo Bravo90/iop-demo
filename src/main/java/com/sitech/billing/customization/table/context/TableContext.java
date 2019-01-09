@@ -1,10 +1,12 @@
 package com.sitech.billing.customization.table.context;
 
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
+import com.sitech.billing.customization.table.configuration.TableConfigurationBuilder;
 import com.sitech.billing.customization.table.model.Field;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
+import com.sitech.billing.customization.table.sql.SqlBuilder;
 import org.apache.ibatis.jdbc.SQL;
 
 import javax.security.auth.login.Configuration;
@@ -34,8 +36,9 @@ public class TableContext {
 
     private String updateSql;
 
-    private TableContext(TableConfiguration cfg, List<FieldValue> fieldValues, List<FieldOrder> fieldOrders, RequestPageInfo pageInfo) {
-        this.tableConfiguration = cfg;
+    private TableContext(Integer id, List<FieldValue> fieldValues, List<FieldOrder> fieldOrders, RequestPageInfo pageInfo) {
+        this.tableConfiguration = TableConfigurationBuilder.build(id);
+        System.out.println(this.tableConfiguration);
         this.fieldValues = fieldValues;
         this.fieldOrders = fieldOrders;
         this.pageInfo = pageInfo;
@@ -44,7 +47,10 @@ public class TableContext {
 
     public TableContext querySqlInit() {
         SQL sql = new SQL();
-        this.querySql = sql.toString();
+        this.querySql = SqlBuilder.initQuerySql(this.tableConfiguration, this.fieldValues,
+                this.fieldOrders, this.pageInfo);
+
+
         return this;
     }
 
@@ -68,14 +74,22 @@ public class TableContext {
         return this;
     }
 
-    public void query(){}
-    public void insert(){}
-    public void update(){}
-    public void delete(){}
+    public void query() {
+        System.err.println("sql = " + this.querySql);
+    }
+
+    public void insert() {
+    }
+
+    public void update() {
+    }
+
+    public void delete() {
+    }
 
     public static class Builder {
 
-        private TableConfiguration tableConfiguration;
+        private Integer id;
 
         private List<FieldValue> fieldValues;
 
@@ -84,8 +98,8 @@ public class TableContext {
         private RequestPageInfo pageInfo;
 
 
-        public Builder tableConfig(TableConfiguration configuration) {
-            this.tableConfiguration = configuration;
+        public Builder tableConfig(Integer id) {
+            this.id = id;
             return this;
         }
 
@@ -105,7 +119,7 @@ public class TableContext {
         }
 
         public TableContext build() {
-            return new TableContext(this.tableConfiguration, this.fieldValues,
+            return new TableContext(this.id, this.fieldValues,
                     this.fieldOrders, this.pageInfo);
         }
     }

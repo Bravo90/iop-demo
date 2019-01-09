@@ -53,7 +53,6 @@ public class TableControllerTest {
                 new UsernamePasswordToken(username, password, true);
         subject.login(token);
         ThreadContext.bind(subject);
-
     }
 
     @Before
@@ -79,7 +78,7 @@ public class TableControllerTest {
                         .get("/table/query")
                         .param("param",QUERY_PARAM)
                         .accept(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print());
+        );
     }
 
     @Test
@@ -94,5 +93,5 @@ public class TableControllerTest {
     public void update() {
     }
 
-    private static final String QUERY_PARAM = "{\"tableId\":\"1\",\"fields\":[{\"name\":\"user_id\",\"value\":[\"100\",\"300\"]},{\"name\":\"user_name\",\"value\":[\"bravo\"]}],\"order\":{\"field\":\"user_id\",\"type\":\"desc\"},\"page\":{\"pageSize\":10,\"pageNo\":1}}";
+    private static final String QUERY_PARAM = "{\"tableId\":\"1\",\"fields\":[{\"name\":\"user_id\",\"value\":[\"100\"]},{\"name\":\"username\",\"value\":[\"bravo\"]}],\"order\":[{\"field\":\"user_id\",\"type\":\"desc\"},{\"field\":\"username\",\"type\":\"ASC\"}],\"page\":{\"pageSize\":10,\"pageNo\":1}}";
 }

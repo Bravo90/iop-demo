@@ -2,14 +2,12 @@ package com.sitech.billing.customization.table.context;
 
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.configuration.TableConfigurationBuilder;
-import com.sitech.billing.customization.table.model.Field;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
-import com.sitech.billing.customization.table.sql.SqlBuilder;
+import com.sitech.billing.customization.table.sql.SampleSqlBuilder;
 import org.apache.ibatis.jdbc.SQL;
 
-import javax.security.auth.login.Configuration;
 import java.util.List;
 
 /**
@@ -47,7 +45,7 @@ public class TableContext {
 
     public TableContext querySqlInit() {
         SQL sql = new SQL();
-        this.querySql = SqlBuilder.initQuerySql(this.tableConfiguration, this.fieldValues,
+        this.querySql = SampleSqlBuilder.initQuerySql(this.tableConfiguration, this.fieldValues,
                 this.fieldOrders, this.pageInfo);
 
 

@@ -1,6 +1,7 @@
 package com.sitech.billing.customization.table.sql;
 
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
+import com.sitech.billing.customization.table.handler.operator.OperatorHandler;
 import com.sitech.billing.customization.table.model.Field;
 import com.sitech.billing.customization.table.model.Searcher;
 import com.sitech.billing.customization.table.model.Table;
@@ -9,16 +10,17 @@ import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import org.apache.ibatis.jdbc.SQL;
 
+import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Map;
 
 /**
- * TODO
+ * 生成sql
  *
  * @author sunzhen
  * @date 2019/1/8 16:19
  */
-public class SqlBuilder {
+public class SampleSqlBuilder {
 
     public static String initQuerySql(TableConfiguration cfg, List<FieldValue> fieldValues,
                                       List<FieldOrder> fieldOrders, RequestPageInfo pageInfo) {
@@ -35,37 +37,46 @@ public class SqlBuilder {
         Map<String, FieldValue> fieldValueMap = FieldValue.toMap(fieldValues);
         Map<String, FieldOrder> fieldOrderMap = FieldOrder.toMap(fieldOrders);
         for (Field field : fields) {
+            //FieldFunctionDecoration.decorate()对字段进行处理,如:函数添加
+            FieldValue fieldValue = fieldValueMap.get(field.getFieldName());
+            FieldOrder fieldOrder = fieldOrderMap.get(field.getFieldName());
+            field = FieldFunctionDecoration.decorate(field);
+
+            //处理字段
             if (field.isViewable()) {
                 sql.SELECT(field.getFieldName());
             }
             //处理where
-            FieldValue fieldValue = fieldValueMap.get(field.getFieldName());
             if (fieldValue != null) {
-                where(sql, fieldValue, field.getSearcher());
+                where(sql, fieldValue, field);
             }
             //处理order
-            FieldOrder fieldOrder = fieldOrderMap.get(field.getFieldName());
             if (fieldOrder != null) {
                 order(sql, fieldOrder);
             }
         }
 
+        //sql拦截器，可对sql进行自定义处理
+        SqlFilter.doFiletr(sql);
 
         return sql.toString();
     }
 
-    private static SQL where(SQL sql, FieldValue fieldValue, Searcher searcher) {
+    //处理where语句
+    private static SQL where(SQL sql, FieldValue fieldValue, Field field) {
 
         StringBuffer sb = new StringBuffer();
+        Searcher searcher = field.getSearcher();
         if (searcher.isSearchable()) {
             if (fieldValue.getValue() != null && fieldValue.getValue().size() >= 1) {
-                sb.append(fieldValue.getName()).append("=").append(fieldValue.getValue().get(0));
-                sql.WHERE(sb.toString());
+                String where = OperatorHandler.handler(field, fieldValue);
+                sql.WHERE(where);
             }
         }
         return sql;
     }
 
+    //处理排序
     private static SQL order(SQL sql, FieldOrder fieldOrder) {
         sql.ORDER_BY(fieldOrder.getField() + " " + fieldOrder.getType());
         return sql;

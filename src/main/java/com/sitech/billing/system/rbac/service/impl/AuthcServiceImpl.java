@@ -61,7 +61,7 @@ public class AuthcServiceImpl implements AuthcService {
 
     /**
      * @param roleList
-     * @return TODO:需要优化
+     * @return
      */
     @Override
     public List<Authc> listAuthcByRole(List<Role> roleList) {

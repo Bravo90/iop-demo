@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.annotation.Resource;
 
 /**
- * TODO
+ * 测试类
  *
  * @author sunzhen
  * @date 2019/1/8 16:34
@@ -93,5 +93,5 @@ public class TableControllerTest {
     public void update() {
     }
 
-    private static final String QUERY_PARAM = "{\"tableId\":\"1\",\"fields\":[{\"name\":\"user_id\",\"value\":[\"100\"]},{\"name\":\"username\",\"value\":[\"bravo\"]}],\"order\":[{\"field\":\"user_id\",\"type\":\"desc\"},{\"field\":\"username\",\"type\":\"ASC\"}],\"page\":{\"pageSize\":10,\"pageNo\":1}}";
+    private static final String QUERY_PARAM = "{\"tableId\":\"1\",\"fields\":[{\"name\":\"user_id\",\"value\":[\"1\",\"2\",\"3\"]},{\"name\":\"username\",\"value\":[\"bravo\"]}],\"order\":[{\"field\":\"user_id\",\"type\":\"desc\"},{\"field\":\"username\",\"type\":\"ASC\"}],\"page\":{\"pageSize\":10,\"pageNo\":1}}";
 }

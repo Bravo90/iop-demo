@@ -19,6 +19,8 @@ public class Field {
     private String fieldName;
     /* 字段转义 如："user_name"转义为"用户名称" */
     private String fieldDesc;
+    /* 字段类型 查看：com.sitech.billing.customization.table.type.FieldType*/
+    private int fieldType;
     /* 字段是否显示 */
     private boolean viewable;
     /* 字段别名：sql语句中字段的别名*/

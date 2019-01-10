@@ -76,6 +76,7 @@ public class TableConfigurationBuilder {
         field.setFieldName(json.getString("fieldName"));
         field.setFieldDesc(json.getString("fieldDesc"));
         field.setFieldAlias(json.getString("fieldAlias"));
+        field.setFieldType(json.getInteger("fieldType"));
         field.setViewable(json.getBoolean("viewable"));
         field.setFieldOrder(json.getInteger("fieldOrder"));
         field.setSortable(json.getBoolean("sortable"));
@@ -90,10 +91,10 @@ public class TableConfigurationBuilder {
         Searcher searcher = new Searcher();
         searcher.setRequired(json.getBoolean("required"));
         searcher.setSearchable(json.getBoolean("searchable"));
-        searcher.setSearchType(json.getString("searchType"));
+        searcher.setSearchType(json.getInteger("searchType"));
         searcher.setSearchOrder(json.getInteger("searchOrder"));
         return searcher;
     }
 
-    private static final String ccc = "{\"viewName\":\"用户信息查询\",\"viewId\":\"1\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_sys_user\",\"tableDesc\":\"用户信息表\",\"fields\":[{\"fieldName\":\"user_id\",\"fieldDesc\":\"用户ID\",\"fieldAlias\":\"user_id\",\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":\"1\",\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"username\",\"fieldDesc\":\"用户名称\",\"fieldAlias\":\"username\",\"viewable\":true,\"fieldOrder\":2,\"sortable\":false,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":\"1\",\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"nickname\",\"fieldDesc\":\"用户昵称\",\"fieldAlias\":\"nickname\",\"viewable\":true,\"fieldOrder\":3,\"sortable\":false,\"keyField\":false,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":\"1\",\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
+    private static final String ccc = "{\"viewName\":\"用户信息查询\",\"viewId\":\"1\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_sys_user\",\"tableDesc\":\"用户信息表\",\"fields\":[{\"fieldName\":\"user_id\",\"fieldDesc\":\"用户ID\",\"fieldAlias\":\"user_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":11,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"username\",\"fieldDesc\":\"用户名称\",\"fieldAlias\":\"username\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":false,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"nickname\",\"fieldDesc\":\"用户昵称\",\"fieldAlias\":\"nickname\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":false,\"keyField\":false,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
 }

@@ -1,16 +1,18 @@
 package com.sitech.billing.customization.table.api;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sitech.billing.common.bean.JsonResult;
 import com.sitech.billing.customization.table.context.TableContext;
+import com.sitech.billing.customization.table.excute.JDBCExecute;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
+import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import com.sitech.billing.system.base.BaseController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用于响应table操作的API，如查询，增加、删除、更新等
@@ -26,19 +28,29 @@ public class TableController extends BaseController {
     public JsonResult query(@RequestParam String param) {
 
         JSONObject jsonObject = JSONObject.parseObject(param);
+
         String fields = jsonObject.getString("fields");
         List<FieldValue> fieldValues = JSON.parseArray(fields, FieldValue.class);
 
         String orders = jsonObject.getString("order");
         List<FieldOrder> fieldOrders = JSON.parseArray(orders, FieldOrder.class);
 
-        TableContext context = new TableContext.Builder()
-                .tableConfig(1)
-                .fieldValues(fieldValues)
-                .fieldOrders(fieldOrders)
-                .pageInfo(null)
+        RequestPageInfo pageInfo = JSON.parseObject(jsonObject.getString("page"), RequestPageInfo.class);
+
+        //获得context
+        TableContext context = new TableContext.Builder().tableConfig(1)
+                .fieldValues(fieldValues).fieldOrders(fieldOrders).pageInfo(pageInfo)
                 .build().querySqlInit();
-        context.query();
+        //查询
+
+        context.queryByPage(jdbcTemplate);
+
+       /* List<List<String>> result = context.query((sql) -> {
+            System.err.println("sql = " + sql);
+            List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql);
+            System.err.println(maps);
+            return null;
+        });*/
         return JsonResult.success();
     }
 

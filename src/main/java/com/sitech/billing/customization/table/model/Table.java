@@ -25,4 +25,12 @@ public class Table {
     /* 表的字段集合 */
     private List<Field> Fields = new ArrayList<>();
 
+    public Field getFieldByFieldName(String fieldName) {
+        for (Field field : this.Fields) {
+            if (fieldName.equals(field.getFieldName()))
+                return field;
+        }
+        return null;
+    }
+
 }

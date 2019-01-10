@@ -5,8 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * TODO
- *
+ * 按钮实体类
  * @author sunzhen
  * @date 2019/1/8 16:05
  */

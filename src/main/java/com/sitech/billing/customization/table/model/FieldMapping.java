@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO
- *
+ * 映射实体类
  * @author sunzhen
  * @date 2019/1/8 17:13
  */

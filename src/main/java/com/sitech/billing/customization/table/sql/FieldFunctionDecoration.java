@@ -3,8 +3,7 @@ package com.sitech.billing.customization.table.sql;
 import com.sitech.billing.customization.table.model.Field;
 
 /**
- * TODO
- *
+ * 字段装饰
  * @author sunzhen
  * @date 2019/1/10 9:36
  */

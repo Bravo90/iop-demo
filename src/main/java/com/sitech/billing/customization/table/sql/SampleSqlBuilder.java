@@ -40,6 +40,7 @@ public class SampleSqlBuilder {
             //FieldFunctionDecoration.decorate()对字段进行处理,如:函数添加
             FieldValue fieldValue = fieldValueMap.get(field.getFieldName());
             FieldOrder fieldOrder = fieldOrderMap.get(field.getFieldName());
+
             field = FieldFunctionDecoration.decorate(field);
 
             //处理字段

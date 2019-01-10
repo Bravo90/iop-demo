@@ -1,8 +1,7 @@
 package com.sitech.billing.customization.table.type;
 
 /**
- * TODO
- *
+ * 字段类型
  * @author sunzhen
  * @date 2019/1/10 10:04
  */

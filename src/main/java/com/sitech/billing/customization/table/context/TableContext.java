@@ -25,6 +25,8 @@ import java.util.Map;
  */
 public class TableContext {
 
+    private JdbcTemplate jdbcTemplate;
+
     private TableConfiguration tableConfiguration;
 
     private List<FieldValue> fieldValues;
@@ -43,8 +45,10 @@ public class TableContext {
 
     private String updateSql;
 
-    private TableContext(Integer id, List<FieldValue> fieldValues, List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
+    private TableContext(Integer id, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
+                         List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
         this.tableConfiguration = TableConfigurationBuilder.build(id);
+        this.jdbcTemplate = jdbcTemplate;
         this.fieldValues = fieldValues;
         this.fieldOrders = fieldOrders;
         this.pageInfo = pageInfo;
@@ -52,29 +56,22 @@ public class TableContext {
     }
 
     public TableContext querySqlInit() {
-        SQL sql = new SQL();
         this.querySql = SampleSqlBuilder.initQuerySql(this.tableConfiguration, this.fieldValues,
                 this.fieldOrders, this.pageInfo);
         return this;
     }
 
     public TableContext insertSqlInit() {
-        SQL sql = new SQL();
-        this.querySql = sql.toString();
         return this;
     }
 
 
     public TableContext deleteSqlInit() {
-        SQL sql = new SQL();
-        this.querySql = sql.toString();
         return this;
     }
 
 
     public TableContext updateSqlInit() {
-        SQL sql = new SQL();
-        this.querySql = sql.toString();
         return this;
     }
 
@@ -91,7 +88,7 @@ public class TableContext {
         return null;
     }
 
-    public PageInfo<Map<String, Object>> queryByPage(JdbcTemplate jdbcTemplate) throws Exception {
+    public PageInfo<Map<String, Object>> queryByPage() throws Exception {
         PageHandler pageHandler = new PageHandler(this.querySql, pageInfo, dbDialect, jdbcTemplate);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo(pageHandler.pageResult());
         return pageInfo;
@@ -99,6 +96,7 @@ public class TableContext {
 
     public static class Builder {
 
+        private JdbcTemplate jdbcTemplate;
         private String dbDialect;
 
         private Integer id;
@@ -112,6 +110,11 @@ public class TableContext {
 
         public Builder dbDialect(String dbDialect) {
             this.dbDialect = dbDialect;
+            return this;
+        }
+
+        public Builder jdbc(JdbcTemplate jdbcTemplate) {
+            this.jdbcTemplate = jdbcTemplate;
             return this;
         }
 
@@ -136,7 +139,7 @@ public class TableContext {
         }
 
         public TableContext build() {
-            return new TableContext(this.id, this.fieldValues,
+            return new TableContext(this.id, this.jdbcTemplate, this.fieldValues,
                     this.fieldOrders, this.pageInfo, this.dbDialect);
         }
     }

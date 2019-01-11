@@ -39,13 +39,13 @@ public class TableController extends BaseController {
         RequestPageInfo pageInfo = JSON.parseObject(jsonObject.getString("page"), RequestPageInfo.class);
 
         //获得context
-        TableContext context = new TableContext.Builder().dbDialect(DialectType.MYSQL)
-                .tableConfig(tableId)
-                .fieldValues(fieldValues).fieldOrders(fieldOrders).pageInfo(pageInfo)
+        TableContext context = new TableContext.Builder().dbDialect(DialectType.MYSQL).jdbc(jdbcTemplate)
+                .tableConfig(tableId).fieldValues(fieldValues)
+                .fieldOrders(fieldOrders).pageInfo(pageInfo)
                 .build().querySqlInit();
         //查询
         try {
-            PageInfo<Map<String, Object>> pageResult = context.queryByPage(jdbcTemplate);
+            PageInfo<Map<String, Object>> pageResult = context.queryByPage();
             return JsonResult.success(pageResult);
         } catch (Exception e) {
             log.error(e.getMessage());

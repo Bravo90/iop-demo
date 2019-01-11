@@ -3,6 +3,7 @@ package com.sitech.billing.customization.table.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.omg.PortableInterceptor.INACTIVE;
 
 /**
  * 字段实体类
@@ -20,19 +21,19 @@ public class Field {
     /* 字段转义 如："user_name"转义为"用户名称" */
     private String fieldDesc;
     /* 字段类型 查看：com.sitech.billing.customization.table.type.FieldType*/
-    private int fieldType;
+    private Integer fieldType;
     /* 字段是否显示 */
-    private boolean viewable;
+    private Boolean viewable;
     /* 字段别名：sql语句中字段的别名*/
     private String fieldAlias;
     /* 字段顺位 */
-    private int fieldOrder;
+    private Integer fieldOrder;
     /* 字段是否支持排序 */
-    private boolean sortable;
+    private Boolean sortable;
     /* 字段查询条件信息 */
     private Searcher searcher;
     /* 字段是否为主键 */
-    private boolean keyFiled;
+    private Boolean keyFiled;
     /* 字段映射（考虑多级联动的实现） */
     private FieldMapping fieldMapping;
 

@@ -87,18 +87,14 @@ public class TableContext {
     public void delete() {
     }
 
-    public List<List<String>> query(JDBCExecute<List<Map<String, Object>>> execute) {
-
-        List<Map<String, Object>> resultMap = execute.execute(this.querySql);
-
+    public List<List<String>> query() {
         return null;
     }
 
-    public PageInfo<List<List<String>>> queryByPage(JdbcTemplate jdbcTemplate) throws Exception {
+    public PageInfo<Map<String, Object>> queryByPage(JdbcTemplate jdbcTemplate) throws Exception {
         PageHandler pageHandler = new PageHandler(this.querySql, pageInfo, dbDialect, jdbcTemplate);
-        Page<Map<String, Object>> pageInfo = pageHandler.pageResult();
-        System.err.println(pageInfo.toString());
-        return null;
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo(pageHandler.pageResult());
+        return pageInfo;
     }
 
     public static class Builder {

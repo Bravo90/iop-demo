@@ -78,7 +78,7 @@ public class TableControllerTest {
                         .get("/table/query")
                         .param("param", QUERY_PARAM)
                         .accept(MediaType.APPLICATION_JSON)
-        );
+        ).andDo(MockMvcResultHandlers.print());
     }
 
     @Test

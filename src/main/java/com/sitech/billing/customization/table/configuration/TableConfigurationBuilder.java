@@ -3,6 +3,7 @@ package com.sitech.billing.customization.table.configuration;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sitech.billing.common.utils.AssertUtils;
 import com.sitech.billing.customization.table.model.Button;
 import com.sitech.billing.customization.table.model.Field;
 import com.sitech.billing.customization.table.model.Searcher;
@@ -21,9 +22,10 @@ public class TableConfigurationBuilder {
 
     public static TableConfiguration build(Integer id) {
 
-        JSONObject json = JSON.parseObject(ccc);
-
+        String configuration = getConfigurationById(id);
+        JSONObject json = JSON.parseObject(configuration);
         TableConfiguration cfg = new TableConfiguration();
+        AssertUtils.isNull(cfg);
 
         cfg.setViewId(json.getInteger("viewId"));
         cfg.setViewName(json.getString("viewName"));
@@ -31,13 +33,17 @@ public class TableConfigurationBuilder {
         cfg.setPageable(json.getBoolean("pageable"));
         cfg.setPageSize(json.getInteger("pageSize"));
         JSONArray jbtns = json.getJSONArray("button");
+
         List<Button> btns = new ArrayList<>();
-        for (int i = 0; i < jbtns.size(); i++) {
-            Button button = buildBtn(jbtns.getJSONObject(i));
-            btns.add(button);
+        if (jbtns != null) {
+            for (int i = 0; i < jbtns.size(); i++) {
+                Button button = buildBtn(jbtns.getJSONObject(i));
+                btns.add(button);
+            }
         }
         cfg.setButtons(btns);
         JSONArray jtables = json.getJSONArray("table");
+        AssertUtils.isNull(jtables);
         List<Table> tables = new ArrayList<>();
         for (int i = 0; i < jtables.size(); i++) {
             tables.add(buildTable(jtables.getJSONObject(i)));
@@ -48,6 +54,10 @@ public class TableConfigurationBuilder {
         return cfg;
     }
 
+    private static String getConfigurationById(Integer id) {
+        return c1;
+    }
+
     private static Button buildBtn(JSONObject json) {
         Button btn = new Button();
         btn.setBtnClass(json.getString("btnClass"));
@@ -56,6 +66,7 @@ public class TableConfigurationBuilder {
     }
 
     private static Table buildTable(JSONObject json) {
+        AssertUtils.isNull(json);
         Table table = new Table();
         table.setTableName(json.getString("tableName"));
         table.setTableDesc(json.getString("tableDesc"));
@@ -70,7 +81,7 @@ public class TableConfigurationBuilder {
     }
 
     private static Field buildField(JSONObject json) {
-
+        AssertUtils.isNull(json);
         Field field = new Field();
 
         field.setFieldName(json.getString("fieldName"));
@@ -89,6 +100,7 @@ public class TableConfigurationBuilder {
 
     private static Searcher buildSearcher(JSONObject json) {
         Searcher searcher = new Searcher();
+        System.out.println("required = " + json.getBoolean("required"));
         searcher.setRequired(json.getBoolean("required"));
         searcher.setSearchable(json.getBoolean("searchable"));
         searcher.setSearchType(json.getInteger("searchType"));
@@ -97,4 +109,6 @@ public class TableConfigurationBuilder {
     }
 
     private static final String ccc = "{\"viewName\":\"用户信息查询\",\"viewId\":\"1\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_sys_user\",\"tableDesc\":\"用户信息表\",\"fields\":[{\"fieldName\":\"user_id\",\"fieldDesc\":\"用户ID\",\"fieldAlias\":\"user_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":11,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"username\",\"fieldDesc\":\"用户名称\",\"fieldAlias\":\"username\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":false,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"nickname\",\"fieldDesc\":\"用户昵称\",\"fieldAlias\":\"nickname\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":false,\"keyField\":false,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
+
+    private static final String c1 = "{\"viewName\":\"用户信息查询\",\"viewId\":\"1\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_sys_user\",\"tableDesc\":\"用户信息表\",\"fields\":[{\"fieldName\":\"user_id\",\"fieldDesc\":\"用户ID\",\"fieldAlias\":\"user_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":11,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"username\",\"fieldDesc\":\"用户名称\",\"fieldAlias\":\"username\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":false,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":1},\"fieldMapping\":[]},{\"fieldName\":\"nickname\",\"fieldDesc\":\"用户昵称\",\"fieldAlias\":\"nickname\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":false,\"keyField\":false,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
 }

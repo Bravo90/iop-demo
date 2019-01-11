@@ -15,11 +15,11 @@ import lombok.ToString;
 @ToString
 public class Searcher {
     /* 是否支持查询*/
-    private boolean searchable;
+    private Boolean searchable;
     /* 查询顺位 */
     private Integer searchOrder;
     /* 查询方式 查看：com.sitech.billing.customization.table.type.OperatorType*/
-    private int searchType;
+    private Integer searchType;
     /* 是否为必选条件 */
-    private boolean required;
+    private Boolean required;
 }

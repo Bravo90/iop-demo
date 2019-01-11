@@ -9,6 +9,7 @@ package com.sitech.billing.common.enums;
 public enum ErrorMsgEnum {
 
     SYSTEM_ERROR(99999, "系统内部异常，请联系管理员"),
+    OBJECT_EMPTY_ERROR(9001001, "对象为空"),
 
     USERNAME_OR_PASSWORD_IS_EMPTY(1001001, "用户名密码为空"),
     UNKNOWN_ACCOUNT(1001002, "用户不存在"),
@@ -18,10 +19,9 @@ public enum ErrorMsgEnum {
     USER_ID_IS_NULL(1001005, "用户ID为空"),
     ROLE_ID_IS_NULL(1001006, "角色ID为空"),
     AUTHC_ID_IS_NULL(1001007, "权限ID为空"),
-    USERNAME_ALREADY_EXIST(1001008,"用户已存在"),
-    ROLE_NAME_ALREADY_EXIST(1001009,"角色名称已存在"),
-    AUTHC_NAME_ALREADY_EXIST(1001010,"权限名称已存在"),
-    ;
+    USERNAME_ALREADY_EXIST(1001008, "用户已存在"),
+    ROLE_NAME_ALREADY_EXIST(1001009, "角色名称已存在"),
+    AUTHC_NAME_ALREADY_EXIST(1001010, "权限名称已存在"),;
     private Integer errorCode;
     private String errorMsg;
 

@@ -44,7 +44,7 @@ public class SampleSqlBuilder {
             field = FieldFunctionDecoration.decorate(field);
 
             //处理字段
-            if (field.isViewable()) {
+            if (field.getViewable() != null && field.getViewable()) {
                 sql.SELECT(field.getFieldName());
             }
             //处理where
@@ -65,10 +65,9 @@ public class SampleSqlBuilder {
 
     //处理where语句
     private static SQL where(SQL sql, FieldValue fieldValue, Field field) {
-
         StringBuffer sb = new StringBuffer();
         Searcher searcher = field.getSearcher();
-        if (searcher.isSearchable()) {
+        if (searcher.getSearchable() != null && searcher.getSearchable()) {
             if (fieldValue.getValue() != null && fieldValue.getValue().size() >= 1) {
                 String where = OperatorHandler.handler(field, fieldValue);
                 sql.WHERE(where);

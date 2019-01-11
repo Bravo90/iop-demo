@@ -10,6 +10,7 @@ import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import com.sitech.billing.system.base.BaseController;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,43 +24,34 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/table")
+@Slf4j
 public class TableController extends BaseController {
 
     @GetMapping("/query")
     public JsonResult query(@RequestParam String param) {
 
         JSONObject jsonObject = JSONObject.parseObject(param);
-
+        Integer tableId = jsonObject.getInteger("tableId");
         String fields = jsonObject.getString("fields");
         List<FieldValue> fieldValues = JSON.parseArray(fields, FieldValue.class);
-
         String orders = jsonObject.getString("order");
         List<FieldOrder> fieldOrders = JSON.parseArray(orders, FieldOrder.class);
-
         RequestPageInfo pageInfo = JSON.parseObject(jsonObject.getString("page"), RequestPageInfo.class);
 
-        pageInfo.setPageNum(1);
-        pageInfo.setPageSize(2);
-
         //获得context
-        TableContext context = new TableContext.Builder().dbDialect("mysql").tableConfig(1)
+        TableContext context = new TableContext.Builder().dbDialect("mysql")
+                .tableConfig(tableId)
                 .fieldValues(fieldValues).fieldOrders(fieldOrders).pageInfo(pageInfo)
                 .build().querySqlInit();
         //查询
         try {
-            PageInfo<List<List<String>>> listPageInfo = context.queryByPage(jdbcTemplate);
+            PageInfo<Map<String, Object>> pageResult = context.queryByPage(jdbcTemplate);
+            return JsonResult.success(pageResult);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            return JsonResult.error("查询失败");
         }
 
-
-       /* List<List<String>> result = context.query((sql) -> {
-            System.err.println("sql = " + sql);
-            List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql);
-            System.err.println(maps);
-            return null;
-        });*/
-        return JsonResult.success();
     }
 
     @PutMapping("/insert")

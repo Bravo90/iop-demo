@@ -47,8 +47,8 @@ public class PageHandler {
         return pageSql;
     }
 
-    public Page<Map<String, Object>> pageResult() throws Exception {
-        Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(), true);
+    public List<Map<String, Object>> pageResult() throws Exception {
+        Page<Map<String, Object>> page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(), true);
         page.setReasonable(true);
         page.setTotal(count);
         pageSql = pageSql(page);
@@ -58,7 +58,6 @@ public class PageHandler {
         } else {
             result = jdbcTemplate.queryForList(pageSql, page.getStartRow(), page.getPageSize());
         }
-        System.err.println(result);
         page.addAll(result);
         return page;
     }

@@ -1,27 +1,16 @@
 package com.sitech.billing.customization.table.context;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.dialect.helper.MySqlDialect;
-import com.github.pagehelper.dialect.helper.OracleDialect;
-import com.github.pagehelper.page.PageAutoDialect;
-import com.github.pagehelper.parser.CountSqlParser;
-import com.github.pagehelper.parser.SqlServerParser;
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.configuration.TableConfigurationBuilder;
 import com.sitech.billing.customization.table.excute.JDBCExecute;
-import com.sitech.billing.customization.table.model.Field;
-import com.sitech.billing.customization.table.model.Table;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
+import com.sitech.billing.customization.table.pagehelper.PageHandler;
 import com.sitech.billing.customization.table.sql.SampleSqlBuilder;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import org.apache.ibatis.cache.CacheKey;
+
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -44,6 +33,8 @@ public class TableContext {
 
     private RequestPageInfo pageInfo;
 
+    private String dbDialect;
+
     private String querySql;
 
     private String insertSql;
@@ -52,21 +43,18 @@ public class TableContext {
 
     private String updateSql;
 
-    private TableContext(Integer id, List<FieldValue> fieldValues, List<FieldOrder> fieldOrders, RequestPageInfo pageInfo) {
+    private TableContext(Integer id, List<FieldValue> fieldValues, List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
         this.tableConfiguration = TableConfigurationBuilder.build(id);
-        System.err.println(this.tableConfiguration);
         this.fieldValues = fieldValues;
         this.fieldOrders = fieldOrders;
         this.pageInfo = pageInfo;
+        this.dbDialect = dbDialect;
     }
-
 
     public TableContext querySqlInit() {
         SQL sql = new SQL();
         this.querySql = SampleSqlBuilder.initQuerySql(this.tableConfiguration, this.fieldValues,
                 this.fieldOrders, this.pageInfo);
-
-
         return this;
     }
 
@@ -106,34 +94,16 @@ public class TableContext {
         return null;
     }
 
-    public PageInfo<List<List<String>>> queryByPage(JdbcTemplate jdbcTemplate) {
-
-        //1、统计总数
-        CountSqlParser countSqlParser = new CountSqlParser();
-        String countSql = countSqlParser.getSmartCountSql(this.querySql);
-        Integer count = jdbcTemplate.queryForObject(countSql, int.class);
-
-        Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize());
-
-        System.out.println(page.getStartRow());
-
-        MySqlDialect mySqlDialect = new MySqlDialect();
-        CacheKey cacheKey = new CacheKey();
-        String pageSql = mySqlDialect.getPageSql(this.querySql, page, cacheKey);
-
-        System.err.println(pageSql);
-        if (page.getStartRow() == 0) {
-            List<Map<String, Object>> result = jdbcTemplate.queryForList(pageSql, page.getPageSize());
-            System.out.println(result);
-        } else {
-            List<Map<String, Object>> result = jdbcTemplate.queryForList(pageSql, page.getStartRow(), page.getPageSize());
-            System.out.println(result);
-        }
-
+    public PageInfo<List<List<String>>> queryByPage(JdbcTemplate jdbcTemplate) throws Exception {
+        PageHandler pageHandler = new PageHandler(this.querySql, pageInfo, dbDialect, jdbcTemplate);
+        Page<Map<String, Object>> pageInfo = pageHandler.pageResult();
+        System.err.println(pageInfo.toString());
         return null;
     }
 
     public static class Builder {
+
+        private String dbDialect;
 
         private Integer id;
 
@@ -143,6 +113,11 @@ public class TableContext {
 
         private RequestPageInfo pageInfo;
 
+
+        public Builder dbDialect(String dbDialect) {
+            this.dbDialect = dbDialect;
+            return this;
+        }
 
         public Builder tableConfig(Integer id) {
             this.id = id;
@@ -166,7 +141,7 @@ public class TableContext {
 
         public TableContext build() {
             return new TableContext(this.id, this.fieldValues,
-                    this.fieldOrders, this.pageInfo);
+                    this.fieldOrders, this.pageInfo, this.dbDialect);
         }
     }
 }

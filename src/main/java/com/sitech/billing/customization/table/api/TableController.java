@@ -2,6 +2,7 @@ package com.sitech.billing.customization.table.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.sitech.billing.common.bean.JsonResult;
 import com.sitech.billing.customization.table.context.TableContext;
 import com.sitech.billing.customization.table.excute.JDBCExecute;
@@ -37,13 +38,20 @@ public class TableController extends BaseController {
 
         RequestPageInfo pageInfo = JSON.parseObject(jsonObject.getString("page"), RequestPageInfo.class);
 
+        pageInfo.setPageNum(1);
+        pageInfo.setPageSize(2);
+
         //获得context
-        TableContext context = new TableContext.Builder().tableConfig(1)
+        TableContext context = new TableContext.Builder().dbDialect("mysql").tableConfig(1)
                 .fieldValues(fieldValues).fieldOrders(fieldOrders).pageInfo(pageInfo)
                 .build().querySqlInit();
         //查询
+        try {
+            PageInfo<List<List<String>>> listPageInfo = context.queryByPage(jdbcTemplate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        context.queryByPage(jdbcTemplate);
 
        /* List<List<String>> result = context.query((sql) -> {
             System.err.println("sql = " + sql);

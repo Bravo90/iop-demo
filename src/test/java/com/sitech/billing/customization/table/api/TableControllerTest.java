@@ -76,7 +76,7 @@ public class TableControllerTest {
         mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/table/query")
-                        .param("param",QUERY_PARAM)
+                        .param("param", QUERY_PARAM)
                         .accept(MediaType.APPLICATION_JSON)
         );
     }
@@ -93,5 +93,6 @@ public class TableControllerTest {
     public void update() {
     }
 
-    private static final String QUERY_PARAM = "{\"tableId\":\"1\",\"fields\":[{\"name\":\"user_id\",\"value\":[\"1\",\"2\",\"3\"]}],\"order\":[{\"field\":\"user_id\",\"type\":\"desc\"}],\"page\":{\"pageSize\":1,\"pageNum\":1}}";
+    private static final String QUERY_PARAM = "{\"tableId\":\"1\",\"page\":{\"pageSize\":1,\"pageNum\":1}}";
+    //{"tableId":"1","fields":[{"name":"user_id","value":["1","2","3"]}],"order":[{"field":"user_id","type":"desc"}],"page":{"pageSize":1,"pageNum":1}}
 }

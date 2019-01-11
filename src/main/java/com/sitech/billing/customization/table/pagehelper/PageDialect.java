@@ -8,18 +8,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 根据数据库类型获得不同的数据库方言
  * @author sunzhen
  * @date 2019/1/10 16:51
+ * @see com.github.pagehelper.page.PageAutoDialect
  */
 public class PageDialect {
+
     private static Map<String, Class<?>> dialectAliasMap = new HashMap();
 
-    public AbstractHelperDialect getDialect(String dialectStr) throws Exception {
-        Class sqlDialectClass = dialectAliasMap.get(dialectStr);
+    public static AbstractHelperDialect getDialect(String dialectStr) throws Exception {
+        Class sqlDialectClass = resloveDialectClass(dialectStr);
         AbstractHelperDialect dialect = (AbstractHelperDialect) sqlDialectClass.newInstance();
         return dialect;
     }
 
+    private static Class resloveDialectClass(String className) throws Exception {
+        return dialectAliasMap.containsKey(className.toLowerCase()) ? (Class)dialectAliasMap.get(className.toLowerCase()) : Class.forName(className);
+    }
 
     static {
         dialectAliasMap.put("hsqldb", HsqldbDialect.class);

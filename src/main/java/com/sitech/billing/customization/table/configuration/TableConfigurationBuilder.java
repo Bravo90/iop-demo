@@ -55,7 +55,7 @@ public class TableConfigurationBuilder {
     }
 
     private static String getConfigurationById(Integer id) {
-        return c1;
+        return c2;
     }
 
     private static Button buildBtn(JSONObject json) {
@@ -100,7 +100,6 @@ public class TableConfigurationBuilder {
 
     private static Searcher buildSearcher(JSONObject json) {
         Searcher searcher = new Searcher();
-        System.out.println("required = " + json.getBoolean("required"));
         searcher.setRequired(json.getBoolean("required"));
         searcher.setSearchable(json.getBoolean("searchable"));
         searcher.setSearchType(json.getInteger("searchType"));
@@ -109,6 +108,7 @@ public class TableConfigurationBuilder {
     }
 
     private static final String ccc = "{\"viewName\":\"用户信息查询\",\"viewId\":\"1\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_sys_user\",\"tableDesc\":\"用户信息表\",\"fields\":[{\"fieldName\":\"user_id\",\"fieldDesc\":\"用户ID\",\"fieldAlias\":\"user_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":11,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"username\",\"fieldDesc\":\"用户名称\",\"fieldAlias\":\"username\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":false,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"nickname\",\"fieldDesc\":\"用户昵称\",\"fieldAlias\":\"nickname\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":false,\"keyField\":false,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
-
     private static final String c1 = "{\"viewName\":\"用户信息查询\",\"viewId\":\"1\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_sys_user\",\"tableDesc\":\"用户信息表\",\"fields\":[{\"fieldName\":\"user_id\",\"fieldDesc\":\"用户ID\",\"fieldAlias\":\"user_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":11,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"username\",\"fieldDesc\":\"用户名称\",\"fieldAlias\":\"username\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":false,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":1},\"fieldMapping\":[]},{\"fieldName\":\"nickname\",\"fieldDesc\":\"用户昵称\",\"fieldAlias\":\"nickname\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":false,\"keyField\":false,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
+    private static final String c2 = "{\"viewName\":\"用户信息查询\",\"viewId\":\"1\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_sys_user\",\"tableDesc\":\"用户信息表\",\"fields\":[{\"fieldName\":\"user_id\",\"fieldDesc\":\"用户ID\",\"fieldAlias\":\"user_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":11,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"username\",\"fieldDesc\":\"用户名称\",\"fieldAlias\":\"username\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":false,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":7},\"fieldMapping\":[]},{\"fieldName\":\"nickname\",\"fieldDesc\":\"用户昵称\",\"fieldAlias\":\"nickname\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":false,\"keyField\":false,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
+
 }

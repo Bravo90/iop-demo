@@ -21,7 +21,9 @@ public enum ErrorMsgEnum {
     AUTHC_ID_IS_NULL(1001007, "权限ID为空"),
     USERNAME_ALREADY_EXIST(1001008, "用户已存在"),
     ROLE_NAME_ALREADY_EXIST(1001009, "角色名称已存在"),
-    AUTHC_NAME_ALREADY_EXIST(1001010, "权限名称已存在"),;
+    AUTHC_NAME_ALREADY_EXIST(1001010, "权限名称已存在"),
+    ;
+
     private Integer errorCode;
     private String errorMsg;
 

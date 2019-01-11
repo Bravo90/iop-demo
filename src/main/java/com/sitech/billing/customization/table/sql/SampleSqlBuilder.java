@@ -10,7 +10,6 @@ import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import org.apache.ibatis.jdbc.SQL;
 
-import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +57,7 @@ public class SampleSqlBuilder {
         }
 
         //sql拦截器，可对sql进行自定义处理
-        SqlFilter.doFiletr(sql);
+        SqlFilter.doFilter(sql);
 
         return sql.toString();
     }

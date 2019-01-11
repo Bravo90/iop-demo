@@ -8,7 +8,7 @@ import org.apache.ibatis.jdbc.SQL;
  * @date 2019/1/9 16:07
  */
 public class SqlFilter {
-    public static SQL doFiletr(SQL sql) {
+    public static SQL doFilter(SQL sql) {
         return sql;
     }
 }

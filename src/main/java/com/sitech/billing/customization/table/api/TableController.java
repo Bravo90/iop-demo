@@ -5,10 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.sitech.billing.common.bean.JsonResult;
 import com.sitech.billing.customization.table.context.TableContext;
-import com.sitech.billing.customization.table.excute.JDBCExecute;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
+import com.sitech.billing.customization.table.type.DialectType;
 import com.sitech.billing.system.base.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +39,7 @@ public class TableController extends BaseController {
         RequestPageInfo pageInfo = JSON.parseObject(jsonObject.getString("page"), RequestPageInfo.class);
 
         //获得context
-        TableContext context = new TableContext.Builder().dbDialect("mysql")
+        TableContext context = new TableContext.Builder().dbDialect(DialectType.MYSQL)
                 .tableConfig(tableId)
                 .fieldValues(fieldValues).fieldOrders(fieldOrders).pageInfo(pageInfo)
                 .build().querySqlInit();

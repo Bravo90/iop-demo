@@ -1,5 +1,7 @@
 package com.sitech.billing.customization.table.api;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sitech.billing.MainApplication;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -93,6 +95,7 @@ public class TableControllerTest {
     public void update() {
     }
 
-    private static final String QUERY_PARAM = "{\"tableId\":\"1\",\"page\":{\"pageSize\":1,\"pageNum\":1}}";
+    private static final String QUERY_PARAM = "{\"tableId\":\"1\",\"fields\":[{\"name\":\"username\",\"value\":[\"c\"]}],\"order\":[{\"field\":\"user_id\",\"type\":\"asc\"}],\"page\":{\"pageSize\":10,\"pageNum\":1}}";
+    //{"tableId":"1","page":{"pageSize":1,"pageNum":1}}
     //{"tableId":"1","fields":[{"name":"user_id","value":["1","2","3"]}],"order":[{"field":"user_id","type":"desc"}],"page":{"pageSize":1,"pageNum":1}}
 }

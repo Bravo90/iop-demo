@@ -8,6 +8,7 @@
 <head>
     <jsp:include page="common/head.jsp"/>
     <link href="${ctx}/resources/css/index/index.css" rel="stylesheet">
+    <link href="${ctx}/resources/css/customization/table.css" rel="stylesheet">
     <script type="text/javascript" src="${ctx}/resources/js/index/index.js"></script>
 </head>
 <body class="bg-image">
@@ -63,7 +64,23 @@
             </div>
         </li>
         <li class="ul-content" style="width: 50%;height: 40%">
-            <div></div>
+            <div id="index-msg">
+                <table class="table-css">
+                    <thead>
+                    <tr>
+                        <th>测试Id</th>
+                        <th>测试名称</th>
+                        <th>测试编码</th>
+                        <th>测试时间</th>
+                        <th>测试排序</th>
+                        <th>测试联动</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+            </div>
         </li>
         <li class="ul-content" style="width: 50%;height: 40%">
             <div></div>

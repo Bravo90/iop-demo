@@ -11,6 +11,7 @@ import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import com.sitech.billing.customization.table.pagehelper.PageHandler;
 import com.sitech.billing.customization.table.sql.SampleSqlBuilder;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -23,6 +24,7 @@ import java.util.Map;
  * @author sunzhen
  * @date 2019/1/8 14:30
  */
+@Slf4j
 public class TableContext {
 
     private JdbcTemplate jdbcTemplate;
@@ -89,6 +91,7 @@ public class TableContext {
     }
 
     public PageInfo<Map<String, Object>> queryByPage() throws Exception {
+        log.debug(querySql);
         PageHandler pageHandler = new PageHandler(this.querySql, pageInfo, dbDialect, jdbcTemplate);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo(pageHandler.pageResult());
         return pageInfo;

@@ -91,7 +91,7 @@ public class TableContext {
     }
 
     public PageInfo<Map<String, Object>> queryByPage() throws Exception {
-        log.debug(querySql);
+        System.err.println(querySql);
         PageHandler pageHandler = new PageHandler(this.querySql, pageInfo, dbDialect, jdbcTemplate);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo(pageHandler.pageResult());
         return pageInfo;

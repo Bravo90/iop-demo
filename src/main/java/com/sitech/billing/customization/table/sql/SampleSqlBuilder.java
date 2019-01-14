@@ -39,17 +39,19 @@ public class SampleSqlBuilder {
             //FieldFunctionDecoration.decorate()对字段进行处理,如:函数添加
             FieldValue fieldValue = fieldValueMap.get(field.getFieldName());
             FieldOrder fieldOrder = fieldOrderMap.get(field.getFieldName());
-
-            field = FieldFunctionDecoration.decorate(field);
-
+            System.out.println(field);
             //处理字段
             if (field.getViewable() != null && field.getViewable()) {
-                sql.SELECT(field.getFieldName());
+                Field fd = FieldDecoration.decorate(field);
+                sql.SELECT(fd.getFieldName());
             }
+            System.out.println(field);
             //处理where
             if (fieldValue != null) {
-                where(sql, fieldValue, field);
+                Field fd = FieldDecoration.decorateWhere(field);
+                where(sql, fieldValue, fd);
             }
+            System.out.println(field);
             //处理order
             if (fieldOrder != null) {
                 order(sql, fieldOrder);

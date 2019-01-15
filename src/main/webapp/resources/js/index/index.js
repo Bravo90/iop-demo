@@ -7,6 +7,14 @@ var Index = {
     init: function () {
         Index.methods.renderCarousel();
         Index.methods.tableQuery();
+
+        var table = $("#tbody").renderTable({
+            url: {
+                config: '/table/config',
+                del: '/table/del',
+                query: '/table/query'
+            }
+        });
     },
     methods: {
         renderCarousel: function () {
@@ -33,8 +41,8 @@ var Index = {
             }, function (result) {
                 var list = result.data.list;
                 layer.msg("查询数据总量:" + result.data.total +
-                          ";总页数:" + result.data.pages +
-                          ";当前页码:" + result.data.pageNum);
+                    ";总页数:" + result.data.pages +
+                    ";当前页码:" + result.data.pageNum);
                 $('#tbody').empty();
                 $(list).each(function () {
                     $('#tbody').append("<tr>" +

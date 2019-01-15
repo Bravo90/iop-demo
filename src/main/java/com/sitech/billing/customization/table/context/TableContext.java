@@ -1,10 +1,12 @@
 package com.sitech.billing.customization.table.context;
 
 import com.github.pagehelper.PageInfo;
+import com.sitech.billing.customization.table.configuration.ColConfigurationBuilder;
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.configuration.TableConfigurationBuilder;
 import com.sitech.billing.customization.table.excute.BaseExecute;
 import com.sitech.billing.customization.table.excute.ExecuteBuilder;
+import com.sitech.billing.customization.table.model.Col;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
@@ -14,6 +16,7 @@ import com.sitech.billing.customization.table.sql.SampleSqlBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +29,7 @@ import java.util.Map;
 public class TableContext {
     private TableConfiguration tableConfiguration;
     private BaseExecute execute;
+    private List<Col> cols = new ArrayList<>();
 
     private TableContext(Integer id, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
                          List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
@@ -35,6 +39,7 @@ public class TableContext {
 
     public TableContext(Integer id) {
         this.tableConfiguration = TableConfigurationBuilder.build(id);
+        cols = ColConfigurationBuilder.builder(tableConfiguration);
     }
 
     public void insert() {

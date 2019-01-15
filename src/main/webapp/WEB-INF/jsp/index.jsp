@@ -8,8 +8,9 @@
 <head>
     <jsp:include page="common/head.jsp"/>
     <link href="${ctx}/resources/css/index/index.css" rel="stylesheet">
-    <link href="${ctx}/resources/css/customization/table.css" rel="stylesheet">
+    <link href="${ctx}/resources/css/customization/customization/table.css" rel="stylesheet">
     <script type="text/javascript" src="${ctx}/resources/js/index/index.js"></script>
+    <script type="text/javascript" src="${ctx}/resources/js/customization/table/customization.table.js"></script>
 </head>
 <body class="bg-image">
 <div class="index-container">

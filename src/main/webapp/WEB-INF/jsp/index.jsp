@@ -21,8 +21,8 @@
             </div>
         </li>
         <li class="ul-content" style="width: 15%;height: 8%">
-            <div style="text-align: center;line-height: 40px;color: yellow;">2018-12-21
-                13:55:21
+            <div style="text-align: center;line-height: 40px;color: yellow;">
+                2018-12-21 13:55:21
             </div>
         </li>
         <li class="ul-content" style="width: 5%;height: 8%">
@@ -57,29 +57,31 @@
                         <img src="${ctx}/resources/images/timg.jpg"
                              style="width: 100%;height: 100%;">
                     </div>
-                    <div style="background-color: transparent"></div>
+                    <div style="background-color: transparent" id="index-msg">
+                        <table class="table-css">
+                            <thead>
+                            <tr>
+                                <th>测试Id</th>
+                                <th>测试名称</th>
+                                <th>测试编码</th>
+                                <th>测试时间</th>
+                                <th>测试排序</th>
+                                <th>测试联动</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody">
+
+                            </tbody>
+                        </table>
+                    </div>
                     <div style="background-color: transparent"></div>
                     <div style="background-color: transparent"></div>
                 </div>
             </div>
         </li>
         <li class="ul-content" style="width: 50%;height: 40%">
-            <div id="index-msg">
-                <table class="table-css">
-                    <thead>
-                    <tr>
-                        <th>测试Id</th>
-                        <th>测试名称</th>
-                        <th>测试编码</th>
-                        <th>测试时间</th>
-                        <th>测试排序</th>
-                        <th>测试联动</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tbody">
+            <div>
 
-                    </tbody>
-                </table>
             </div>
         </li>
         <li class="ul-content" style="width: 50%;height: 40%">

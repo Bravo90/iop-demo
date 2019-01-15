@@ -1,9 +1,7 @@
 package com.sitech.billing.customization.table.type;
 
-import com.github.pagehelper.dialect.helper.*;
-
 /**
- * TODO
+ * 数据库方言
  *
  * @author sunzhen
  * @date 2019/1/11 15:11

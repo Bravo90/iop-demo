@@ -8,7 +8,7 @@ package com.sitech.billing.customization.table.type;
 public abstract class OperatorType {
     public static final int EQUALS = 1;
     public static final int NOT_EQUALS = 2;
-    public static final int MORE_THAN_EUQALS = 3;
+    public static final int MORE_THAN_EQUALS = 3;
     public static final int LESS_THAN_EQUALS = 4;
     public static final int MORE_THAN = 5;
     public static final int LESS_THAN = 6;

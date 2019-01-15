@@ -51,7 +51,7 @@ public class TableController extends BaseController {
             PageInfo<Map<String, Object>> pageResult = context.queryByPage();
             return JsonResult.success(pageResult);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.toString());
             return JsonResult.error("查询失败");
         }
 

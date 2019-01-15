@@ -37,7 +37,7 @@ public class OperatorHandler {
                     sb.append(fieldName).append("!=").append(list.get(0));
                 }
                 break;
-            case OperatorType.MORE_THAN_EUQALS:
+            case OperatorType.MORE_THAN_EQUALS:
                 if (list.size() == 1) {
                     sb.append(fieldName).append(">=").append(list.get(0));
                 }

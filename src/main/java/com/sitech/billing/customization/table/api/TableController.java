@@ -45,7 +45,7 @@ public class TableController extends BaseController {
                 .fieldValues(fieldValues)
                 .fieldOrders(fieldOrders)
                 .pageInfo(pageInfo)
-                .build().querySqlInit();
+                .build();
         //查询
         try {
             PageInfo<Map<String, Object>> pageResult = context.queryByPage();

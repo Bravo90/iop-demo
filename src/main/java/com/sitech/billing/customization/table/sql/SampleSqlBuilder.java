@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 生成sql
+ * 单表时，SQL处理
  *
  * @author sunzhen
  * @date 2019/1/8 16:19
@@ -39,19 +39,16 @@ public class SampleSqlBuilder {
             //FieldFunctionDecoration.decorate()对字段进行处理,如:函数添加
             FieldValue fieldValue = fieldValueMap.get(field.getFieldName());
             FieldOrder fieldOrder = fieldOrderMap.get(field.getFieldName());
-            System.out.println(field);
             //处理字段
             if (field.getViewable() != null && field.getViewable()) {
                 Field fd = FieldDecoration.decorate(field);
                 sql.SELECT(fd.getFieldName());
             }
-            System.out.println(field);
             //处理where
             if (fieldValue != null) {
                 Field fd = FieldDecoration.decorateWhere(field);
                 where(sql, fieldValue, fd);
             }
-            System.out.println(field);
             //处理order
             if (fieldOrder != null) {
                 order(sql, fieldOrder);

@@ -1,12 +1,14 @@
 package com.sitech.billing.customization.table.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 界面跳转控制类
+ *
  * @author sunzhen
  * @date 2019/1/8 12:49
  */
@@ -14,15 +16,15 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/view")
 public class ViewController {
 
-    @GetMapping("/table")
-    public ModelAndView tablePage(){
+    @GetMapping("/table/{viewId}")
+    public ModelAndView tablePage(@PathVariable Integer viewId) {
         return new ModelAndView("");
     }
 
     @GetMapping("/config")
-   public ModelAndView configPage(){
-       return new ModelAndView("");
-   }
+    public ModelAndView configPage() {
+        return new ModelAndView("");
+    }
 
 
 }

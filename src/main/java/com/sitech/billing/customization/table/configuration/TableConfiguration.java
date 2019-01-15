@@ -19,9 +19,6 @@ import java.util.List;
 @Setter
 @ToString
 public class TableConfiguration {
-
-    private static final int DEFAULT_PAGE_SIZE = 10;
-
     private int viewId;
     private String viewName;
     private boolean editable;

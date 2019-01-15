@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 /**
- * TODO
+ * 执行增删改查类的工厂类；TODO：尚未完善
  *
  * @author sunzhen
  * @date 2019/1/15 14:25
@@ -18,7 +18,6 @@ public class ExecuteBuilder {
 
     public static BaseExecute build(TableConfiguration tableConfiguration, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
                                     List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
-
         return new SingleTableExecute(tableConfiguration, jdbcTemplate, fieldValues, fieldOrders, pageInfo, dbDialect);
     }
 }

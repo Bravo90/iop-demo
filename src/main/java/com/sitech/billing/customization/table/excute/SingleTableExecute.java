@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO
+ * 单表的增删改查
  *
  * @author sunzhen
  * @date 2019/1/15 14:06
@@ -66,25 +66,24 @@ public class SingleTableExecute extends BaseExecute {
 
     }
 
-    @Override
-    public String querySqlInit() {
+    private String querySqlInit() {
         String sql = SampleSqlBuilder.initQuerySql(this.tableConfiguration, this.fieldValues,
                 this.fieldOrders, this.pageInfo);
         return sql;
     }
 
-    @Override
-    public String insertSqlInit() {
+
+    private String insertSqlInit() {
         return null;
     }
 
-    @Override
-    public String deleteSqlInit() {
+
+    private String deleteSqlInit() {
         return null;
     }
 
-    @Override
-    public String updateSqlInit() {
+
+    private String updateSqlInit() {
         return null;
     }
 }

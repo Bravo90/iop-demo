@@ -24,9 +24,7 @@ import java.util.Map;
  * @date 2019/1/8 14:30
  */
 public class TableContext {
-
     private TableConfiguration tableConfiguration;
-
     private BaseExecute execute;
 
     private TableContext(Integer id, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
@@ -51,8 +49,8 @@ public class TableContext {
         execute.delete();
     }
 
-    public List<List<String>> query() {
-        return null;
+    public List<Map<String, Object>> query() {
+        return execute.query();
     }
 
     public PageInfo<Map<String, Object>> queryByPage() {
@@ -61,18 +59,12 @@ public class TableContext {
     }
 
     public static class Builder {
-
         private JdbcTemplate jdbcTemplate;
         private String dbDialect;
-
         private Integer id;
-
         private List<FieldValue> fieldValues;
-
         private List<FieldOrder> fieldOrders;
-
         private RequestPageInfo pageInfo;
-
 
         public Builder dbDialect(String dbDialect) {
             this.dbDialect = dbDialect;

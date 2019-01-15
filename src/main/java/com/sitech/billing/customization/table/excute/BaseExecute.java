@@ -11,13 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO
+ * 执行增删改查的父类
  *
  * @author sunzhen
  * @date 2019/1/15 13:46
  */
 public abstract class BaseExecute {
-
 
     protected JdbcTemplate jdbcTemplate;
 
@@ -31,7 +30,6 @@ public abstract class BaseExecute {
 
     protected String dbDialect;
 
-
     public abstract List<Map<String, Object>> query();
 
     public abstract PageInfo<Map<String, Object>> queryByPage();
@@ -41,12 +39,4 @@ public abstract class BaseExecute {
     public abstract void update();
 
     public abstract void delete();
-
-    public abstract String querySqlInit();
-
-    public abstract String insertSqlInit();
-
-    public abstract String deleteSqlInit();
-
-    public abstract String updateSqlInit();
 }

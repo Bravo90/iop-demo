@@ -27,6 +27,7 @@ public class TableConfigurationBuilder {
     public static TableConfiguration build(Integer id) {
 
         String configuration = getConfigurationById(id);
+
         JSONObject json = JSON.parseObject(configuration);
         TableConfiguration cfg = new TableConfiguration();
         AssertUtils.isNull(cfg);
@@ -58,6 +59,7 @@ public class TableConfigurationBuilder {
         return cfg;
     }
 
+    //TODO:需要处理，配置信息存储问题，存数据库直接存配置信息！
     private static String getConfigurationById(Integer id) {
         String cfg = cfgMap.get(id);
         if (cfg != null && !"".equals(cfg)) {

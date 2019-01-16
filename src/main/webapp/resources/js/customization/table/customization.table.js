@@ -19,8 +19,16 @@
 
     Table.prototype = {
         init: function () {
-            console.log(this);
+            $.get(Globals.contextPath() + "/config/1", {}, function (result) {
+                console.log(result)
+            });
             this.query();
+        },
+        renderHead: function () {
+
+        },
+        renderBody:function () {
+            
         },
         query: function () {
             if (this.option.url.query != '') {

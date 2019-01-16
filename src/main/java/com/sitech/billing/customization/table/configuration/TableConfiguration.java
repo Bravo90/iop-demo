@@ -24,6 +24,7 @@ public class TableConfiguration {
     private boolean editable;
     private boolean pageable;
     private int pageSize;
+    private int dataSourceType = 1;
 
     List<Table> tables = new ArrayList<>();
     List<Button> buttons = new ArrayList<>();

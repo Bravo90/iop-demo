@@ -3,6 +3,8 @@ package com.sitech.billing.customization.table.configuration;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
+import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.common.utils.AssertUtils;
 import com.sitech.billing.customization.table.model.Button;
 import com.sitech.billing.customization.table.model.Field;
@@ -57,8 +59,12 @@ public class TableConfigurationBuilder {
     }
 
     private static String getConfigurationById(Integer id) {
-
-        return cfgMap.get(id);
+        String cfg = cfgMap.get(id);
+        if (cfg != null && !"".equals(cfg)) {
+            return cfg;
+        } else {
+            throw new IopException(ErrorMsgEnum.CONFIGURATION_NOT_EXIST);
+        }
     }
 
     private static Button buildBtn(JSONObject json) {

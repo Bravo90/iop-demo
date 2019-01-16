@@ -13,10 +13,12 @@
 <body class="bg-image">
 <div class="error-container">
     <h1 class="name-color">系统异常</h1>
-    <c:if test="${msg != null}">
-        <div class="error-msg">${msg}</div>
-    </c:if>
-    <div class="error-admin">请联系管理员</div>
+    <div class="error-msg">
+        <c:if test="${msg != null}">
+            ${msg},
+        </c:if>
+        请联系管理员
+    </div>
     <div class="error-404">404</div>
 </div>
 </body>

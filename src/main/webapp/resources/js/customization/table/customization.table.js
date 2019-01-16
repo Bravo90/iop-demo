@@ -10,7 +10,8 @@
                 add: '',
                 del: '',
                 update: ''
-            }
+            },
+            col: []
         };
         this.option = $.extend({}, this.default, option);
         this.init();
@@ -22,7 +23,11 @@
             this.query();
         },
         query: function () {
-            console.log(this.option.url.query)
+            if (this.option.url.query != '') {
+
+            } else {
+                alert('尚未提供数据服务接口');
+            }
         },
         remove: function () {
 

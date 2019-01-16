@@ -37,7 +37,7 @@ public class IopExceptionHandler {
         if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {
             return JsonResult.error(e.getMessage());
         } else {
-            return new ModelAndView("login/login")
+            return new ModelAndView("error")
                     .addObject("msg", e.getMessage());
         }
     }

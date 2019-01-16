@@ -8,21 +8,22 @@ package com.sitech.billing.common.enums;
  */
 public enum ErrorMsgEnum {
 
-    SYSTEM_ERROR(99999, "系统内部异常，请联系管理员"),
-    OBJECT_EMPTY_ERROR(9001001, "对象为空"),
+    SYSTEM_ERROR(9999, "系统内部异常，请联系管理员"),
+    OBJECT_EMPTY_ERROR(9001, "对象为空"),
 
-    USERNAME_OR_PASSWORD_IS_EMPTY(1001001, "用户名密码为空"),
-    UNKNOWN_ACCOUNT(1001002, "用户不存在"),
-    INCORRECT_CREDENTIALS(1001003, "用户密码不正确"),
-    UNAUTHORIZED(1001004, "用户权限不足"),
-    LOGIN_TIMEOUT(1001005, "登录超时"),
-    USER_ID_IS_NULL(1001005, "用户ID为空"),
-    ROLE_ID_IS_NULL(1001006, "角色ID为空"),
-    AUTHC_ID_IS_NULL(1001007, "权限ID为空"),
-    USERNAME_ALREADY_EXIST(1001008, "用户已存在"),
-    ROLE_NAME_ALREADY_EXIST(1001009, "角色名称已存在"),
-    AUTHC_NAME_ALREADY_EXIST(1001010, "权限名称已存在"),
-    ;
+    USERNAME_OR_PASSWORD_IS_EMPTY(1001, "用户名密码为空"),
+    UNKNOWN_ACCOUNT(1002, "用户不存在"),
+    INCORRECT_CREDENTIALS(1003, "用户密码不正确"),
+    UNAUTHORIZED(1004, "用户权限不足"),
+    LOGIN_TIMEOUT(1005, "登录超时"),
+    USER_ID_IS_NULL(1005, "用户ID为空"),
+    ROLE_ID_IS_NULL(1006, "角色ID为空"),
+    AUTHC_ID_IS_NULL(1007, "权限ID为空"),
+    USERNAME_ALREADY_EXIST(1008, "用户已存在"),
+    ROLE_NAME_ALREADY_EXIST(1009, "角色名称已存在"),
+    AUTHC_NAME_ALREADY_EXIST(1010, "权限名称已存在"),
+
+    CONFIGURATION_NOT_EXIST(2001, "表配置信息不存在"),;
 
     private Integer errorCode;
     private String errorMsg;

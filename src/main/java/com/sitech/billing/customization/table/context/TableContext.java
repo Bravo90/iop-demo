@@ -42,6 +42,10 @@ public class TableContext {
         cols = ColConfigurationBuilder.builder(tableConfiguration);
     }
 
+    public List<Col> getCols() {
+        return this.cols;
+    }
+
     public void insert() {
         execute.insert();
     }

@@ -23,7 +23,7 @@ public class ConfigurationController extends BaseController {
 
     @GetMapping("/{viewId}")
     public JsonResult getConfig(@PathVariable Integer viewId) {
-        TableContext context = new TableContext.Builder().tableConfig(viewId).buildView();
+        TableContext context = new TableContext.Builder().tableConfig(viewId).jdbc(jdbcTemplate).buildView();
         List<Col> cols = context.getCols();
         return JsonResult.success(cols);
     }

@@ -10,10 +10,7 @@ import com.sitech.billing.customization.table.model.Col;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
-import com.sitech.billing.customization.table.pagehelper.PageHandler;
-import com.sitech.billing.customization.table.sql.SampleSqlBuilder;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
@@ -37,9 +34,10 @@ public class TableContext {
         execute = ExecuteBuilder.build(tableConfiguration, jdbcTemplate, fieldValues, fieldOrders, pageInfo, dbDialect);
     }
 
-    public TableContext(Integer id) {
+    public TableContext(Integer id, JdbcTemplate jdbcTemplate) {
         this.tableConfiguration = TableConfigurationBuilder.build(id);
-        cols = ColConfigurationBuilder.builder(tableConfiguration);
+        System.err.println(this.tableConfiguration);
+        cols = ColConfigurationBuilder.builder(tableConfiguration, jdbcTemplate);
     }
 
     public List<Col> getCols() {
@@ -111,7 +109,7 @@ public class TableContext {
         }
 
         public TableContext buildView() {
-            return new TableContext(this.id);
+            return new TableContext(this.id, this.jdbcTemplate);
         }
     }
 }

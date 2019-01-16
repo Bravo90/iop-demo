@@ -1,8 +1,15 @@
 package com.sitech.billing.customization.table.configuration;
 
+import com.alibaba.fastjson.JSONObject;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
+import com.sitech.billing.common.exception.IopException;
+import com.sitech.billing.customization.table.handler.fieldmapping.BaseFieldMappingHandler;
+import com.sitech.billing.customization.table.handler.fieldmapping.FieldMappingHandlerFactory;
 import com.sitech.billing.customization.table.model.Col;
 import com.sitech.billing.customization.table.model.Field;
+import com.sitech.billing.customization.table.model.FieldMapping;
 import com.sitech.billing.customization.table.model.Table;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.*;
 
@@ -14,7 +21,10 @@ import java.util.*;
  */
 public class ColConfigurationBuilder {
 
-    public static List<Col> builder(TableConfiguration tableConfiguration) {
+    private static BaseFieldMappingHandler fieldMappingHandler;
+
+    public static List<Col> builder(TableConfiguration tableConfiguration,
+                                    JdbcTemplate jdbcTemplate) {
         List<Col> cols = new ArrayList<>();
         List<Table> tables = tableConfiguration.getTables();
         for (Table table : tables) {
@@ -30,7 +40,11 @@ public class ColConfigurationBuilder {
                 col.setSearchable(field.getSearcher().getSearchable());
                 col.setRequired(field.getSearcher().getRequired());
                 col.setKeyFiled(field.getKeyFiled());
-                col.setFieldMapping(field.getFieldMapping());
+
+                JSONObject json = field.getMapJson();
+                if (json.get("type") != null) {
+                    col.setFieldMapping(getMapping(json));
+                }
                 cols.add(col);
             }
         }
@@ -48,5 +62,14 @@ public class ColConfigurationBuilder {
             }
         });
         return cols;
+    }
+
+    public static List<FieldMapping> getMapping(JSONObject jsonObject) {
+        try {
+            fieldMappingHandler = FieldMappingHandlerFactory.getHandler(jsonObject);
+            return fieldMappingHandler.handle(jsonObject);
+        } catch (Exception e) {
+            throw new IopException(ErrorMsgEnum.FIELD_MAPPING_HANDLER_NOT_EXIST);
+        }
     }
 }

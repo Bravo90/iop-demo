@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * 字段配置类
  *
@@ -24,5 +26,5 @@ public class Col {
     private Boolean searchable;
     private Boolean required;
     private Boolean keyFiled;
-    private FieldMapping fieldMapping;
+    private List<FieldMapping> fieldMapping;
 }

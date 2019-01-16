@@ -23,7 +23,8 @@ public enum ErrorMsgEnum {
     ROLE_NAME_ALREADY_EXIST(1009, "角色名称已存在"),
     AUTHC_NAME_ALREADY_EXIST(1010, "权限名称已存在"),
 
-    CONFIGURATION_NOT_EXIST(2001, "表配置信息不存在"),;
+    CONFIGURATION_NOT_EXIST(2001, "表配置信息不存在"),
+    FIELD_MAPPING_HANDLER_NOT_EXIST(2002, "字段映射解析类不存在");
 
     private Integer errorCode;
     private String errorMsg;

@@ -10,6 +10,7 @@ import com.sitech.billing.customization.table.model.Button;
 import com.sitech.billing.customization.table.model.Field;
 import com.sitech.billing.customization.table.model.Searcher;
 import com.sitech.billing.customization.table.model.Table;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,6 @@ import java.util.Map;
 public class TableConfigurationBuilder {
 
     public static TableConfiguration build(Integer id) {
-
         String configuration = getConfigurationById(id);
 
         JSONObject json = JSON.parseObject(configuration);
@@ -37,6 +37,7 @@ public class TableConfigurationBuilder {
         cfg.setEditable(json.getBoolean("editable"));
         cfg.setPageable(json.getBoolean("pageable"));
         cfg.setPageSize(json.getInteger("pageSize"));
+        cfg.setDataSourceType(json.getInteger("dataSourceType"));
         JSONArray jbtns = json.getJSONArray("button");
 
         List<Button> btns = new ArrayList<>();
@@ -103,9 +104,8 @@ public class TableConfigurationBuilder {
         field.setFieldOrder(json.getInteger("fieldOrder"));
         field.setSortable(json.getBoolean("sortable"));
         field.setKeyFiled(json.getBoolean("keyField"));
-
         field.setSearcher(buildSearcher(json.getJSONObject("search")));
-
+        field.setMapJson(json.getJSONObject("jsonMapping"));
         return field;
     }
 
@@ -120,8 +120,8 @@ public class TableConfigurationBuilder {
 
     private static Map<Integer, String> cfgMap = new HashMap();
 
-    private static final String c1 = "{\"viewName\":\"用户信息查询\",\"viewId\":\"1\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_sys_user\",\"tableDesc\":\"用户信息表\",\"fields\":[{\"fieldName\":\"user_id\",\"fieldDesc\":\"用户ID\",\"fieldAlias\":\"user_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":10,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"username\",\"fieldDesc\":\"用户名称\",\"fieldAlias\":\"username\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":false,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":7},\"fieldMapping\":[]},{\"fieldName\":\"nickname\",\"fieldDesc\":\"用户昵称\",\"fieldAlias\":\"nickname\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":false,\"keyField\":false,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
-    private static final String c2 = "{\"viewName\":\"测试信息查询\",\"viewId\":\"2\",\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_test_table\",\"tableDesc\":\"测试信息表\",\"fields\":[{\"fieldName\":\"test_id\",\"fieldDesc\":\"测试ID\",\"fieldAlias\":\"test_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"test_name\",\"fieldDesc\":\"测试名称\",\"fieldAlias\":\"test_name\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":7,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"test_code\",\"fieldDesc\":\"测试编码\",\"fieldAlias\":\"test_code\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"test_date\",\"fieldDesc\":\"测试时间\",\"fieldAlias\":\"test_date\",\"fieldType\":3,\"viewable\":true,\"fieldOrder\":4,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":4,\"searchable\":true,\"searchType\":10,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"test_order\",\"fieldDesc\":\"测试排序\",\"fieldAlias\":\"test_order\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":5,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":5,\"searchable\":true,\"searchType\":5,\"required\":false},\"fieldMapping\":[]},{\"fieldName\":\"test_linkage\",\"fieldDesc\":\"测试联动\",\"fieldAlias\":\"test_linkage\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":6,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":6,\"searchable\":true,\"searchType\":1,\"required\":false},\"fieldMapping\":[]}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
+    private static final String c1 = "";
+    private static final String c2 = "{\"viewName\":\"测试信息查询\",\"viewId\":\"2\",\"dataSourceType\":1,\"editable\":false,\"pageable\":true,\"pageSize\":10,\"table\":[{\"tableName\":\"iop_test_table\",\"tableDesc\":\"测试信息表\",\"fields\":[{\"fieldName\":\"test_id\",\"fieldDesc\":\"测试ID\",\"fieldAlias\":\"test_id\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":1,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":1,\"searchable\":true,\"searchType\":1,\"required\":false},\"jsonMapping\":{}},{\"fieldName\":\"test_name\",\"fieldDesc\":\"测试名称\",\"fieldAlias\":\"test_name\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":2,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":2,\"searchable\":true,\"searchType\":7,\"required\":false},\"jsonMapping\":{}},{\"fieldName\":\"test_code\",\"fieldDesc\":\"测试编码\",\"fieldAlias\":\"test_code\",\"fieldType\":2,\"viewable\":true,\"fieldOrder\":3,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":3,\"searchable\":true,\"searchType\":1,\"required\":false},\"jsonMapping\":{\"type\":1,\"map\":[{\"0531\":\"济南\"},{\"0534\":\"德州\"}]}},{\"fieldName\":\"test_date\",\"fieldDesc\":\"测试时间\",\"fieldAlias\":\"test_date\",\"fieldType\":3,\"viewable\":true,\"fieldOrder\":4,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":4,\"searchable\":true,\"searchType\":10,\"required\":false},\"jsonMapping\":{}},{\"fieldName\":\"test_order\",\"fieldDesc\":\"测试排序\",\"fieldAlias\":\"test_order\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":5,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":5,\"searchable\":true,\"searchType\":5,\"required\":false},\"jsonMapping\":{}},{\"fieldName\":\"test_linkage\",\"fieldDesc\":\"测试联动\",\"fieldAlias\":\"test_linkage\",\"fieldType\":1,\"viewable\":true,\"fieldOrder\":6,\"sortable\":true,\"keyField\":true,\"search\":{\"searchOrder\":6,\"searchable\":true,\"searchType\":1,\"required\":false},\"jsonMapping\":{}}]}],\"button\":[{\"btnName\":\"查询\",\"btnClass\":\"search\"},{\"btnName\":\"删除\",\"btnClass\":\"delete\"}]}";
 
     static {
         cfgMap.put(1, c1);

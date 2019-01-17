@@ -18,7 +18,8 @@ public class ViewController {
 
     @GetMapping("/table/{viewId}")
     public ModelAndView tablePage(@PathVariable Integer viewId) {
-        return new ModelAndView("");
+        return new ModelAndView("customization/table/view")
+                .addObject("viewId", viewId);
     }
 
     @GetMapping("/config")

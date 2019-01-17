@@ -58,22 +58,7 @@
                         <img src="${ctx}/resources/images/timg.jpg"
                              style="width: 100%;height: 100%;">
                     </div>
-                    <div style="background-color: transparent" id="index-msg">
-                        <table class="table-css">
-                            <thead>
-                            <tr>
-                                <th>测试Id</th>
-                                <th>测试名称</th>
-                                <th>测试编码</th>
-                                <th>测试时间</th>
-                                <th>测试排序</th>
-                                <th>测试联动</th>
-                            </tr>
-                            </thead>
-                            <tbody id="tbody">
-
-                            </tbody>
-                        </table>
+                    <div style="background-color: transparent">
                     </div>
                     <div style="background-color: transparent"></div>
                     <div style="background-color: transparent"></div>

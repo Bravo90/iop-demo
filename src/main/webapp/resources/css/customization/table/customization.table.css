@@ -1,0 +1,108 @@
+.table-css {
+    margin: auto;
+    /* margin-top: 5px; */
+    min-width: 100%;
+    table-layout: fixed;
+}
+
+.table-css tr > th {
+    font-weight: normal;
+    text-align: left;
+    background-color: #ccc;
+    color: #000;
+}
+
+.table-css tr > td {
+    background-color: #F2F2F2;
+}
+
+.table-css th, .table-css td {
+    width: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.table-css th {
+    white-space: nowrap !important;
+}
+
+.table-css th.checkbox {
+    width: 40px !important;
+    text-align: center;
+}
+
+.table-css input[type=checkbox] {
+    width: 20px !important;
+}
+
+.table-css td {
+    word-break: break-all;
+}
+
+.table-css td > input {
+    padding: 2px;
+    height: auto;
+    width: 100px;
+}
+
+.table-css td > select {
+    padding: 2px;
+    height: auto;
+    width: 100px;
+}
+/*************升降图标实现******************/
+.table-sort {
+    width: 10px;
+    height: 20px;
+    margin-left: 5px;
+    cursor: pointer !important;
+}
+
+.inline {
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+}
+
+.table-sort .edge {
+    position: absolute;
+    left: 5px;
+    border-width: 5px;
+}
+
+.edge {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: dashed;
+    border-color: transparent;
+    overflow: hidden;
+}
+
+.table-sort-asc {
+    top: 4px;
+    border-top: none;
+    border-bottom-style: solid;
+    border-bottom-color: #b2b2b2;
+}
+
+.table-sort-desc {
+    bottom: 4px;
+    border-bottom: none;
+    border-top-style: solid;
+    border-top-color: #b2b2b2;
+}
+
+.table-sort-asc:hover {
+    border-bottom-color: black;
+}
+
+.table-sort-desc:hover {
+    border-top-color: black;
+}
+
+.selected {
+    border-bottom-color: black;
+    border-top-color: black;
+}

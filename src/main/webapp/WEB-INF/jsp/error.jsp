@@ -19,7 +19,7 @@
         </c:if>
         请联系管理员
     </div>
-    <div class="error-404">404</div>
+    <div class="error-404"><i class="layui-icon layui-icon-404" style="font-size:400px "></i></div>
 </div>
 </body>
 

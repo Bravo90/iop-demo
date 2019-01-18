@@ -18,22 +18,38 @@
             searchCols: []
         };
         this.option = $.extend({}, this.default, option);
-        this.init();
         this.layui = window.layui;
         this.layer = window.layui.layer;
+        this.laypage = window.layui.laypage;
+
+        this.init();
     };
 
     Table.prototype = {
         init: function () {
             this.renderView();
             this.events();
+            this.renderPage();
+
         },
         renderView: function () {
             this.renderSearchArea();
             this.renderTable();
         },
         renderPage: function () {
-
+            var div = $('<div></div>')
+                .attr('id', 'page-id')
+                .addClass('table-page');
+            this.ele.append(div);
+            this.laypage.render({
+                elem: 'page-id',
+                count: 0,
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                jump: function (obj) {
+                    console.log(obj.curr);
+                    console.log(obj);
+                }
+            });
         }
         ,
         renderTable: function () {
@@ -116,9 +132,9 @@
                 case 11:
                 default: {
                     if (fieldType == 3) {
-                        div.append('<input placeholder="开始" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
-                        div.append(' —');
-                        div.append('<input placeholder="结束" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
+                        div.append('<input placeholder="开始日期" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
+                        //div.append('');
+                        div.append('<input placeholder="结束日期" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
                     } else {
                         var input = $('<input>');
                         div.append(input);
@@ -127,9 +143,9 @@
                 }
                 case 10: {
                     if (fieldType == 3) {
-                        div.append('<input placeholder="开始" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
-                        div.append(' —');
-                        div.append('<input placeholder="结束" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
+                        div.append('<input placeholder="开始日期" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
+                        //div.append('');
+                        div.append('<input placeholder="结束日期" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
                     } else {
                         var input = $('<input placeholder="开始"><input placeholder="结束">');
                         div.append(input);
@@ -174,8 +190,8 @@
                                 if ($(inputs[i]).val() != '') {
                                     valueArr.push($(inputs[i]).val());
                                     $(inputs[i]).removeClass('empty-alert')
-                                }else{
-                                    if(required != undefined){
+                                } else {
+                                    if (required != undefined) {
                                         $(inputs[i]).addClass('empty-alert')
                                         layer.msg('必选项不可为空', {icon: 2});
                                         return;

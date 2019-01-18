@@ -55,7 +55,12 @@
     line-height: 40px;
     float: right;
 }
-
+.table-page{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin-top: 15px;
+}
 .empty-alert {
     border: 1px solid red;
 }

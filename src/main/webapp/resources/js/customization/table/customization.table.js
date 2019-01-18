@@ -5,7 +5,6 @@
         this.layui = window.layui;
         this.layer = window.layui.layer;
         this.laypage = window.layui.laypage;
-
         this.default = {
             tableId: 0,
             tableStyle: 'table-css',
@@ -22,14 +21,12 @@
             searchCols: []
         };
         this.option = $.extend({}, this.default, option);
-
         this.requestParam = {
             'tableId': option.tableId,
             'fields': [],
             'order': [],
             'page': {'pageSize': 10, 'pageNum': 1}
         }
-
         this.init();
     };
 
@@ -39,7 +36,6 @@
             this.events();
             this.renderPage();
             this.query();
-
         },
         renderView: function () {
             this.renderSearchArea();
@@ -263,7 +259,6 @@
                 } else if (className === 'layui-btn layui-btn-sm clear-btn') {
                     //清空查询条件
 
-
                     $('.table-sort-asc').removeClass('selected');
                     $('.table-sort-desc').removeClass('selected');
                     //重新查询数据
@@ -278,13 +273,11 @@
                     $('.table-sort-desc').removeClass('selected');
                     $(source).addClass('selected');
                     var field = $(source).parent().parent().attr('field-name');
-
                     var orderArr = new Array();
                     orderArr.push({
                         "field": field,
                         "type": "asc"
                     });
-
                     _this.requestParam = $.extend(_this.requestParam, {
                         'order': orderArr
                     });
@@ -295,7 +288,6 @@
                     $('.table-sort-desc').removeClass('selected');
                     $(source).addClass('selected');
                     var field = $(source).parent().parent().attr('field-name');
-
                     var orderArr = new Array();
                     orderArr.push({
                         "field": field,
@@ -306,12 +298,10 @@
                     });
                     console.log(_this.requestParam)
                     _this.query();
-
                 }
             });
         }
     };
-
     $.fn.renderTable = function (option) {
         return new Table($(this), option);
     }

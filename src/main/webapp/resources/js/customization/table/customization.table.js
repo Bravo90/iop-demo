@@ -6,13 +6,16 @@
             tableId: 0,
             tableStyle: 'table-css',
             url: {
-                config: '/config/',
                 query: '',
                 add: '',
                 del: '',
                 update: ''
             },
-            col: []
+            editable: false,
+            pageable: true,
+            pageSize: 10,
+            col: [],
+            searchCols: []
         };
         this.option = $.extend({}, this.default, option);
         this.init();
@@ -22,36 +25,26 @@
 
     Table.prototype = {
         init: function () {
-            var _this = this;
-            var configUrl = Globals.contextPath() + this.option.url.config + this.option.tableId;
-            $.get(configUrl, {}, function (result) {
-                var tr = $('<tr></tr>');
-                var searchArea = $('<div></div>').addClass('table-search-container');
-                $(result.data).each(function () {
-                    //1.处理表头
-                    var th = _this.renderHeadTh(this);
-                    tr.append(th);
-                    //2.处理搜索字段
-                    if (this['searchable']) {
-                        searchArea.append(_this.renderSearchField(this));
-                    }
-                });
-                searchArea.append('<div class="btn">' +
-                    '<button class="layui-btn layui-btn-sm">查询</button>' +
-                    '<button class="layui-btn layui-btn-sm">重置</button>' +
-                    '</div>');
-                _this.ele.append(searchArea);
-                _this.ele.append(_this.createTable(_this.renderHead(tr)));
-
-            });
+            this.renderView();
         },
-        createTable: function (head) {
+        renderView: function () {
+            this.renderSearchArea();
+            this.renderTable();
+        },
+        renderTable: function () {
+            var head = this.renderHead();
             var table = $('<table></table>')
                 .addClass(this.option.tableStyle)
                 .append(head);
-            return table;
+            this.ele.append(table);
         },
-        renderHead: function (tr) {
+        renderHead: function () {
+            var _this = this;
+            var tr = $('<tr></tr>');
+            $(_this.option.col).each(function () {
+                var th = _this.renderHeadTh(this);
+                tr.append(th);
+            });
             var head = $('<thead></thead>')
                 .append(tr);
             return head;
@@ -78,19 +71,30 @@
         renderBody: function () {
 
         },
+        renderSearchArea: function () {
+            var _this = this;
+            var searchArea = $('<div></div>').addClass('table-search-container');
+            $(_this.option.searchCols).each(function () {
+                if (this['searchable']) {
+                    searchArea.append(_this.renderSearchField(this));
+                }
+            });
+            searchArea.append('<div class="btn">' +
+                '<button class="layui-btn layui-btn-sm">查询</button>' +
+                '<button class="layui-btn layui-btn-sm">重置</button>' +
+                '</div>');
+            _this.ele.append(searchArea);
+        },
         renderSearchField: function (field) {
             var span = $('<span></span>').html(field['fieldDesc']);
             if (field['required']) {
                 span.append('<span class="required">*</span>');
             }
-            console.log('fieldType = ' + field['fieldType'],field['fieldMapping']);
+            console.log('fieldType = ' + field['fieldType'], field['fieldMapping']);
             var input = $("<input>");
             var div = $('<div></div>').addClass('field')
                 .append(span).append(input);
             return div;
-        },
-        renderSearchArea: function () {
-
         },
         query: function () {
             if (this.option.url.query != '') {

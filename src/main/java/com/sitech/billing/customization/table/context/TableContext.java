@@ -1,11 +1,13 @@
 package com.sitech.billing.customization.table.context;
 
 import com.github.pagehelper.PageInfo;
-import com.sitech.billing.customization.table.configuration.ColConfigurationBuilder;
+import com.sitech.billing.customization.table.configuration.ViewConfiguration;
+import com.sitech.billing.customization.table.configuration.ViewConfigurationBuilder;
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.configuration.TableConfigurationBuilder;
 import com.sitech.billing.customization.table.excute.BaseExecute;
 import com.sitech.billing.customization.table.excute.ExecuteBuilder;
+import com.sitech.billing.customization.table.model.Button;
 import com.sitech.billing.customization.table.model.Col;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
@@ -26,7 +28,8 @@ import java.util.Map;
 public class TableContext {
     private TableConfiguration tableConfiguration;
     private BaseExecute execute;
-    private List<Col> cols = new ArrayList<>();
+    private ViewConfiguration viewConfiguration;
+
 
     private TableContext(Integer id, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
                          List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
@@ -36,12 +39,11 @@ public class TableContext {
 
     public TableContext(Integer id, JdbcTemplate jdbcTemplate) {
         this.tableConfiguration = TableConfigurationBuilder.build(id);
-        System.err.println(this.tableConfiguration);
-        cols = ColConfigurationBuilder.builder(tableConfiguration, jdbcTemplate);
+        this.viewConfiguration = ViewConfigurationBuilder.build(tableConfiguration, jdbcTemplate);
     }
 
-    public List<Col> getCols() {
-        return this.cols;
+    public ViewConfiguration getViewConfiguration() {
+        return this.viewConfiguration;
     }
 
     public void insert() {

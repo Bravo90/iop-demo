@@ -19,14 +19,24 @@ import java.util.*;
  * @author sunzhen
  * @date 2019/1/15 16:50
  */
-public class ColConfigurationBuilder {
+public class ViewConfigurationBuilder {
 
     private static BaseFieldMappingHandler fieldMappingHandler;
 
-    public static List<Col> builder(TableConfiguration tableConfiguration,
-                                    JdbcTemplate jdbcTemplate) {
-        List<Col> cols = new ArrayList<>();
+
+    public static ViewConfiguration build(TableConfiguration tableConfiguration,
+                                          JdbcTemplate jdbcTemplate) {
+        ViewConfiguration viewConfiguration = new ViewConfiguration();
+
+        viewConfiguration.setViewName(tableConfiguration.getViewName());
+        viewConfiguration.setEditable(tableConfiguration.isEditable());
+        viewConfiguration.setBtns(tableConfiguration.getButtons());
+        viewConfiguration.setPageable(tableConfiguration.isPageable());
+        viewConfiguration.setPageSize(tableConfiguration.getPageSize());
+
         List<Table> tables = tableConfiguration.getTables();
+        List<Col> cols = new ArrayList<>();
+        List<Col> searchCols = new ArrayList<>();
         for (Table table : tables) {
             List<Field> fields = table.getFields();
             for (Field field : fields) {
@@ -40,12 +50,17 @@ public class ColConfigurationBuilder {
                 col.setSearchable(field.getSearcher().getSearchable());
                 col.setRequired(field.getSearcher().getRequired());
                 col.setKeyFiled(field.getKeyFiled());
+                col.setSeachOrder(field.getSearcher().getSearchOrder());
 
                 JSONObject json = field.getMapJson();
                 if (json.get("type") != null) {
                     col.setFieldMapping(getMapping(json));
                 }
                 cols.add(col);
+
+                if (field.getSearcher().getSearchable()) {
+                    searchCols.add(col);
+                }
             }
         }
 
@@ -61,7 +76,24 @@ public class ColConfigurationBuilder {
                 }
             }
         });
-        return cols;
+
+        Collections.sort(searchCols, new Comparator<Col>() {
+            @Override
+            public int compare(Col o1, Col o2) {
+                if (o1.getSeachOrder() > o2.getSeachOrder()) {
+                    return 1;
+                } else if (o1.getSeachOrder() < o2.getSeachOrder()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+        viewConfiguration.setCols(cols);
+        viewConfiguration.setSearchCols(searchCols);
+
+        return viewConfiguration;
     }
 
     public static List<FieldMapping> getMapping(JSONObject jsonObject) {

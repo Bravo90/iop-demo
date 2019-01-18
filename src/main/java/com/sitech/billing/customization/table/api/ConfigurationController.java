@@ -1,6 +1,7 @@
 package com.sitech.billing.customization.table.api;
 
 import com.sitech.billing.common.bean.JsonResult;
+import com.sitech.billing.customization.table.configuration.ViewConfiguration;
 import com.sitech.billing.customization.table.context.TableContext;
 import com.sitech.billing.customization.table.model.Col;
 import com.sitech.billing.system.base.BaseController;
@@ -24,7 +25,7 @@ public class ConfigurationController extends BaseController {
     @GetMapping("/{viewId}")
     public JsonResult getConfig(@PathVariable Integer viewId) {
         TableContext context = new TableContext.Builder().tableConfig(viewId).jdbc(jdbcTemplate).buildView();
-        List<Col> cols = context.getCols();
-        return JsonResult.success(cols);
+        ViewConfiguration viewConfiguration = context.getViewConfiguration();
+        return JsonResult.success(viewConfiguration);
     }
 }

@@ -1,8 +1,5 @@
 $(function () {
-
-
     Table.init();
-
 });
 var Table = {
     URL: {

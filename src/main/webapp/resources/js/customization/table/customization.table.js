@@ -32,6 +32,10 @@
             this.renderSearchArea();
             this.renderTable();
         },
+        renderPage: function () {
+
+        }
+        ,
         renderTable: function () {
             var head = this.renderHead();
             var table = $('<table></table>')
@@ -88,13 +92,51 @@
         },
         renderSearchField: function (field) {
             var span = $('<span></span>').html(field['fieldDesc']);
+            var div = $('<div></div>').addClass('field').attr('field', field['fieldName']);
             if (field['required']) {
                 span.append('<span class="required">*</span>');
+                div.attr('required', true);
             }
-            console.log('fieldType = ' + field['fieldType'], field['fieldMapping']);
-            var input = $("<input>");
-            var div = $('<div></div>').addClass('field')
-                .append(span).append(input);
+            div.append(span);
+            //先判断是否是映射值
+
+            //根据搜索类型和字段类型生成查询条件输入框
+            var search = field['searchType'];
+            var fieldType = field['fieldType'];
+            switch (search) {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 11:
+                default: {
+                    if (fieldType == 3) {
+                        div.append('<input placeholder="开始" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
+                        div.append(' —');
+                        div.append('<input placeholder="结束" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
+                    } else {
+                        var input = $('<input>');
+                        div.append(input);
+                    }
+                    break;
+                }
+                case 10: {
+                    if (fieldType == 3) {
+                        div.append('<input placeholder="开始" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
+                        div.append(' —');
+                        div.append('<input placeholder="结束" class="Wdate select-control" onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">');
+                    } else {
+                        var input = $('<input placeholder="开始"><input placeholder="结束">');
+                        div.append(input);
+                    }
+                    break;
+                }
+            }
             return div;
         },
         query: function () {
@@ -120,7 +162,35 @@
                 var source = e.target;
                 var className = source.className;
                 if (className === 'layui-btn layui-btn-sm query-btn') {
-                    layer.msg('查询成功');
+                    var divs = $('.table-search-container').find('div');
+                    var params = new Array();
+                    $(divs).each(function () {
+                        var required = $(this).attr('required');
+                        var fieldName = $(this).attr('field');
+                        var inputs = $(this).find("input");
+                        var valueArr = new Array();
+                        if (inputs.length > 0) {
+                            for (var i = 0; i < inputs.length; i++) {
+                                if ($(inputs[i]).val() != '') {
+                                    valueArr.push($(inputs[i]).val());
+                                    $(inputs[i]).removeClass('empty-alert')
+                                }else{
+                                    if(required != undefined){
+                                        $(inputs[i]).addClass('empty-alert')
+                                        layer.msg('必选项不可为空', {icon: 2});
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                        if (valueArr.length > 0) {
+                            params.push({
+                                'name': fieldName,
+                                'value': valueArr
+                            });
+                        }
+                    });
+                    console.log(JSON.stringify(params));
                 } else if (className === 'layui-btn layui-btn-sm clear-btn') {
                     layer.alert('已重置');
                 } else if (

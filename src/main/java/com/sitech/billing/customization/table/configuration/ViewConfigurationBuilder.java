@@ -50,7 +50,8 @@ public class ViewConfigurationBuilder {
                 col.setSearchable(field.getSearcher().getSearchable());
                 col.setRequired(field.getSearcher().getRequired());
                 col.setKeyFiled(field.getKeyFiled());
-                col.setSeachOrder(field.getSearcher().getSearchOrder());
+                col.setSearchOrder(field.getSearcher().getSearchOrder());
+                col.setSearchType(field.getSearcher().getSearchType());
 
                 JSONObject json = field.getMapJson();
                 if (json.get("type") != null) {
@@ -80,9 +81,9 @@ public class ViewConfigurationBuilder {
         Collections.sort(searchCols, new Comparator<Col>() {
             @Override
             public int compare(Col o1, Col o2) {
-                if (o1.getSeachOrder() > o2.getSeachOrder()) {
+                if (o1.getSearchOrder() > o2.getSearchOrder()) {
                     return 1;
-                } else if (o1.getSeachOrder() < o2.getSeachOrder()) {
+                } else if (o1.getSearchOrder() < o2.getSearchOrder()) {
                     return -1;
                 } else {
                     return 0;

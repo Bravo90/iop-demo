@@ -26,6 +26,7 @@ public class Col {
     private Boolean searchable;
     private Boolean required;
     private Boolean keyFiled;
-    private Integer seachOrder;
+    private Integer searchOrder;
+    private Integer searchType;
     private List<FieldMapping> fieldMapping;
 }

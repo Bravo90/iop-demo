@@ -9,6 +9,7 @@
     <jsp:include page="../../common/head.jsp"/>
     <link href="${ctx}/resources/css/customization/table/customization.table.css" rel="stylesheet">
     <link href="${ctx}/resources/css/customization/table/table.css" rel="stylesheet">
+    <script type="text/javascript" src="${ctx}/resources/lib/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="${ctx}/resources/js/customization/table/customization.table.js"></script>
     <script type="text/javascript" src="${ctx}/resources/js/customization/table/table.js"></script>
     <title>查询界面</title>

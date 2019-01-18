@@ -26,6 +26,7 @@
     Table.prototype = {
         init: function () {
             this.renderView();
+            this.events();
         },
         renderView: function () {
             this.renderSearchArea();
@@ -80,8 +81,8 @@
                 }
             });
             searchArea.append('<div class="btn">' +
-                '<button class="layui-btn layui-btn-sm">查询</button>' +
-                '<button class="layui-btn layui-btn-sm">重置</button>' +
+                '<button class="layui-btn layui-btn-sm query-btn">查询</button>' +
+                '<button class="layui-btn layui-btn-sm clear-btn">重置</button>' +
                 '</div>');
             _this.ele.append(searchArea);
         },
@@ -111,6 +112,28 @@
         },
         insert: function () {
 
+        },
+        events: function () {
+            var _this = this;
+            _this.ele.on('click', function (e) {
+                var e = e || window.event;
+                var source = e.target;
+                var className = source.className;
+                if (className === 'layui-btn layui-btn-sm query-btn') {
+                    layer.msg('查询成功');
+                } else if (className === 'layui-btn layui-btn-sm clear-btn') {
+                    layer.alert('已重置');
+                } else if (
+                    className == 'edge table-sort-asc') {
+                    $('.table-sort-asc').removeClass('selected');
+                    $('.table-sort-desc').removeClass('selected');
+                    $(source).addClass('selected');
+                } else if (className == 'edge table-sort-desc') {
+                    $('.table-sort-asc').removeClass('selected');
+                    $('.table-sort-desc').removeClass('selected');
+                    $(source).addClass('selected');
+                }
+            });
         }
     };
 

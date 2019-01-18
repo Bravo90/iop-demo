@@ -14,19 +14,24 @@ var Table = {
     methods: {
         initTable: function (viewId) {
             $.get(Table.URL.config(viewId), {}, function (result) {
-                console.log(result.data);
-                $('#t-table').renderTable({
-                    tableId: viewId,
-                    viewName: result.data.viewName,
-                    editable: result.data.editable,
-                    pageable: result.data.pageable,
-                    pageSize: result.data.pageSize,
-                    col: result.data.cols,
-                    searchCols: result.data.searchCols,
-                    url: {
-                        query: Globals.contextPath() + '/table/query'
-                    }
-                });
+                var success = result['success'];
+                var msg = result['message'];
+                if (success == 1) {
+                    $('#t-table').renderTable({
+                        tableId: viewId,
+                        viewName: result.data.viewName,
+                        editable: result.data.editable,
+                        pageable: result.data.pageable,
+                        pageSize: result.data.pageSize,
+                        col: result.data.cols,
+                        searchCols: result.data.searchCols,
+                        url: {
+                            query: Globals.contextPath() + '/table/query'
+                        }
+                    });
+                } else {
+                    layer.msg(msg, {icon: 2});
+                }
             });
         }
     }

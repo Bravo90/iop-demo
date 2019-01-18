@@ -26,7 +26,7 @@
         this.requestParam = {
             'tableId': option.tableId,
             'fields': [],
-            'orders': [],
+            'order': [],
             'page': {'pageSize': 10, 'pageNum': 1}
         }
 
@@ -120,7 +120,6 @@
                 curr: pageNum,
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
                 jump: function (obj) {
-                    console.log(_this.requestParam.page.pageNum, _this.requestParam.pageSize)
                     if (obj.curr != _this.requestParam.page.pageNum ||
                         obj.limit != _this.requestParam.page.pageSize) {
                         _this.requestParam = $.extend(_this.requestParam, {
@@ -210,7 +209,7 @@
                         _this.buildPage(result.data);
                     });
             } else {
-                layer.msg('null')
+                layer.msg('服务接口尚未提供，请配置url.query路径')
             }
         },
         remove: function () {
@@ -240,12 +239,12 @@
                             for (var i = 0; i < inputs.length; i++) {
                                 if ($(inputs[i]).val() != '') {
                                     valueArr.push($(inputs[i]).val());
-                                    $(inputs[i]).removeClass('empty-alert')
+                                    $(inputs[i]).removeClass('empty-alert');
                                 } else {
                                     if (required != undefined) {
                                         $(inputs[i]).addClass('empty-alert')
                                         layer.msg('必选项不可为空', {icon: 2});
-                                        return;
+                                        return false;
                                     }
                                 }
                             }
@@ -257,18 +256,57 @@
                             });
                         }
                     });
-                    console.log(JSON.stringify(params));
+                    _this.requestParam = $.extend(_this.requestParam, {
+                        'fields': params
+                    });
+                    _this.query();
                 } else if (className === 'layui-btn layui-btn-sm clear-btn') {
-                    layer.alert('已重置');
-                } else if (
-                    className == 'edge table-sort-asc') {
+                    //清空查询条件
+
+
+                    $('.table-sort-asc').removeClass('selected');
+                    $('.table-sort-desc').removeClass('selected');
+                    //重新查询数据
+                    _this.requestParam = $.extend(_this.requestParam, {
+                        'fields': [],
+                        'order': [],
+                        'page': {'pageSize': 10, 'pageNum': 1}
+                    });
+                    _this.query();
+                } else if (className == 'edge table-sort-asc') {
                     $('.table-sort-asc').removeClass('selected');
                     $('.table-sort-desc').removeClass('selected');
                     $(source).addClass('selected');
+                    var field = $(source).parent().parent().attr('field-name');
+
+                    var orderArr = new Array();
+                    orderArr.push({
+                        "field": field,
+                        "type": "asc"
+                    });
+
+                    _this.requestParam = $.extend(_this.requestParam, {
+                        'order': orderArr
+                    });
+                    _this.query();
+
                 } else if (className == 'edge table-sort-desc') {
                     $('.table-sort-asc').removeClass('selected');
                     $('.table-sort-desc').removeClass('selected');
                     $(source).addClass('selected');
+                    var field = $(source).parent().parent().attr('field-name');
+
+                    var orderArr = new Array();
+                    orderArr.push({
+                        "field": field,
+                        "type": "desc"
+                    });
+                    _this.requestParam = $.extend(_this.requestParam, {
+                        'order': orderArr
+                    });
+                    console.log(_this.requestParam)
+                    _this.query();
+
                 }
             });
         }

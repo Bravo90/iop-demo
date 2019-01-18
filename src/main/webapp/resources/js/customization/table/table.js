@@ -23,6 +23,9 @@ var Table = {
                     pageSize: result.data.pageSize,
                     col: result.data.cols,
                     searchCols: result.data.searchCols,
+                    url: {
+                        query: Globals.contextPath() + '/table/query'
+                    }
                 });
             });
         }

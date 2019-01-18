@@ -80,6 +80,7 @@ public class TableConfigurationBuilder {
 
     private static Table buildTable(JSONObject json) {
         AssertUtils.isNull(json);
+
         Table table = new Table();
         table.setTableName(json.getString("tableName"));
         table.setTableDesc(json.getString("tableDesc"));
@@ -95,8 +96,8 @@ public class TableConfigurationBuilder {
 
     private static Field buildField(JSONObject json) {
         AssertUtils.isNull(json);
-        Field field = new Field();
 
+        Field field = new Field();
         field.setFieldName(json.getString("fieldName"));
         field.setFieldDesc(json.getString("fieldDesc"));
         field.setFieldAlias(json.getString("fieldAlias"));

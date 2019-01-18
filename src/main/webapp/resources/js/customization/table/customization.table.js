@@ -2,6 +2,10 @@
 ;(function ($, window, document, undefined) {
     var Table = function (ele, option) {
         this.ele = ele;
+        this.layui = window.layui;
+        this.layer = window.layui.layer;
+        this.laypage = window.layui.laypage;
+
         this.default = {
             tableId: 0,
             tableStyle: 'table-css',
@@ -18,9 +22,13 @@
             searchCols: []
         };
         this.option = $.extend({}, this.default, option);
-        this.layui = window.layui;
-        this.layer = window.layui.layer;
-        this.laypage = window.layui.laypage;
+
+        this.requestParam = {
+            'tableId': option.tableId,
+            'fields': [],
+            'orders': [],
+            'page': {'pageSize': 10, 'pageNum': 1}
+        }
 
         this.init();
     };
@@ -30,6 +38,7 @@
             this.renderView();
             this.events();
             this.renderPage();
+            this.query();
 
         },
         renderView: function () {
@@ -37,26 +46,18 @@
             this.renderTable();
         },
         renderPage: function () {
+            var _this = this;
             var div = $('<div></div>')
                 .attr('id', 'page-id')
                 .addClass('table-page');
-            this.ele.append(div);
-            this.laypage.render({
-                elem: 'page-id',
-                count: 0,
-                layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-                jump: function (obj) {
-                    console.log(obj.curr);
-                    console.log(obj);
-                }
-            });
-        }
-        ,
+            _this.ele.append(div);
+        },
         renderTable: function () {
             var head = this.renderHead();
+            var body = this.renderBody();
             var table = $('<table></table>')
                 .addClass(this.option.tableStyle)
-                .append(head);
+                .append(head).append(body);
             this.ele.append(table);
         },
         renderHead: function () {
@@ -90,7 +91,48 @@
             return th;
         },
         renderBody: function () {
-
+            var body = $('<tbody></tbody>').attr('id', 'tbody');
+            return body;
+        },
+        buildBody: function (list) {
+            var ths = $('th[field-name]');
+            $('#tbody').empty();
+            $(list).each(function () {
+                var _this = this;
+                var tr = $('<tr></tr>')
+                for (var i = 0; i < ths.length; i++) {
+                    var fieldName = $(ths[i]).attr('field-name');
+                    var td = $('<td></td>').html(_this[fieldName]);
+                    tr.append(td);
+                }
+                $('#tbody').append(tr);
+            });
+        },
+        buildPage: function (data) {
+            var _this = this;
+            var limit = data.pageSize;
+            var count = data.total;
+            var pageNum = data.pageNum;
+            _this.laypage.render({
+                elem: 'page-id',
+                count: count,
+                limit: limit,
+                curr: pageNum,
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                jump: function (obj) {
+                    console.log(_this.requestParam.page.pageNum, _this.requestParam.pageSize)
+                    if (obj.curr != _this.requestParam.page.pageNum ||
+                        obj.limit != _this.requestParam.page.pageSize) {
+                        _this.requestParam = $.extend(_this.requestParam, {
+                            'page': {
+                                'pageSize': obj.limit,
+                                'pageNum': obj.curr
+                            }
+                        });
+                        _this.query();
+                    }
+                }
+            });
         },
         renderSearchArea: function () {
             var _this = this;
@@ -156,10 +198,19 @@
             return div;
         },
         query: function () {
-            if (this.option.url.query != '') {
-
+            var _this = this;
+            if (_this.option.url.query != '') {
+                $.get(_this.option.url.query,
+                    {'param': JSON.stringify(this.requestParam)},
+                    function (result) {
+                        var list = result.data.list;
+                        //tbody数据构建
+                        _this.buildBody(list);
+                        //分页处理
+                        _this.buildPage(result.data);
+                    });
             } else {
-
+                layer.msg('null')
             }
         },
         remove: function () {

@@ -331,7 +331,10 @@
                     });
                     _this.query();
                 } else if (className === 'layui-btn layui-btn-sm clear-btn') {
+                    console.log(123)
                     //清空查询条件
+                    $('.field').find('input').val("");
+                    $('.field').find('select option:first').prop("selected", 'selected');
 
                     $('.table-sort-asc').removeClass('selected');
                     $('.table-sort-desc').removeClass('selected');

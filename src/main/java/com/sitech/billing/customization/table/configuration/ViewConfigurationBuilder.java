@@ -64,8 +64,6 @@ public class ViewConfigurationBuilder {
                 if (field.getSearcher().getSearchable()) {
                     searchCols.add(col);
                 }
-
-
             }
         }
 
@@ -98,6 +96,7 @@ public class ViewConfigurationBuilder {
         viewConfiguration.setCols(cols);
         viewConfiguration.setSearchCols(searchCols);
         viewConfiguration.setFieldMap(fieldMap);
+        viewConfiguration.setBtns(tableConfiguration.getButtons());
         return viewConfiguration;
     }
 

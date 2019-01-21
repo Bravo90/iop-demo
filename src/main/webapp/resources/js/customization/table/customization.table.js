@@ -19,7 +19,8 @@
             pageSize: 10,
             col: [],
             searchCols: [],
-            fieldMap: []
+            fieldMap: [],
+            btns: []
         };
         this.option = $.extend({}, this.default, option);
         this.requestParam = {
@@ -223,22 +224,39 @@
             return div;
         },
         renderTools: function () {
-            var div = $('<div></div>').addClass('table-tools');
-            var style1 = 'color:#009688;font-size: 30px;margin-right: 10px;cursor: pointer;';
-            var style2 = 'color:#009688;font-size: 30px;float: right;margin-right: 10px;cursor: pointer';
-            var add = '<i title="新增" class="layui-icon layui-icon-add-circle-fine" style="' + style1 + '"></i>';
-            var del = '<i title="删除" class="layui-icon layui-icon-delete" style="' + style1 + '"></i>';
-            var update = ' <i title="修改" class="layui-icon layui-icon-edit" style="' + style1 + '" ></i>';
-            var dataOutput = '<i title="数据导入" class="layui-icon layui-icon-upload-drag"  style="' + style2 + '" ></i>';
-            var dataInput = '<i title="数据导出" class="layui-icon layui-icon-download-circle"  style="' + style2 + '" ></i>';
-
-
-            div.append(add);
-            div.append(del);
-            div.append(update);
-            div.append(dataOutput);
-            div.append(dataInput);
-            this.ele.append(div);
+            var btns = this.option.btns;
+            if (btns.length > 0) {
+                var div = $('<div></div>').addClass('table-tools');
+                var style1 = 'color:#009688;font-size: 30px;margin-right: 10px;cursor: pointer;';
+                var style2 = 'color:#009688;font-size: 30px;float: right;margin-right: 10px;cursor: pointer';
+                $(btns).each(function () {
+                    var className = this['btnClass'];
+                    var btnName = this['btnName'];
+                    switch (className) {
+                        case 'add':
+                            var add = '<i title="' + btnName + '" class="layui-icon layui-icon-add-circle-fine" style="' + style1 + '"></i>';
+                            div.append(add);
+                            break;
+                        case 'del':
+                            var del = '<i title="' + btnName + '" class="layui-icon layui-icon-delete" style="' + style1 + '"></i>';
+                            div.append(del);
+                            break;
+                        case 'update':
+                            var update = ' <i title="' + btnName + '" class="layui-icon layui-icon-edit" style="' + style1 + '" ></i>';
+                            div.append(update);
+                            break;
+                        case 'dataOutput':
+                            var dataOutput = '<i title="' + btnName + '" class="layui-icon layui-icon-download-circle"  style="' + style2 + '" ></i>';
+                            div.append(dataOutput);
+                            break;
+                        case 'dataInput':
+                            var dataInput = '<i title="' + btnName + '" class="layui-icon layui-icon-upload-drag"  style="' + style2 + '" ></i>';
+                            div.append(dataInput);
+                            break;
+                    }
+                });
+                this.ele.append(div);
+            }
         },
         query: function () {
             var _this = this;

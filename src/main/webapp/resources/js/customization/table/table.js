@@ -27,6 +27,7 @@ var Table = {
                         col: result.data.cols,
                         searchCols: result.data.searchCols,
                         fieldMap: result.data.fieldMap,
+                        btns: result.data.btns,
                         url: {
                             query: Globals.contextPath() + '/table/query'
                         }

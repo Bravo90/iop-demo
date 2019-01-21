@@ -44,6 +44,7 @@ public class PageHandler {
         AbstractHelperDialect dialect = PageDialect.getDialect(dbDialect);
         CacheKey cacheKey = new CacheKey();
         String pageSql = dialect.getPageSql(sql, page, cacheKey);
+        System.err.println(pageSql);
         return pageSql;
     }
 

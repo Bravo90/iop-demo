@@ -9,6 +9,7 @@ import com.sitech.billing.customization.table.excute.BaseExecute;
 import com.sitech.billing.customization.table.excute.ExecuteBuilder;
 import com.sitech.billing.customization.table.model.Button;
 import com.sitech.billing.customization.table.model.Col;
+import com.sitech.billing.customization.table.model.FieldMapping;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
@@ -29,7 +30,6 @@ public class TableContext {
     private TableConfiguration tableConfiguration;
     private BaseExecute execute;
     private ViewConfiguration viewConfiguration;
-
 
     private TableContext(Integer id, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
                          List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {

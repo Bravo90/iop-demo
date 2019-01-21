@@ -18,7 +18,8 @@
             pageable: true,
             pageSize: 10,
             col: [],
-            searchCols: []
+            searchCols: [],
+            fieldMap: []
         };
         this.option = $.extend({}, this.default, option);
         this.requestParam = {
@@ -33,12 +34,13 @@
     Table.prototype = {
         init: function () {
             this.renderView();
-            this.events();
             this.renderPage();
             this.query();
+            this.events();
         },
         renderView: function () {
             this.renderSearchArea();
+            this.renderTools();
             this.renderTable();
         },
         renderPage: function () {
@@ -59,6 +61,9 @@
         renderHead: function () {
             var _this = this;
             var tr = $('<tr></tr>');
+            if (_this.option.editable) {
+                tr.append('<th class="check-all"><input class="check-all" type="checkbox"></th>');
+            }
             $(_this.option.col).each(function () {
                 var th = _this.renderHeadTh(this);
                 tr.append(th);
@@ -91,14 +96,25 @@
             return body;
         },
         buildBody: function (list) {
+            var _this = this;
             var ths = $('th[field-name]');
             $('#tbody').empty();
             $(list).each(function () {
-                var _this = this;
-                var tr = $('<tr></tr>')
+                var tr = $('<tr></tr>');
+                if (_this.option.editable) {
+                    tr.append('<td class="checkbox"><input class="checkbox" type="checkbox"></td>');
+                }
                 for (var i = 0; i < ths.length; i++) {
+                    var td = $('<td></td>');
                     var fieldName = $(ths[i]).attr('field-name');
-                    var td = $('<td></td>').html(_this[fieldName]);
+                    //码表转译
+                    var vk = _this.option.fieldMap[fieldName];
+                    if (vk != undefined) {
+                        var value = _this.handleFieldMap(vk, this[fieldName]);
+                        td.html(value);
+                    } else {
+                        td.html(this[fieldName]);
+                    }
                     tr.append(td);
                 }
                 $('#tbody').append(tr);
@@ -144,6 +160,7 @@
             _this.ele.append(searchArea);
         },
         renderSearchField: function (field) {
+            var _this = this;
             var span = $('<span></span>').html(field['fieldDesc']);
             var div = $('<div></div>').addClass('field').attr('field', field['fieldName']);
             if (field['required']) {
@@ -157,6 +174,19 @@
             var search = field['searchType'];
             var fieldType = field['fieldType'];
             switch (search) {
+                case 101: {
+                    var fieldMap = _this.option.fieldMap[field['fieldName']];
+                    var select = $('<select></select>');
+                    select.append('<option value="none">--请选择--</option>');
+                    for (var i = 0; i < fieldMap.length; i++) {
+                        var key = fieldMap[i].key;
+                        var value = fieldMap[i].value;
+                        var option = $('<option value="' + key + '">' + value + '</option>');
+                        select.append(option);
+                    }
+                    div.append(select);
+                    break;
+                }
                 case 1:
                 case 2:
                 case 3:
@@ -191,6 +221,24 @@
                 }
             }
             return div;
+        },
+        renderTools: function () {
+            var div = $('<div></div>').addClass('table-tools');
+            var style1 = 'color:#009688;font-size: 30px;margin-right: 10px;cursor: pointer;';
+            var style2 = 'color:#009688;font-size: 30px;float: right;margin-right: 10px;cursor: pointer';
+            var add = '<i title="新增" class="layui-icon layui-icon-add-circle-fine" style="' + style1 + '"></i>';
+            var del = '<i title="删除" class="layui-icon layui-icon-delete" style="' + style1 + '"></i>';
+            var update = ' <i title="修改" class="layui-icon layui-icon-edit" style="' + style1 + '" ></i>';
+            var dataOutput = '<i title="数据导入" class="layui-icon layui-icon-upload-drag"  style="' + style2 + '" ></i>';
+            var dataInput = '<i title="数据导出" class="layui-icon layui-icon-download-circle"  style="' + style2 + '" ></i>';
+
+
+            div.append(add);
+            div.append(del);
+            div.append(update);
+            div.append(dataOutput);
+            div.append(dataInput);
+            this.ele.append(div);
         },
         query: function () {
             var _this = this;
@@ -229,7 +277,8 @@
                     $(divs).each(function () {
                         var required = $(this).attr('required');
                         var fieldName = $(this).attr('field');
-                        var inputs = $(this).find("input");
+                        var inputs = $(this).find('input');
+                        var selects = $(this).find('select');
                         var valueArr = new Array();
                         if (inputs.length > 0) {
                             for (var i = 0; i < inputs.length; i++) {
@@ -242,6 +291,13 @@
                                         layer.msg('必选项不可为空', {icon: 2});
                                         return false;
                                     }
+                                }
+                            }
+                        } else if (selects.length > 0) {
+                            for (var i = 0; i < selects.length; i++) {
+                                var value = $(selects[i]).find('option:selected').val();
+                                if (value != 'none') {
+                                    valueArr.push(value);
                                 }
                             }
                         }
@@ -298,8 +354,31 @@
                     });
                     console.log(_this.requestParam)
                     _this.query();
+                } else if (className == 'layui-icon layui-icon-add-circle-fine') {
+                    layer.msg('新增记录', {icon: 2});
+                } else if (className == 'layui-icon layui-icon-delete') {
+                    layer.msg('删除记录', {icon: 2});
+                } else if (className == 'layui-icon layui-icon-edit') {
+                    layer.msg('更新记录', {icon: 2});
+                } else if (className == 'layui-icon layui-icon-upload-drag') {
+                    layer.msg('导入记录', {icon: 2});
+                } else if (className == 'layui-icon layui-icon-download-circle') {
+                    layer.msg('导出记录', {icon: 2});
                 }
             });
+            $('input[type=checkbox]').on('change', function () {
+                if ($(this).hasClass('check-all')) {
+                    $('.checkbox').attr("checked", $(this).is(':checked'));
+                }
+            });
+        },
+        handleFieldMap: function (list, value) {
+            for (var i = 0; i < list.length; i++) {
+                if (list[i]['key'] == value) {
+                    return list[i]['value'];
+                }
+            }
+            return value;
         }
     };
     $.fn.renderTable = function (option) {

@@ -37,6 +37,7 @@ public class ViewConfigurationBuilder {
         List<Table> tables = tableConfiguration.getTables();
         List<Col> cols = new ArrayList<>();
         List<Col> searchCols = new ArrayList<>();
+        Map<String, List<FieldMapping>> fieldMap = new HashMap<>();
         for (Table table : tables) {
             List<Field> fields = table.getFields();
             for (Field field : fields) {
@@ -56,12 +57,15 @@ public class ViewConfigurationBuilder {
                 JSONObject json = field.getMapJson();
                 if (json.get("type") != null) {
                     col.setFieldMapping(getMapping(json));
+                    fieldMap.put(field.getFieldName(), getMapping(json));
                 }
                 cols.add(col);
 
                 if (field.getSearcher().getSearchable()) {
                     searchCols.add(col);
                 }
+
+
             }
         }
 
@@ -93,7 +97,7 @@ public class ViewConfigurationBuilder {
 
         viewConfiguration.setCols(cols);
         viewConfiguration.setSearchCols(searchCols);
-
+        viewConfiguration.setFieldMap(fieldMap);
         return viewConfiguration;
     }
 

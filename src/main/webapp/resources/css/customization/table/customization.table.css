@@ -26,7 +26,7 @@
     white-space: nowrap !important;
 }
 
-.table-css th.checkbox {
+.table-css th.check-all {
     width: 40px !important;
     text-align: center;
 }

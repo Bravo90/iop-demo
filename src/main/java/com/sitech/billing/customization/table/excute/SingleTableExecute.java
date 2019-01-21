@@ -41,7 +41,6 @@ public class SingleTableExecute extends BaseExecute {
     @Override
     public PageInfo<Map<String, Object>> queryByPage() {
         String sql = querySqlInit();
-        System.err.println(sql);
         PageHandler pageHandler = new PageHandler(sql, pageInfo, dbDialect, jdbcTemplate);
         try {
             PageInfo<Map<String, Object>> pageInfo = new PageInfo(pageHandler.pageResult());

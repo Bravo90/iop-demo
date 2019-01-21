@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 处理处理运算符
+ *
  * @author sunzhen
  * @date 2019/1/10 10:32
  */
@@ -28,6 +29,7 @@ public class OperatorHandler {
 
         switch (searchType) {
             case OperatorType.EQUALS:
+            case OperatorType.CODE_EQUALS:
                 if (list.size() == 1) {
                     sb.append(fieldName).append("=").append(list.get(0));
                 }

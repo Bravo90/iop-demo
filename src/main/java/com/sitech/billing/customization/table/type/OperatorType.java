@@ -2,6 +2,7 @@ package com.sitech.billing.customization.table.type;
 
 /**
  * 运算类型
+ *
  * @author sunzhen
  * @date 2019/1/10 10:04
  */
@@ -17,4 +18,6 @@ public abstract class OperatorType {
     public static final int LIKE_RIGHT = 9;
     public static final int BETWEEN_AND = 10;
     public static final int IN = 11;
+    /*码表映射类型 使用等于*/
+    public static final int CODE_EQUALS = 101;
 }

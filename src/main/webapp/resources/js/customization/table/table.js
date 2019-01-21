@@ -14,6 +14,7 @@ var Table = {
     methods: {
         initTable: function (viewId) {
             $.get(Table.URL.config(viewId), {}, function (result) {
+                console.log(result)
                 var success = result['success'];
                 var msg = result['message'];
                 if (success == 1) {
@@ -25,6 +26,7 @@ var Table = {
                         pageSize: result.data.pageSize,
                         col: result.data.cols,
                         searchCols: result.data.searchCols,
+                        fieldMap: result.data.fieldMap,
                         url: {
                             query: Globals.contextPath() + '/table/query'
                         }

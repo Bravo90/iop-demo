@@ -35,6 +35,13 @@
     margin-left: 2px;
     background: white !important;
 }
+.table-search-container .field > select {
+    width: 150px;
+    height: 28px;
+    padding: 2px 5px;
+    margin-left: 2px;
+    background: white !important;
+}
 
 .table-search-container .field > span {
     padding: 5px;

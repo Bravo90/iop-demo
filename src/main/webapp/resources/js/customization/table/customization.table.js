@@ -102,7 +102,7 @@
             $(list).each(function () {
                 var tr = $('<tr></tr>');
                 if (_this.option.editable) {
-                    tr.append('<td class="checkbox"><input class="checkbox" type="checkbox"></td>');
+                    tr.append('<td class="checkbox"><input class="checkItem" type="checkbox"></td>');
                 }
                 for (var i = 0; i < ths.length; i++) {
                     var td = $('<td></td>');
@@ -355,11 +355,40 @@
                     console.log(_this.requestParam)
                     _this.query();
                 } else if (className == 'layui-icon layui-icon-add-circle-fine') {
-                    layer.msg('新增记录', {icon: 2});
+                    var ths = $('.check-all').parent().siblings();
+                    var content = _this.getUpdateContent(ths);
+                    layer.open({
+                        type: 1,
+                        title: '新增数据',
+                        anim: 1,
+                        skin: 'layui-layer-molv',
+                        area: ['290px', '400px'], //宽高
+                        content: content
+                    });
                 } else if (className == 'layui-icon layui-icon-delete') {
-                    layer.msg('删除记录', {icon: 2});
+                    var checked = $('.checkItem:checked');
+                    if (checked.length <= 0) {
+                        layer.msg('请至少选择一个删除项', {icon: 2})
+                    } else {
+                        layer.msg('删除记录成功', {icon: 1});
+                    }
                 } else if (className == 'layui-icon layui-icon-edit') {
-                    layer.msg('更新记录', {icon: 2});
+                    var checked = $('.checkItem:checked');
+                    if (checked.length != 1) {
+                        layer.msg('请选择一项进行编辑', {icon: 2});
+                    } else {
+                        var tds = $('.checkItem:checked').parent().siblings();
+                        var ths = $('.check-all').parent().siblings();
+                        var content = _this.getUpdateContent(ths, tds);
+                        layer.open({
+                            type: 1,
+                            title: '更新数据',
+                            anim: 1,
+                            skin: 'layui-layer-molv',
+                            area: ['290px', '400px'], //宽高
+                            content: content
+                        });
+                    }
                 } else if (className == 'layui-icon layui-icon-upload-drag') {
                     layer.msg('导入记录', {icon: 2});
                 } else if (className == 'layui-icon layui-icon-download-circle') {
@@ -368,8 +397,15 @@
             });
             $('input[type=checkbox]').on('change', function () {
                 if ($(this).hasClass('check-all')) {
-                    $('.checkbox').attr("checked", $(this).is(':checked'));
+                    var checked = $(this).is(':checked');
+                    $('.checkItem').each(function () {
+                        $(this).prop('checked', checked);
+                    });
                 }
+            });
+            //更新确定
+            $(document).on('click', '.update-confirm', function () {
+                layer.msg('1');
             });
         },
         handleFieldMap: function (list, value) {
@@ -379,6 +415,18 @@
                 }
             }
             return value;
+        },
+        getUpdateContent: function (ths, tds) {
+            var content = '<div class="insert-update-container">';
+            $(ths).each(function (index) {
+                var value = "";
+                if (tds != undefined) {
+                    value = $(tds[index]).text();
+                }
+                content += ('<span>' + $(this).text() + '</span><div><input value="' + value + '"></div>');
+            });
+            content += '<div></div><div><button class="layui-btn layui-btn-sm update-confirm">确定</button></div>';
+            return content + '</div>';
         }
     };
     $.fn.renderTable = function (option) {

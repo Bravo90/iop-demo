@@ -35,6 +35,7 @@
     margin-left: 2px;
     background: white !important;
 }
+
 .table-search-container .field > select {
     width: 150px;
     height: 28px;
@@ -62,12 +63,44 @@
     line-height: 40px;
     float: right;
 }
-.table-page{
+
+.table-page {
     width: 100%;
     height: auto;
     text-align: center;
     margin-top: 15px;
 }
+
 .empty-alert {
     border: 1px solid red;
+}
+
+.insert-update-container {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    font-size: 14px;
+}
+
+.insert-update-container span {
+    width: 30%;
+    height: 40px;
+    float: left;
+    line-height: 40px;
+}
+
+.insert-update-container div {
+    width: 50%;
+    height: 40px;
+    float: left;
+    line-height: 40px;
+}
+
+.insert-update-container div > input {
+    width: 180px;
+    height: 28px;
+}
+
+.insert-update-container div > button {
+    margin-left: 85px;
 }

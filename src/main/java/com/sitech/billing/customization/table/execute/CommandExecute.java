@@ -1,4 +1,4 @@
-package com.sitech.billing.customization.table.excute;
+package com.sitech.billing.customization.table.execute;
 
 import com.github.pagehelper.PageInfo;
 

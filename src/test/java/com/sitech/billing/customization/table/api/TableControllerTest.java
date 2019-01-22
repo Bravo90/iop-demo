@@ -84,7 +84,13 @@ public class TableControllerTest {
     }
 
     @Test
-    public void insert() {
+    public void insert() throws Exception{
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/table/insert")
+                        .param("param", QUERY_PARAM)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(MockMvcResultHandlers.print());
     }
 
     @Test

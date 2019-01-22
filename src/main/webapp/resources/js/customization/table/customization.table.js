@@ -169,22 +169,13 @@
                 div.attr('required', true);
             }
             div.append(span);
-            //先判断是否是映射值
-
             //根据搜索类型和字段类型生成查询条件输入框
             var search = field['searchType'];
             var fieldType = field['fieldType'];
             switch (search) {
                 case 101: {
                     var fieldMap = _this.option.fieldMap[field['fieldName']];
-                    var select = $('<select></select>');
-                    select.append('<option value="none">--请选择--</option>');
-                    for (var i = 0; i < fieldMap.length; i++) {
-                        var key = fieldMap[i].key;
-                        var value = fieldMap[i].value;
-                        var option = $('<option value="' + key + '">' + value + '</option>');
-                        select.append(option);
-                    }
+                    var select = _this.buildSeletMap(fieldMap);
                     div.append(select);
                     break;
                 }
@@ -444,10 +435,27 @@
                 if (tds != undefined) {
                     value = $(tds[index]).text();
                 }
-                content += ('<span>' + $(this).text() + '</span><div><input value="' + value + '"></div>');
+
+                //先判断是否为映射值
+
+                content += ('<span >' +
+                    $(this).text() + '</span><div><input field-name="' +
+                    $(this).attr('field-name') + '" ' + 'value="' + value + '"></div>');
             });
-            content += '<div></div><div><button class="layui-btn layui-btn-sm update-confirm">确定</button></div>';
+            content += '<div></div>' +
+                '<div><button class="layui-btn layui-btn-sm update-confirm">确定</button></div>';
             return content + '</div>';
+        },
+        buildSeletMap: function (fieldMap) {
+            var select = $('<select></select>');
+            select.append('<option value="none">--请选择--</option>');
+            for (var i = 0; i < fieldMap.length; i++) {
+                var key = fieldMap[i].key;
+                var value = fieldMap[i].value;
+                var option = $('<option value="' + key + '">' + value + '</option>');
+                select.append(option);
+            }
+            return select;
         }
     };
     $.fn.renderTable = function (option) {

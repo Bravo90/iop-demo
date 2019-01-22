@@ -13,6 +13,7 @@ import com.sitech.billing.system.base.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.JDBCType;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +42,11 @@ public class TableController extends BaseController {
         //获得context
         TableContext context =
                 new TableContext.Builder().dbDialect(DialectType.MYSQL).jdbc(jdbcTemplate)
-                .tableConfig(tableId)
-                .fieldValues(fieldValues)
-                .fieldOrders(fieldOrders)
-                .pageInfo(pageInfo)
-                .build();
+                        .tableConfig(tableId)
+                        .fieldValues(fieldValues)
+                        .fieldOrders(fieldOrders)
+                        .pageInfo(pageInfo)
+                        .build();
         //查询
         try {
             PageInfo<Map<String, Object>> pageResult = context.queryByPage();
@@ -57,7 +58,7 @@ public class TableController extends BaseController {
 
     }
 
-    @PutMapping("/insert")
+    @GetMapping("/insert")
     public JsonResult insert(@RequestParam String param) {
         return JsonResult.success();
     }
@@ -71,4 +72,5 @@ public class TableController extends BaseController {
     public JsonResult update(@RequestParam String param) {
         return JsonResult.success();
     }
+
 }

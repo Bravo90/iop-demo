@@ -1,4 +1,4 @@
-package com.sitech.billing.customization.table.excute;
+package com.sitech.billing.customization.table.execute;
 
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
@@ -31,7 +31,8 @@ public class ExecuteBuilder {
                         fieldValues, fieldOrders, pageInfo, dbDialect);
                 break;
             case DataSourceType.SQL_STATEMENT:
-                execute = new SqlExcute();
+                execute = new SqlExecute(tableConfiguration, jdbcTemplate,
+                        fieldValues, fieldOrders, pageInfo, dbDialect);
                 break;
             case DataSourceType.MULTI_TABLE:
                 execute = new MultiExcute();

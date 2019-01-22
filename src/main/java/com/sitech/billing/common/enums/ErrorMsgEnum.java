@@ -24,7 +24,9 @@ public enum ErrorMsgEnum {
     AUTHC_NAME_ALREADY_EXIST(1010, "权限名称已存在"),
 
     CONFIGURATION_NOT_EXIST(2001, "表配置信息不存在"),
-    FIELD_MAPPING_HANDLER_NOT_EXIST(2002, "字段映射解析类不存在");
+    FIELD_MAPPING_HANDLER_NOT_EXIST(2002, "字段映射解析类不存在"),
+    OPERATION_NOT_SUPPORT(2003, "不支持该操作");
+
 
     private Integer errorCode;
     private String errorMsg;

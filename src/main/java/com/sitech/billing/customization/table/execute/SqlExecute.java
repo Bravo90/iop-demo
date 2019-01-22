@@ -1,28 +1,28 @@
-package com.sitech.billing.customization.table.excute;
+package com.sitech.billing.customization.table.execute;
 
 import com.github.pagehelper.PageInfo;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
+import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import com.sitech.billing.customization.table.pagehelper.PageHandler;
-import com.sitech.billing.customization.table.sql.SampleSqlBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sun.rmi.runtime.Log;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * 单表的增删改查
+ * 查询语句处理器
  *
  * @author sunzhen
- * @date 2019/1/15 14:06
+ * @date 2019/1/15 15:17
  */
-public class SingleTableExecute extends BaseExecute {
+public class SqlExecute extends BaseExecute {
 
 
-    public SingleTableExecute(TableConfiguration tableConfiguration, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
+    public SqlExecute(TableConfiguration tableConfiguration, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
                               List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
         super();
         this.dbDialect = dbDialect;
@@ -50,39 +50,22 @@ public class SingleTableExecute extends BaseExecute {
         }
     }
 
+    private String querySqlInit() {
+        return null;
+    }
+
     @Override
     public void insert() {
-
+        throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 
     @Override
     public void update() {
-
+        throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 
     @Override
     public void delete() {
-
-    }
-
-    private String querySqlInit() {
-        String sql = SampleSqlBuilder.initQuerySql(this.tableConfiguration, this.fieldValues,
-                this.fieldOrders, this.pageInfo);
-        return sql;
-    }
-
-
-    private String insertSqlInit() {
-        return null;
-    }
-
-
-    private String deleteSqlInit() {
-        return null;
-    }
-
-
-    private String updateSqlInit() {
-        return null;
+        throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 }

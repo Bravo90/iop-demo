@@ -18,7 +18,7 @@ import java.util.List;
 @ToString
 public class Table {
 
-    /* 表名称 如：sys_iop_user */
+    /* 表名称或sql语句 如：sys_iop_user */
     private String tableName;
     /* 表描述 如：用户信息表*/
     private String tableDesc;

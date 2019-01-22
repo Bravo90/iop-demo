@@ -23,7 +23,6 @@ public class SampleSqlBuilder {
 
     public static String initQuerySql(TableConfiguration cfg, List<FieldValue> fieldValues,
                                       List<FieldOrder> fieldOrders, RequestPageInfo pageInfo) {
-
         SQL sql = new SQL();
         List<Table> tables = cfg.getTables();
         if (tables.size() != 1) {
@@ -54,10 +53,8 @@ public class SampleSqlBuilder {
                 order(sql, fieldOrder);
             }
         }
-
         //sql拦截器，可对sql进行自定义处理
         SqlFilter.doFilter(sql);
-
         return sql.toString();
     }
 

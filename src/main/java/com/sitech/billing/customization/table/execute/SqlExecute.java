@@ -8,6 +8,7 @@ import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import com.sitech.billing.customization.table.pagehelper.PageHandler;
+import com.sitech.billing.customization.table.sql.StatementBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class SqlExecute extends BaseExecute {
 
 
     public SqlExecute(TableConfiguration tableConfiguration, JdbcTemplate jdbcTemplate, List<FieldValue> fieldValues,
-                              List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
+                      List<FieldOrder> fieldOrders, RequestPageInfo pageInfo, String dbDialect) {
         super();
         this.dbDialect = dbDialect;
         this.jdbcTemplate = jdbcTemplate;
@@ -51,7 +52,8 @@ public class SqlExecute extends BaseExecute {
     }
 
     private String querySqlInit() {
-        return null;
+        return StatementBuilder.initQuerySql(this.tableConfiguration, this.fieldValues,
+                this.fieldOrders, this.pageInfo);
     }
 
     @Override

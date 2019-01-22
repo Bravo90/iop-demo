@@ -34,4 +34,26 @@ public class FieldDecoration {
         }
         return fd;
     }
+
+    public static Field statementDecorate(Field field) {
+        Field fd = new Field();
+        BeanUtils.copyProperties(field, fd);
+        if (fd.getFieldType() == 3) {
+            String fieldAlias = fd.getFieldAlias();
+            fieldAlias = "date_format(" + fieldAlias + ", '%Y-%m-%d %H:%i:%s')";
+            fd.setFieldAlias(fieldAlias);
+        }
+        return fd;
+    }
+
+    public static Field statementDecorateWhere(Field field) {
+        Field fd = new Field();
+        BeanUtils.copyProperties(field, fd);
+        if (fd.getFieldType() == 3) {
+            String fieldAlias = fd.getFieldAlias();
+            fieldAlias = "date_format(" + fieldAlias + ", '%Y-%m-%d %H:%i:%s')";
+            fd.setFieldAlias(fieldAlias);
+        }
+        return fd;
+    }
 }

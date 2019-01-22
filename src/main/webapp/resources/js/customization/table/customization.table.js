@@ -175,8 +175,14 @@
             switch (search) {
                 case 101: {
                     var fieldMap = _this.option.fieldMap[field['fieldName']];
-                    var select = _this.buildSeletMap(fieldMap);
-                    div.append(select);
+                    console.log(fieldMap)
+                    if (fieldMap != undefined) {
+                        var select = _this.buildSeletMap(fieldMap);
+                        div.append(select);
+                    } else {
+                        var input = $('<input>');
+                        div.append(input);
+                    }
                     break;
                 }
                 case 1:

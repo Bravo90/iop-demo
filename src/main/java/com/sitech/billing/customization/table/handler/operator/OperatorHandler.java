@@ -22,7 +22,7 @@ public class OperatorHandler {
         int searchType = field.getSearcher().getSearchType();
         int fieldType = field.getFieldType();
         List<String> values = fieldValue.getValue();
-        String fieldName = field.getFieldName();
+        String fieldName = field.getFieldAlias();
 
         StringBuffer sb = new StringBuffer();
         List<String> list = FieldTypeHandler.handler(fieldType, likeHandle(values, searchType));

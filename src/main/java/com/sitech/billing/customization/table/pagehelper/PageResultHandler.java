@@ -16,7 +16,7 @@ import java.util.Map;
  * @author sunzhen
  * @date 2019/1/11 9:16
  */
-public class PageHandler {
+public class PageResultHandler {
 
     private String sql;
     private RequestPageInfo pageInfo;
@@ -25,7 +25,7 @@ public class PageHandler {
     private String dbDialect;
     private JdbcTemplate jdbcTemplate;
 
-    public PageHandler(String sql, RequestPageInfo pageInfo, String dbDialect, JdbcTemplate jdbcTemplate) {
+    public PageResultHandler(String sql, RequestPageInfo pageInfo, String dbDialect, JdbcTemplate jdbcTemplate) {
         this.sql = sql;
         this.pageInfo = pageInfo;
         this.dbDialect = dbDialect;

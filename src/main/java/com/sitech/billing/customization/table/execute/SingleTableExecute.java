@@ -5,7 +5,7 @@ import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
-import com.sitech.billing.customization.table.pagehelper.PageHandler;
+import com.sitech.billing.customization.table.pagehelper.PageResultHandler;
 import com.sitech.billing.customization.table.sql.SampleSqlBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -40,7 +40,7 @@ public class SingleTableExecute extends BaseExecute {
     @Override
     public PageInfo<Map<String, Object>> queryByPage() {
         String sql = querySqlInit();
-        PageHandler pageHandler = new PageHandler(sql, pageInfo, dbDialect, jdbcTemplate);
+        PageResultHandler pageHandler = new PageResultHandler(sql, pageInfo, dbDialect, jdbcTemplate);
         try {
             PageInfo<Map<String, Object>> pageInfo = new PageInfo(pageHandler.pageResult());
             return pageInfo;

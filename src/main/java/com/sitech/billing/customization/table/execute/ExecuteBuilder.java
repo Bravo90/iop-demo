@@ -1,6 +1,7 @@
 package com.sitech.billing.customization.table.execute;
 
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
+import com.sitech.billing.customization.table.execute.impl.*;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
@@ -31,7 +32,7 @@ public class ExecuteBuilder {
                         fieldValues, fieldOrders, pageInfo, dbDialect);
                 break;
             case DataSourceType.SQL_STATEMENT:
-                execute = new SqlExecute(tableConfiguration, jdbcTemplate,
+                execute = new SqlStatementExecute(tableConfiguration, jdbcTemplate,
                         fieldValues, fieldOrders, pageInfo, dbDialect);
                 break;
             case DataSourceType.MULTI_TABLE:

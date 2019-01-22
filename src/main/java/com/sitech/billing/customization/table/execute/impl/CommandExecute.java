@@ -1,6 +1,7 @@
-package com.sitech.billing.customization.table.execute;
+package com.sitech.billing.customization.table.execute.impl;
 
 import com.github.pagehelper.PageInfo;
+import com.sitech.billing.customization.table.execute.BaseExecute;
 
 import java.util.List;
 import java.util.Map;
@@ -9,10 +10,9 @@ import java.util.Map;
  * TODO
  *
  * @author sunzhen
- * @date 2019/1/15 15:18
+ * @date 2019/1/15 15:19
  */
-public class MultiExcute extends BaseExecute{
-
+public class CommandExecute extends BaseExecute {
     @Override
     public List<Map<String, Object>> query() {
         return null;

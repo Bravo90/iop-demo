@@ -1,4 +1,15 @@
 customization:定制化相关
+
+api------------>controller接口
+configuration-->配置信息处理类
+context-------->定制化上下文
+execute-------->执行执行增删改查
+handler-------->处理字段映射、查询条件类型、字段类型
+model---------->实体类
+pagehelper----->处理分页，及查询
+sql------------>sql生成及sql工具类
+type----------->各种类型枚举,如数据库类型、定制化数据源类型、字段类型、where操作符类型
+
 一、定制化设计
 
 二、

@@ -28,7 +28,7 @@
         </li>
         <li class="ul-content" style="width: 5%;height: 8%">
             <div style="text-align:center;line-height: 40px;color: yellow;">
-                <a class="site-fork">退出</a>
+                <a class="site-fork" href="${ctx}/loginout">退出</a>
             </div>
         </li>
 

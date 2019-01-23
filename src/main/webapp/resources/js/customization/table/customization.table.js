@@ -28,7 +28,7 @@
             'fields': [],
             'order': [],
             'page': {'pageSize': 10, 'pageNum': 1}
-        }
+        };
         this.init();
     };
 
@@ -69,9 +69,8 @@
                 var th = _this.renderHeadTh(this);
                 tr.append(th);
             });
-            var head = $('<thead></thead>')
+            return $('<thead></thead>')
                 .append(tr);
-            return head;
         },
         renderHeadTh: function (field) {
             var th = $('<th></th>')
@@ -93,8 +92,7 @@
             return th;
         },
         renderBody: function () {
-            var body = $('<tbody></tbody>').attr('id', 'tbody');
-            return body;
+            return $('<tbody></tbody>').attr('id', 'tbody');
         },
         buildBody: function (list) {
             var _this = this;
@@ -110,7 +108,7 @@
                     var fieldName = $(ths[i]).attr('field-name');
                     //码表转译
                     var vk = _this.option.fieldMap[fieldName];
-                    if (vk != undefined) {
+                    if (vk !== undefined) {
                         var value = _this.handleFieldMap(vk, this[fieldName]);
                         td.html(value);
                     } else {
@@ -129,12 +127,13 @@
             _this.laypage.render({
                 elem: 'page-id',
                 count: count,
+                limits:[5,10,50],
                 limit: limit,
                 curr: pageNum,
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
                 jump: function (obj) {
                     if (obj.curr != _this.requestParam.page.pageNum ||
-                        obj.limit != _this.requestParam.page.pageSize) {
+                        obj.limit !== _this.requestParam.page.pageSize) {
                         _this.requestParam = $.extend(_this.requestParam, {
                             'page': {
                                 'pageSize': obj.limit,
@@ -175,7 +174,6 @@
             switch (search) {
                 case 101: {
                     var fieldMap = _this.option.fieldMap[field['fieldName']];
-                    console.log(fieldMap)
                     if (fieldMap != undefined) {
                         var select = _this.buildSeletMap(fieldMap);
                         div.append(select);
@@ -328,7 +326,6 @@
                     });
                     _this.query();
                 } else if (className === 'layui-btn layui-btn-sm clear-btn') {
-                    console.log(123)
                     //清空查询条件
                     $('.field').find('input').val("");
                     $('.field').find('select option:first').prop("selected", 'selected');

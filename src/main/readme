@@ -92,4 +92,9 @@
 1.权限框架的选择
 2.数据权限需要自己实现
 
+数据表命名规范：
+1)iop_模块_名称，如系统相关的表：iop_sys_xxx,定制化图表：iop_table_xx,测试表：iop_test_xx
+2)表主键命名:"名称"_id,如iop_sys_menu表id：menu_id
+
+
 

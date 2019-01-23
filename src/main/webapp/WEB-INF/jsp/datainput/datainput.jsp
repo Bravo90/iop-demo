@@ -12,12 +12,6 @@
 </head>
 <body>
 <div class="default-container">
-    <%-- <div class="layui-upload layui-form">
-         <input type="radio" name="file-type" value="文本" title="文本">
-         <input type="radio" name="file-type" value="Excel" title="Excel" checked>
-         <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
-         <button type="button" class="layui-btn" id="test9">开始上传</button>
-     </div>--%>
     <div class="default-search-container">
         <span>表名</span><input>
         <span>表描述</span><input>
@@ -70,7 +64,6 @@
 <script>
     $(function () {
         DataInput.init();
-
     });
     var DataInput = {
         init: function () {
@@ -92,7 +85,7 @@
                         '<input type="radio" name="file-type" value="1" title="文本"checked>' +
                         '<input type="radio" name="file-type" value="2" title="Excel">' +
                         '</div><div class="btn-container">' +
-                        '<button type="button" class="layui-btn" id="file-add">选择文件</button>' +
+                        '<button type="button" class="layui-btn" id="file-add">选择文件</button><br>'+
                         '<button type="button" class="layui-btn" id="data-input">开始导入</button>' +
                         '</div></div>'
                     });

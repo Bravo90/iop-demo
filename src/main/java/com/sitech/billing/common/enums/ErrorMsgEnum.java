@@ -25,7 +25,9 @@ public enum ErrorMsgEnum {
 
     CONFIGURATION_NOT_EXIST(2001, "表配置信息不存在"),
     FIELD_MAPPING_HANDLER_NOT_EXIST(2002, "字段映射解析类不存在"),
-    OPERATION_NOT_SUPPORT(2003, "不支持该操作");
+    OPERATION_NOT_SUPPORT(2003, "不支持该操作"),
+
+    FIELD_NOT_MATCH_DATA(3001,"字段数量和数据集不匹配");
 
 
     private Integer errorCode;

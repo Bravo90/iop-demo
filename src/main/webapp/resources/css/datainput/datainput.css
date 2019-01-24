@@ -12,9 +12,10 @@
 
 .btn-container {
     width: 100%;
-    height: 40px;
+    height: auto;
     margin-top: 5px;
     text-align: left;
+    margin-bottom: 10px;
 }
 .btn-container button {
     margin: 5px;

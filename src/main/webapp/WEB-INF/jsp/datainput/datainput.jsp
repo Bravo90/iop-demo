@@ -78,7 +78,7 @@
                         title: '文件上传',
                         anim: 1,
                         skin: 'layui-layer-molv',
-                        area: ['300px', '220px'], //宽高
+                        area: ['300px', '250px'], //宽高
                         content: '<div class="upload-dialog-container">' +
                         '<div class="layui-form btn-container">' +
                         '<div class="btn-container-div">文件类型</div>' +
@@ -107,7 +107,7 @@
                             console.log(res);
                             loading = layer.load(2, {
                                 shade: [0.1, '#fff'] //0.1透明度的白色背景
-                            })
+                            });
                         },
                         done: function (res) {
                             layer.close(loading);

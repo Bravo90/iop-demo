@@ -16,6 +16,6 @@ public interface DataInputMapper {
     int oracleBatchInsert(@Param("sql") String sql, @Param("list") List<Map<String, String>> list);
 
     int mysqlBatchInsert(@Param("insertSql") String insertSql,
-                          @Param("valueSql") String valueSql,
-                          @Param("list") List<Map<String, String>> list);
+                         @Param("valueSql") String valueSql,
+                         @Param("list") List<Map<String, String>> list);
 }

@@ -14,6 +14,10 @@ public class IopException extends RuntimeException {
 
     private Integer errorCode;
 
+    public IopException(String e){
+        super(e);
+    }
+
     public IopException(ErrorMsgEnum errorMsg) {
         super(errorMsg.getErrorMsg());
         this.errorCode = errorMsg.getErrorCode();

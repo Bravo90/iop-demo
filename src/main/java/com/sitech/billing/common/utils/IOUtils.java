@@ -1,6 +1,7 @@
 package com.sitech.billing.common.utils;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -19,11 +20,11 @@ public abstract class IOUtils {
         return "";
     }
 
-    public static List<String> toList(InputStream is) throws Exception {
+    public static List<String> toList(InputStream is) throws IOException {
         return toList(is, "utf-8");
     }
 
-    public static List<String> toList(InputStream is, String encoding) throws Exception {
+    public static List<String> toList(InputStream is, String encoding) throws IOException {
         if (is != null) {
             List<String> list = new ArrayList<>();
             InputStreamReader streamReader = new InputStreamReader(is, encoding);

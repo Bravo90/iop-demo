@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sitech.billing.datainput.dao.DataInputTableMapper">
+
+    <resultMap id="baseResultMap" type="com.sitech.billing.datainput.model.DataInputTable">
+        <id property="inputTableId" column="input_table_id"/>
+        <result property="tableName" column="table_name"/>
+        <result property="tableDesc" column="table_desc"/>
+        <result property="tableFields" column="table_fields"/>
+        <result property="dbType" column="db_type"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+
+    <select id="listTables" resultMap="baseResultMap">
+        SELECT * FROM iop_date_input_table
+        <where>
+            <if test="tableName != null">
+                table_name = #{tableName}
+            </if>
+            <if test="tableDesc != null">
+                table_desc LIKE CONCAT('%',#{tableDesc},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getTableById" resultMap="baseResultMap">
+        SELECT *
+        FROM iop_date_input_table
+        WHERE input_table_id = #{id}
+    </select>
+
+    <insert id="saveTable" parameterType="com.sitech.billing.datainput.model.DataInputTable">
+        INSERT INTO iop_date_input_table
+        (`table_name`, table_desc, table_fields, db_type, user_id)
+        VALUES (#{table.tableName}, #{table.tableDesc},
+                #{table.tableFields}, #{table.dbType}, #{table.userId})
+    </insert>
+</mapper>

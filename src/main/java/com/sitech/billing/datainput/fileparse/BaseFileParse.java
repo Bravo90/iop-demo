@@ -1,5 +1,6 @@
 package com.sitech.billing.datainput.fileparse;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  * @date 2019/1/24 11:02
  */
 public interface BaseFileParse {
-    List<String> parse(InputStream inputStream) throws Exception;
+    List<String> parse(InputStream inputStream) throws IOException;
 }

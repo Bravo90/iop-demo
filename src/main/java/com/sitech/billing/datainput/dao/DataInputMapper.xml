@@ -13,7 +13,7 @@
     <insert id="mysqlBatchInsert">
         ${insertSql}
         <foreach collection="list" item="item" index="index" separator=",">
-            ${valueSql}
+            ${valuesSql}
         </foreach>
     </insert>
 

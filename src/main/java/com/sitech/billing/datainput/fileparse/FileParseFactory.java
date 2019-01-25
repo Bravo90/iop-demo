@@ -1,5 +1,6 @@
 package com.sitech.billing.datainput.fileparse;
 
+import com.sitech.billing.common.exception.IopException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class FileParseFactory {
             return baseFileParse;
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new RuntimeException("文件解析类不存在");
+            throw new IopException("文件解析类不存在");
         }
     }
 

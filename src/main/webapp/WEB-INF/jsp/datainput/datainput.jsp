@@ -36,7 +36,7 @@
             <th>表名</th>
             <th>导入描述</th>
             <th>导入字段</th>
-            <th>操作</th>
+            <th>导入</th>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -104,14 +104,20 @@
                             }
                         },
                         before: function (res) {
-                            console.log(res);
                             loading = layer.load(2, {
                                 shade: [0.1, '#fff'] //0.1透明度的白色背景
                             });
                         },
-                        done: function (res) {
+                        done: function (result) {
                             layer.close(loading);
-                            layer.msg('数据导入成功', {icon: 1});
+                            var success = result['success'];
+                            var msg = result['message'];
+                            if (success == 1) {
+                                layer.msg(msg, {icon: 1});
+                                Role.methods.renderTable();
+                            } else {
+                                layer.alert(msg, {icon: 2});
+                            }
                         }
                     });
                 });

@@ -12,12 +12,12 @@
     </resultMap>
 
     <select id="listTables" resultMap="baseResultMap">
-        SELECT * FROM iop_date_input_table
+        SELECT * FROM iop_data_input_table
         <where>
-            <if test="tableName != null">
+            <if test="tableName != null and tableName != ''">
                 table_name = #{tableName}
             </if>
-            <if test="tableDesc != null">
+            <if test="tableDesc != null and tableDesc != ''">
                 table_desc LIKE CONCAT('%',#{tableDesc},'%')
             </if>
         </where>
@@ -25,14 +25,34 @@
 
     <select id="getTableById" resultMap="baseResultMap">
         SELECT *
-        FROM iop_date_input_table
+        FROM iop_data_input_table
         WHERE input_table_id = #{id}
     </select>
 
     <insert id="saveTable" parameterType="com.sitech.billing.datainput.model.DataInputTable">
-        INSERT INTO iop_date_input_table
+        INSERT INTO iop_data_input_table
         (`table_name`, table_desc, table_fields, db_type, user_id)
         VALUES (#{table.tableName}, #{table.tableDesc},
                 #{table.tableFields}, #{table.dbType}, #{table.userId})
     </insert>
+
+    <update id="updateTable">
+        UPDATE iop_data_input_table
+        SET
+            `table_name` = #{table.tableName},
+            table_desc   = #{table.tableDesc},
+            table_fields = #{table.tableFields},
+            db_type      = #{table.dbType},
+            user_id      = #{table.userId}
+        WHERE
+            input_table_id = #{table.inputTableId}
+    </update>
+
+    <delete id="delTables" parameterType="List">
+        DELETE FROM iop_data_input_table
+        WHERE input_table_id IN
+        <foreach item="id" collection="ids" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

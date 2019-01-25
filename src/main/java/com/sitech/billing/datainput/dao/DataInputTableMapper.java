@@ -19,4 +19,8 @@ public interface DataInputTableMapper {
     DataInputTable getTableById(@Param("id") int id);
 
     int saveTable(@Param("table") DataInputTable table);
+
+    int updateTable(@Param("table") DataInputTable table);
+
+    int delTables(@Param("ids") List<Integer> ids);
 }

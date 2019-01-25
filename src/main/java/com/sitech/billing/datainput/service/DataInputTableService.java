@@ -1,5 +1,6 @@
 package com.sitech.billing.datainput.service;
 
+import com.github.pagehelper.PageInfo;
 import com.sitech.billing.datainput.model.DataInputTable;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface DataInputTableService {
 
-    List<DataInputTable> listTables(String tableName, String tableDesc);
+    PageInfo<DataInputTable> listTables(String tableName, String tableDesc, int pageSize, int pageNum);
 
     DataInputTable getTableById(int id);
 

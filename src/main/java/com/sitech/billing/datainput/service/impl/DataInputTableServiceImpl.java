@@ -1,5 +1,7 @@
 package com.sitech.billing.datainput.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sitech.billing.datainput.dao.DataInputMapper;
 import com.sitech.billing.datainput.dao.DataInputTableMapper;
 import com.sitech.billing.datainput.model.DataInputTable;
@@ -14,15 +16,17 @@ import java.util.List;
  * @date 2019/1/24 14:17
  */
 @Service("dataInputTableService")
-public class DataInputTableServiceImpl implements DataInputTableService{
+public class DataInputTableServiceImpl implements DataInputTableService {
 
     @Autowired
     private DataInputTableMapper dataInputTableMapper;
 
     @Override
-    public List<DataInputTable> listTables(String tableName, String tableDesc) {
-
-        return dataInputTableMapper.listTables(tableName,tableDesc);
+    public PageInfo<DataInputTable> listTables(String tableName, String tableDesc, int pageSize, int pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<DataInputTable> tables = dataInputTableMapper.listTables(tableName, tableDesc);
+        PageInfo pageInfo = new PageInfo(tables);
+        return pageInfo;
     }
 
     @Override
@@ -37,11 +41,14 @@ public class DataInputTableServiceImpl implements DataInputTableService{
 
     @Override
     public int delTables(List<Integer> ids) {
+        if (ids.size() > 0) {
+            return dataInputTableMapper.delTables(ids);
+        }
         return 0;
     }
 
     @Override
     public int updateTable(DataInputTable table) {
-        return 0;
+        return dataInputTableMapper.updateTable(table);
     }
 }

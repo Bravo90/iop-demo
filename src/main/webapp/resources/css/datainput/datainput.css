@@ -4,12 +4,6 @@
     cursor: pointer
 }
 
-.upload-dialog-container {
-    width: 100%;
-    height: 100%;
-    padding: 5px;
-}
-
 .btn-container {
     width: 100%;
     height: auto;
@@ -17,11 +11,47 @@
     text-align: left;
     margin-bottom: 10px;
 }
+
 .btn-container button {
     margin: 5px;
 }
-.btn-container-div{
+
+.btn-container-div {
     float: left;
     height: 40px;
     padding: 10px 10px 0 0;
+}
+
+.dialog-container {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+}
+
+.dialog-container > div {
+    width: 100%;
+    height:auto;
+    padding: 5px;
+}
+
+.dialog-container > div > input {
+    height: 30px;
+    width: 150px;
+    padding-left: 5px;
+}
+.dialog-container > div > select {
+    height: 30px;
+    width: 150px;
+}
+.dialog-container > div >button{
+    margin-left: 185px;
+}
+
+.dialog-container > div > span {
+    display: -moz-inline-box;
+    display: inline-block;
+    padding-right: 10px;
+    height: 30px;
+    width: 80px;
+    text-align: right;
 }

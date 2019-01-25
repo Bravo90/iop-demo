@@ -44,15 +44,15 @@ var Authc = {
                     var list = result.data;
                     $(list).each(function (index) {
                         $('#tbody').append('<tr authc-id="' + this.authcId + '">' +
-                            '<th>' + this.authcId + '</th>' +
-                            '<th>' + this.authcName + '</th>' +
-                            '<th>' + this.authcDesc + '</th>' +
-                            '<th>' +
+                            '<td>' + this.authcId + '</td>' +
+                            '<td>' + this.authcName + '</td>' +
+                            '<td>' + this.authcDesc + '</td>' +
+                            '<td>' +
                             '<button class="layui-btn layui-btn-xs authc-delete" authc-id="' + this.authcId + '">删除</button>' +
                             '<button class="layui-btn layui-btn-xs authc-update" authc-id="' + this.authcId + '">更新</button>' +
                             '<button class="layui-btn layui-btn-xs authc-children-show" authc-id="' + this.authcId + '">' +
                             '<i class="layui-icon layui-icon-down" style="font-size: 30px; color: white;"></i>功能权限</button>' +
-                            '</th>' +
+                            '</td>' +
                             '</tr>');
                     });
                 });

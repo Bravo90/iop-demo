@@ -1,6 +1,7 @@
 package com.sitech.billing.system.base;
 
 import com.sitech.billing.datainput.service.DataInputService;
+import com.sitech.billing.datainput.service.DataInputTableService;
 import com.sitech.billing.system.rbac.service.AuthcService;
 import com.sitech.billing.system.rbac.service.RoleService;
 import com.sitech.billing.system.rbac.service.UserService;
@@ -58,5 +59,6 @@ public class BaseController {
 
     @Resource
     protected DataInputService dataInputService;
-
+    @Resource
+    protected DataInputTableService dataInputTableService;
 }

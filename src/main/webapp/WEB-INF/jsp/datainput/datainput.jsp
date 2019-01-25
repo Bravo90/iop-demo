@@ -8,19 +8,21 @@
 <head>
     <jsp:include page="../common/head.jsp"/>
     <link href="${ctx}/resources/css/datainput/datainput.css" rel="stylesheet">
+    <script type="text/javascript" src="${ctx}/resources/js/datainput/datainput.js"></script>
     <title>数据导入</title>
 </head>
 <body>
 <div class="default-container">
     <div class="default-search-container">
-        <span>表名</span><input>
-        <span>表描述</span><input>
-        <button class="layui-btn layui-btn-sm">查询</button>
+        <span>表名</span><input id="table-name">
+        <span>表描述</span><input id="table-desc">
+        <button class="layui-btn layui-btn-sm" id="search-btn">查询</button>
+        <button class="layui-btn layui-btn-sm" id="rest-btn">重置</button>
     </div>
     <div class="default-table-tools">
-        <i title="新增" class="layui-icon layui-icon-add-circle-fine"></i>
-        <i title="删除" class="layui-icon layui-icon-delete"></i>
-        <i title="更新" class="layui-icon layui-icon-edit"></i>
+        <i title="新增" class="layui-icon layui-icon-add-circle-fine" id="table-add"></i>
+        <i title="删除" class="layui-icon layui-icon-delete" id="table-del"></i>
+        <i title="更新" class="layui-icon layui-icon-edit"id="table-update"></i>
     </div>
     <table class="layui-table">
         <colgroup>
@@ -58,71 +60,7 @@
         </tr>
         </tbody>
     </table>
+    <div class="table-page" id="page-id" style="text-align: center"></div>
 </div>
-
 </body>
-<script>
-    $(function () {
-        DataInput.init();
-    });
-    var DataInput = {
-        init: function () {
-            DataInput.method.datainput();
-        },
-        method: {
-            datainput: function () {
-                $(document).on('click', '.layui-icon-upload-drag', function () {
-                    var inputId = $(this).attr('input-id');
-                    layer.open({
-                        type: 1,
-                        title: '文件上传',
-                        anim: 1,
-                        skin: 'layui-layer-molv',
-                        area: ['300px', '250px'], //宽高
-                        content: '<div class="upload-dialog-container">' +
-                        '<div class="layui-form btn-container">' +
-                        '<div class="btn-container-div">文件类型</div>' +
-                        '<input type="radio" name="file-type" value="1" title="文本"checked>' +
-                        '<input type="radio" name="file-type" value="2" title="Excel">' +
-                        '</div><div class="btn-container">' +
-                        '<button type="button" class="layui-btn" id="file-add">选择文件</button><br>'+
-                        '<button type="button" class="layui-btn" id="data-input">开始导入</button>' +
-                        '</div></div>'
-                    });
-                    var loading;
-                    layui.form.render();
-                    layui.upload.render({
-                        elem: '#file-add',
-                        url: Globals.contextPath() + '/input/upload',
-                        auto: false,
-                        accept: 'file',
-                        bindAction: '#data-input',
-                        data: {
-                            inputId: inputId,
-                            fileType: function () {
-                                return $('input[name="file-type"]:checked').val();
-                            }
-                        },
-                        before: function (res) {
-                            loading = layer.load(2, {
-                                shade: [0.1, '#fff'] //0.1透明度的白色背景
-                            });
-                        },
-                        done: function (result) {
-                            layer.close(loading);
-                            var success = result['success'];
-                            var msg = result['message'];
-                            if (success == 1) {
-                                layer.msg(msg, {icon: 1});
-                                Role.methods.renderTable();
-                            } else {
-                                layer.alert(msg, {icon: 2});
-                            }
-                        }
-                    });
-                });
-            }
-        }
-    };
-</script>
 </html>

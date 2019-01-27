@@ -221,9 +221,7 @@ var Authc = {
                             });
                             $('#authc-update-authcname').val(authcNameOld);
                             $('#authc-update-authcdesc').val(authcDescOld);
-                        } else {
-                            layer.msg(result['message'], {icon: 2});
-                        }
+                        } ;
                     });
                 });
                 //更新确定

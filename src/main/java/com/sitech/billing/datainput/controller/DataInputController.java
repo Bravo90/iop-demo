@@ -9,12 +9,14 @@ import com.sitech.billing.datainput.fileparse.FileParseFactory;
 import com.sitech.billing.datainput.model.DataInputTable;
 import com.sitech.billing.datainput.service.DataInputTableService;
 import com.sitech.billing.system.base.BaseController;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,18 +52,22 @@ public class DataInputController extends BaseController {
     }
 
     @PostMapping("/table")
-    public JsonResult tableAdd() {
-        return null;
+    public JsonResult tableAdd(@RequestBody DataInputTable dataInputTable) {
+        System.err.println(dataInputTable);
+        dataInputTableService.saveTable(dataInputTable);
+        return JsonResult.success("添加成功");
     }
 
     @PutMapping("/table")
-    public JsonResult tableUpdate() {
-        return null;
+    public JsonResult tableUpdate(@RequestBody DataInputTable dataInputTable) {
+        dataInputTableService.updateTable(dataInputTable);
+        return JsonResult.success("更新成功");
     }
 
     @DeleteMapping("/table")
-    public JsonResult tableDel() {
-        return null;
+    public JsonResult tableDel(@RequestBody List<Integer> ids) {
+        dataInputTableService.delTables(ids);
+        return JsonResult.success("删除成功");
     }
 
     /**

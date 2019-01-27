@@ -30,6 +30,13 @@ var DataInput = {
             $('#table-del').on('click', DataInput.method.tableDel);
             //修改
             $('#table-update').on('click', DataInput.method.tableUpdate);
+            //全选
+            $('.check-all').on('change', function () {
+                var checked = $(this).is(':checked');
+                $('.checkItem').each(function () {
+                    $(this).prop('checked', checked);
+                });
+            });
         },
         renderTable: function (pageSize, pageNum) {
             var tableName = $('#table-name').val();
@@ -62,7 +69,7 @@ var DataInput = {
             $('#tbody').empty();
             $(list).each(function () {
                 $('#tbody').append('<tr>' +
-                    '<td><input type="checkbox" id="' + this.inputTableId + '"></td>' +
+                    '<td><input class="checkItem" type="checkbox" table-id="' + this.inputTableId + '"></td>' +
                     '<td>' + this.tableName + '</td>' +
                     '<td>' + this.tableDesc + '</td>' +
                     '<td>' + this.tableFields + '</td>' +
@@ -73,49 +80,180 @@ var DataInput = {
             });
         },
         tableAdd: function () {
-            layer.open({
+            var addLayer = layer.open({
                 type: 1,
                 title: '新增上传表',
                 anim: 1,
                 skin: 'layui-layer-molv',
                 area: ['265px', '270px'], //宽高
                 content: '<div class="dialog-container"> ' +
-                '<div><span>表名称</span><input></div>' +
-                '<div><span>表描述</span><input></div>' +
-                '<div><span>数据库类型</span><select>' +
+                '<div><span class="span">表名称</span><input id="tableName"></div>' +
+                '<div><span class="span">表描述</span><input id="tableDesc"></div>' +
+                '<div><span class="span">数据库类型</span><select id="dbType">' +
                 '<option value="1">mysql</option>' +
                 '<option value="2">oracle</option>' +
                 '<option value="3">内存库</option>' +
                 '<option value="4">其他</option>' +
                 '</select></div>' +
-                '<div><span>字段选择</span><input></div>' +
-                '<div><button class="layui-btn layui-btn-sm">确定</button></div>' +
+                '<div><span class="span">字段选择</span><input id="tableFields"></div>' +
+                '<div><button class="layui-btn layui-btn-sm btn-margin" id="add-confirm">确定</button></div>' +
                 '</div>'
+            });
+            //确定
+            $('#add-confirm').on('click', function () {
+                var tableName = $('#tableName').val();
+                var tableDesc = $('#tableDesc').val();
+                var dbType = $('#dbType').find('option:selected').val();
+                var tableFields = $('#tableFields').val();
+                //空检验
+                if (!Globals.validate.validateNull(tableName, tableFields)) {
+                    layer.msg('请将界面信息填写完整', {icon: 2});
+                    return false;
+                }
+                var inputTable = {
+                    tableName: tableName,
+                    tableDesc: tableDesc,
+                    tableFields: tableFields,
+                    dbType: dbType
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: DataInput.URL.tables(),
+                    contentType: 'application/json;charset=utf-8',
+                    data: JSON.stringify(inputTable),
+                    dateType: 'json',
+                    success: function (result) {
+                        var success = result['success'];
+                        var msg = result['message'];
+                        if (success == 1) {
+                            layer.close(addLayer);
+                            layer.msg(msg, {icon: 1});
+                            DataInput.method.renderTable(10, 1);
+                        } else {
+                            layer.msg(msg, {icon: 2});
+                        }
+                    }
+                });
             });
         },
         tableDel: function () {
-
+            layer.confirm('确定删除？', {
+                skin: 'layui-layer-molv',
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                var checkeds = $('.checkItem:checked');
+                if (checkeds.length > 0) {
+                    var arr = new Array();
+                    $(checkeds).each(function () {
+                        var tableId = $(this).attr('table-id');
+                        arr.push(tableId);
+                    });
+                    $.ajax({
+                        type: 'DELETE',
+                        url: DataInput.URL.tables(),
+                        contentType: 'application/json;charset=utf-8',
+                        data: JSON.stringify(arr),
+                        dateType: 'json',
+                        success: function (result) {
+                            var success = result['success'];
+                            var msg = result['message'];
+                            if (success == 1) {
+                                layer.msg(msg, {icon: 1});
+                                DataInput.method.renderTable(10, 1);
+                            } else {
+                                layer.msg(msg, {icon: 2});
+                            }
+                        }
+                    });
+                } else {
+                    layer.msg('请至少选择一项进行删除', {icon: 2});
+                }
+            });
         },
         tableUpdate: function () {
-            layer.open({
-                type: 1,
-                title: '新增上传表',
-                anim: 1,
-                skin: 'layui-layer-molv',
-                area: ['265px', '270px'], //宽高
-                content: '<div class="dialog-container"> ' +
-                '<div><span>表名称</span><input></div>' +
-                '<div><span>表描述</span><input></div>' +
-                '<div><span>数据库类型</span><select>' +
-                '<option value="1">mysql</option>' +
-                '<option value="2">oracle</option>' +
-                '<option value="3">内存库</option>' +
-                '<option value="4">其他</option>' +
-                '</select></div>' +
-                '<div><span>字段选择</span><input></div>' +
-                '<div><button class="layui-btn layui-btn-sm">确定</button></div>' +
-                '</div>'
-            });
+            //判断选择项
+            var checked = $('.checkItem:checked');
+            if (checked.length != 1) {
+                layer.msg('请选择一项进行编辑', {icon: 2});
+            } else {
+                var tableId = $('.checkItem:checked').attr('table-id');
+                var tableName = '';
+                var tableDesc = '';
+                var dbType = 0;
+                var tableFields = '';
+                var userId = 0;
+                $.get(DataInput.URL.tables() + '/' + tableId, {},
+                    function (result) {
+                        if (result['success'] == 1) {
+                            tableName = result.data.tableName;
+                            tableDesc = result.data.tableDesc;
+                            dbType = result.data.dbType;
+                            tableFields = result.data.tableFields;
+                            userId = result.data.userId;
+                            layer.open({
+                                type: 1,
+                                title: '修改上传表',
+                                anim: 1,
+                                skin: 'layui-layer-molv',
+                                area: ['265px', '270px'], //宽高
+                                content: '<div class="dialog-container"> ' +
+                                '<div><span class="span">表名称</span><input id="update-table-name"></div>' +
+                                '<div><span class="span">表描述</span><input id="update-table-desc"></div>' +
+                                '<div><span class="span">数据库类型</span><select id="update-db-type">' +
+                                '<option value="1">mysql</option>' +
+                                '<option value="2">oracle</option>' +
+                                '<option value="3">内存库</option>' +
+                                '<option value="4">其他</option>' +
+                                '</select></div>' +
+                                '<div><span class="span">字段选择</span><input id="update-table-fields"></div>' +
+                                '<div><button class="layui-btn layui-btn-sm btn-margin" id="update-confirm">确定</button></div>' +
+                                '</div>'
+                            });
+                            $('#update-table-name').val(tableName);
+                            $('#update-table-desc').val(tableDesc);
+                            $('#update-table-fields').val(tableFields);
+                        } else {
+                            layer.msg(result['message'], {icon: 2});
+                        }
+                    });
+
+                $(document).unbind("click").on('click', '#update-confirm', function () {
+                    var tableName = $('#update-table-name').val();
+                    var tableDesc = $('#update-table-desc').val();
+                    var dbType = $('#update-db-type').find('option:selected').val();
+                    var tableFields = $('#update-table-fields').val();
+                    //空检验
+                    if (!Globals.validate.validateNull(tableName, tableFields)) {
+                        layer.msg('请将界面信息填写完整', {icon: 2});
+                        return false;
+                    }
+                    var inputTable = {
+                        tableName: tableName,
+                        tableDesc: tableDesc,
+                        tableFields: tableFields,
+                        dbType: dbType,
+                        inputTableId: tableId,
+                        userId: userId
+                    };
+                    $.ajax({
+                        type: 'PUT',
+                        url: DataInput.URL.tables(),
+                        contentType: 'application/json;charset=utf-8',
+                        data: JSON.stringify(inputTable),
+                        dateType: 'json',
+                        success: function (result) {
+                            var success = result['success'];
+                            var msg = result['message'];
+                            if (success == 1) {
+                                layer.msg(msg, {icon: 1});
+                                DataInput.method.renderTable(10, 1);
+                            } else {
+                                layer.msg(msg, {icon: 2});
+                            }
+                        }
+                    });
+                });
+            }
         },
         dataInput: function () {
             $(document).on('click', '.layui-icon-upload-drag', function () {

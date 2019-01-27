@@ -34,7 +34,7 @@
         </colgroup>
         <thead>
         <tr>
-            <th><input type="checkbox"></th>
+            <th><input type="checkbox" class="check-all"></th>
             <th>表名</th>
             <th>导入描述</th>
             <th>导入字段</th>

@@ -43,11 +43,11 @@
     height: 30px;
     width: 150px;
 }
-.dialog-container > div >button{
+.btn-margin{
     margin-left: 185px;
 }
 
-.dialog-container > div > span {
+.dialog-container > div > .span {
     display: -moz-inline-box;
     display: inline-block;
     padding-right: 10px;

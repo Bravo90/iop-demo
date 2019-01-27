@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface DataInputTableService {
 
-    PageInfo<DataInputTable> listTables(String tableName, String tableDesc, int pageSize, int pageNum);
+    PageInfo<DataInputTable> listTables(String tableName, String tableDesc, Integer tableId, int pageSize, int pageNum);
 
     DataInputTable getTableById(int id);
 

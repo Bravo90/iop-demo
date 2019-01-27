@@ -2,7 +2,6 @@ package com.sitech.billing.datainput.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sitech.billing.datainput.dao.DataInputMapper;
 import com.sitech.billing.datainput.dao.DataInputTableMapper;
 import com.sitech.billing.datainput.model.DataInputTable;
 import com.sitech.billing.datainput.service.DataInputTableService;
@@ -22,9 +21,9 @@ public class DataInputTableServiceImpl implements DataInputTableService {
     private DataInputTableMapper dataInputTableMapper;
 
     @Override
-    public PageInfo<DataInputTable> listTables(String tableName, String tableDesc, int pageSize, int pageNum) {
+    public PageInfo<DataInputTable> listTables(String tableName, String tableDesc, Integer tableId, int pageSize, int pageNum) {
         PageHelper.startPage(pageNum, pageSize);
-        List<DataInputTable> tables = dataInputTableMapper.listTables(tableName, tableDesc);
+        List<DataInputTable> tables = dataInputTableMapper.listTables(tableName, tableDesc, tableId);
         PageInfo pageInfo = new PageInfo(tables);
         return pageInfo;
     }

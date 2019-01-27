@@ -37,11 +37,12 @@ public class DataInputController extends BaseController {
     @GetMapping("/table")
     public JsonResult tables(@RequestParam(name = "tableName", required = false) String tableName,
                              @RequestParam(name = "tableDesc", required = false) String tableDesc,
+                             @RequestParam(name = "tableId", required = false) Integer tableId,
                              @RequestParam(name = "pageSize") int pageSize,
                              @RequestParam(name = "pageNum") int pageNum) {
 
         PageInfo<DataInputTable> info =
-                dataInputTableService.listTables(tableName, tableDesc, pageSize, pageNum);
+                dataInputTableService.listTables(tableName, tableDesc, tableId, pageSize, pageNum);
         return JsonResult.success(info);
     }
 

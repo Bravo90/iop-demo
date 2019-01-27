@@ -14,7 +14,9 @@ import java.util.Map;
 @Mapper
 public interface DataInputTableMapper {
 
-    List<DataInputTable> listTables(@Param("tableName") String tableName, @Param("tableDesc") String tableDesc);
+    List<DataInputTable> listTables(@Param("tableName") String tableName,
+                                    @Param("tableDesc") String tableDesc,
+                                    @Param("tableId") Integer tableId);
 
     DataInputTable getTableById(@Param("id") int id);
 

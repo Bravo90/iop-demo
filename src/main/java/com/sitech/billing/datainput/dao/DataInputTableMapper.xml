@@ -21,6 +21,9 @@
             <if test="tableDesc != null and tableDesc != ''">
                 table_desc LIKE CONCAT('%',#{tableDesc},'%')
             </if>
+            <if test="tableId != 0 and tableId != null ">
+                input_table_id = #{tableId}
+            </if>
         </where>
     </select>
 

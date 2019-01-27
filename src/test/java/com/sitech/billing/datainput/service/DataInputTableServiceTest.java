@@ -14,8 +14,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * @author sunzhen
  * @date 2019/1/25 11:26
@@ -29,7 +27,7 @@ public class DataInputTableServiceTest {
 
     @Test
     public void listTables() {
-        PageInfo<DataInputTable> info = dataInputTableService.listTables(null, null, 10, 1);
+        PageInfo<DataInputTable> info = dataInputTableService.listTables(null, null, 0, 10, 1);
         System.out.println(JSON.toJSON(info));
     }
 

@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @Service("dataInputService")
 public class DataInputServiceImpl implements DataInputService {
-    private static final int DEFAULT_BATCH_SIZE = 10;
+    private static final int DEFAULT_BATCH_SIZE = 200;
     private static final String SPLIT_REGEX = ",";
 
     @Autowired

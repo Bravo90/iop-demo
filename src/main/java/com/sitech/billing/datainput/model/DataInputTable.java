@@ -19,5 +19,7 @@ public class DataInputTable {
     private String tableDesc;
     private String tableFields;
     private int dbType;
+    private String splitRegex;
     private int userId;
+
 }

@@ -8,6 +8,7 @@
         <result property="tableDesc" column="table_desc"/>
         <result property="tableFields" column="table_fields"/>
         <result property="dbType" column="db_type"/>
+        <result property="splitRegex" column="split_regex"/>
         <result property="userId" column="user_id"/>
     </resultMap>
 
@@ -31,9 +32,9 @@
 
     <insert id="saveTable" parameterType="com.sitech.billing.datainput.model.DataInputTable">
         INSERT INTO iop_data_input_table
-        (`table_name`, table_desc, table_fields, db_type, user_id)
+        (`table_name`, table_desc, table_fields, db_type, split_regex, user_id)
         VALUES (#{table.tableName}, #{table.tableDesc},
-                #{table.tableFields}, #{table.dbType}, #{table.userId})
+                #{table.tableFields}, #{table.dbType}, #{table.splitRegex}, #{table.userId})
     </insert>
 
     <update id="updateTable">
@@ -43,6 +44,7 @@
             table_desc   = #{table.tableDesc},
             table_fields = #{table.tableFields},
             db_type      = #{table.dbType},
+            split_regex  = #{table.splitRegex},
             user_id      = #{table.userId}
         WHERE
             input_table_id = #{table.inputTableId}

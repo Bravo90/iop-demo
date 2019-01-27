@@ -24,8 +24,6 @@ import java.util.Map;
 @Service("dataInputService")
 public class DataInputServiceImpl implements DataInputService {
     private static final int DEFAULT_BATCH_SIZE = 200;
-    private static final String SPLIT_REGEX = ",";
-
     @Autowired
     private DataInputMapper dataInputMapper;
 
@@ -37,9 +35,11 @@ public class DataInputServiceImpl implements DataInputService {
         if (total == 0) {
             return rows;
         } else {
+            String splitRegex = table.getSplitRegex();
+
             List<Map<String, String>> dataMapList = new ArrayList<>();
             String fields = table.getTableFields();
-            String[] fieldArr = fields.split(SPLIT_REGEX);
+            String[] fieldArr = fields.split(splitRegex);
 
             for (int i = 0; i < list.size(); i++) {
                 if (dataMapList.size() == DEFAULT_BATCH_SIZE) {
@@ -50,8 +50,8 @@ public class DataInputServiceImpl implements DataInputService {
                 } else {
                     Map<String, String> dataMap = new HashMap<>();
                     String data = list.get(i);
-                    if (data.split(SPLIT_REGEX).length == fieldArr.length) {
-                        String[] dataArr = data.split(SPLIT_REGEX);
+                    if (data.split(splitRegex).length == fieldArr.length) {
+                        String[] dataArr = data.split(splitRegex);
                         for (int j = 0; j < dataArr.length; j++) {
                             dataMap.put(fieldArr[j], dataArr[j]);
                         }

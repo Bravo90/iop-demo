@@ -22,14 +22,15 @@
     <div class="default-table-tools">
         <i title="新增" class="layui-icon layui-icon-add-circle-fine" id="table-add"></i>
         <i title="删除" class="layui-icon layui-icon-delete" id="table-del"></i>
-        <i title="更新" class="layui-icon layui-icon-edit"id="table-update"></i>
+        <i title="更新" class="layui-icon layui-icon-edit" id="table-update"></i>
     </div>
     <table class="layui-table">
         <colgroup>
             <col width="35px">
             <col width="15%">
             <col width="15%">
-            <col width="70%">
+            <col width="62%">
+            <col width="8%">
             <col width="35px">
         </colgroup>
         <thead>
@@ -38,26 +39,11 @@
             <th>表名</th>
             <th>导入描述</th>
             <th>导入字段</th>
+            <th>分隔符</th>
             <th>导入</th>
         </tr>
         </thead>
         <tbody id="tbody">
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>iop_sys_user</td>
-            <td>系统用户表</td>
-            <td>user_id,username,nickname,password</td>
-            <td><i title="数据导入" class="layui-icon layui-icon-upload-drag" input-id="234"></i>
-            </td>
-        </tr>
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>iop_sys_user</td>
-            <td>系统用户表</td>
-            <td>user_id,username,nickname,password</td>
-            <td><i title="数据导入" class="layui-icon layui-icon-upload-drag" input-id="567"></i>
-            </td>
-        </tr>
         </tbody>
     </table>
     <div class="table-page" id="page-id" style="text-align: center"></div>

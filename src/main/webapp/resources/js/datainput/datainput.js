@@ -73,6 +73,7 @@ var DataInput = {
                     '<td>' + this.tableName + '</td>' +
                     '<td>' + this.tableDesc + '</td>' +
                     '<td>' + this.tableFields + '</td>' +
+                    '<td>' + this.splitRegex + '</td>' +
                     '<td>' +
                     '<i class="layui-icon layui-icon-upload-drag" input-id="' + this.inputTableId + '"></i>' +
                     '</td>' +
@@ -85,7 +86,7 @@ var DataInput = {
                 title: '新增上传表',
                 anim: 1,
                 skin: 'layui-layer-molv',
-                area: ['265px', '270px'], //宽高
+                area: ['265px', '320px'], //宽高
                 content: '<div class="dialog-container"> ' +
                 '<div><span class="span">表名称</span><input id="tableName"></div>' +
                 '<div><span class="span">表描述</span><input id="tableDesc"></div>' +
@@ -96,6 +97,7 @@ var DataInput = {
                 '<option value="4">其他</option>' +
                 '</select></div>' +
                 '<div><span class="span">字段选择</span><input id="tableFields"></div>' +
+                '<div><span class="span">分隔符</span><input id="splitRegex"></div>' +
                 '<div><button class="layui-btn layui-btn-sm btn-margin" id="add-confirm">确定</button></div>' +
                 '</div>'
             });
@@ -105,6 +107,7 @@ var DataInput = {
                 var tableDesc = $('#tableDesc').val();
                 var dbType = $('#dbType').find('option:selected').val();
                 var tableFields = $('#tableFields').val();
+                var splitRegex = $('#splitRegex').val();
                 //空检验
                 if (!Globals.validate.validateNull(tableName, tableFields)) {
                     layer.msg('请将界面信息填写完整', {icon: 2});
@@ -114,7 +117,8 @@ var DataInput = {
                     tableName: tableName,
                     tableDesc: tableDesc,
                     tableFields: tableFields,
-                    dbType: dbType
+                    dbType: dbType,
+                    splitRegex: splitRegex
                 };
                 $.ajax({
                     type: 'POST',
@@ -181,6 +185,7 @@ var DataInput = {
                 var tableDesc = '';
                 var dbType = 0;
                 var tableFields = '';
+                var splitRegex = '';
                 var userId = 0;
                 $.get(DataInput.URL.tables() + '/' + tableId, {},
                     function (result) {
@@ -189,13 +194,14 @@ var DataInput = {
                             tableDesc = result.data.tableDesc;
                             dbType = result.data.dbType;
                             tableFields = result.data.tableFields;
+                            splitRegex = result.data.splitRegex;
                             userId = result.data.userId;
                             layer.open({
                                 type: 1,
                                 title: '修改上传表',
                                 anim: 1,
                                 skin: 'layui-layer-molv',
-                                area: ['265px', '270px'], //宽高
+                                area: ['265px', '320px'], //宽高
                                 content: '<div class="dialog-container"> ' +
                                 '<div><span class="span">表名称</span><input id="update-table-name"></div>' +
                                 '<div><span class="span">表描述</span><input id="update-table-desc"></div>' +
@@ -206,12 +212,14 @@ var DataInput = {
                                 '<option value="4">其他</option>' +
                                 '</select></div>' +
                                 '<div><span class="span">字段选择</span><input id="update-table-fields"></div>' +
+                                '<div><span class="span">分隔符</span><input id="update-split-regex"></div>' +
                                 '<div><button class="layui-btn layui-btn-sm btn-margin" id="update-confirm">确定</button></div>' +
                                 '</div>'
                             });
                             $('#update-table-name').val(tableName);
                             $('#update-table-desc').val(tableDesc);
                             $('#update-table-fields').val(tableFields);
+                            $('#update-split-regex').val(splitRegex);
                         } else {
                             layer.msg(result['message'], {icon: 2});
                         }
@@ -222,6 +230,7 @@ var DataInput = {
                     var tableDesc = $('#update-table-desc').val();
                     var dbType = $('#update-db-type').find('option:selected').val();
                     var tableFields = $('#update-table-fields').val();
+                    var splitRegex = $('#update-split-regex').val();
                     //空检验
                     if (!Globals.validate.validateNull(tableName, tableFields)) {
                         layer.msg('请将界面信息填写完整', {icon: 2});
@@ -233,7 +242,8 @@ var DataInput = {
                         tableFields: tableFields,
                         dbType: dbType,
                         inputTableId: tableId,
-                        userId: userId
+                        userId: userId,
+                        splitRegex: splitRegex
                     };
                     $.ajax({
                         type: 'PUT',

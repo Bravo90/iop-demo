@@ -53,7 +53,6 @@ public class DataInputController extends BaseController {
 
     @PostMapping("/table")
     public JsonResult tableAdd(@RequestBody DataInputTable dataInputTable) {
-        System.err.println(dataInputTable);
         dataInputTableService.saveTable(dataInputTable);
         return JsonResult.success("添加成功");
     }

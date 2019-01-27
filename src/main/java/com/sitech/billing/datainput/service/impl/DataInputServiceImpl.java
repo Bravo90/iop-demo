@@ -23,7 +23,10 @@ import java.util.Map;
  */
 @Service("dataInputService")
 public class DataInputServiceImpl implements DataInputService {
+
     private static final int DEFAULT_BATCH_SIZE = 200;
+    private static final  String FIELDS_SPLIT_REGEX = ",";
+
     @Autowired
     private DataInputMapper dataInputMapper;
 
@@ -39,7 +42,7 @@ public class DataInputServiceImpl implements DataInputService {
 
             List<Map<String, String>> dataMapList = new ArrayList<>();
             String fields = table.getTableFields();
-            String[] fieldArr = fields.split(splitRegex);
+            String[] fieldArr = fields.split(FIELDS_SPLIT_REGEX);
 
             for (int i = 0; i < list.size(); i++) {
                 if (dataMapList.size() == DEFAULT_BATCH_SIZE) {

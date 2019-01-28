@@ -27,7 +27,7 @@ public class FileParseFactory {
     }
 
     static {
-        fileParseMap.put(1, TxtFileParse.class);
+        fileParseMap.put(1, TextFileParse.class);
         fileParseMap.put(2, ExcelFileParse.class);
     }
 }

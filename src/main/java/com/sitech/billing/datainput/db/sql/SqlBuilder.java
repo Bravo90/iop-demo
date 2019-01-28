@@ -41,7 +41,7 @@ public class SqlBuilder {
         return map;
     }
 
-    String buildOracle(DataInputTable table) {
+    public static String buildOracle(DataInputTable table) {
         return null;
     }
 }

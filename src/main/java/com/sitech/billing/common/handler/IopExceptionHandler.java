@@ -44,7 +44,7 @@ public class IopExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public JsonResult exceptionHand(Exception e) {
-        log.error(e.getMessage());
+        log.error(e.toString());
         return JsonResult.error(ErrorMsgEnum.SYSTEM_ERROR);
     }
 

@@ -25,7 +25,7 @@ import java.util.Map;
 public class DataInputServiceImpl implements DataInputService {
 
     private static final int DEFAULT_BATCH_SIZE = 200;
-    private static final  String FIELDS_SPLIT_REGEX = ",";
+    private static final String FIELDS_SPLIT_REGEX = ",";
 
     @Autowired
     private DataInputMapper dataInputMapper;
@@ -82,7 +82,8 @@ public class DataInputServiceImpl implements DataInputService {
                 rows = dataInputMapper.mysqlBatchInsert(map.get("insertSql"), map.get("valuesSql"), dataMapList);
                 break;
             case DbType.ORACLE:
-                rows = dataInputMapper.oracleBatchInsert("", dataMapList);
+                String sql = SqlBuilder.buildOracle(table);
+                rows = dataInputMapper.oracleBatchInsert(sql, dataMapList);
                 break;
             case DbType.DMDB:
             default:

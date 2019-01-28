@@ -12,7 +12,7 @@ import java.util.List;
  * @author sunzhen
  * @date 2019/1/24 10:59
  */
-public class TxtFileParse implements BaseFileParse {
+public class TextFileParse implements BaseFileParse {
     @Override
     public List<String> parse(InputStream inputStream) throws IOException {
         return IOUtils.toList(inputStream);

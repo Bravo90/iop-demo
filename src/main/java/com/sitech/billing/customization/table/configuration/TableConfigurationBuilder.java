@@ -39,21 +39,21 @@ public class TableConfigurationBuilder {
         cfg.setPageable(json.getBoolean("pageable"));
         cfg.setPageSize(json.getInteger("pageSize"));
         cfg.setDataSourceType(json.getInteger("dataSourceType"));
-        JSONArray jbtns = json.getJSONArray("button");
+        JSONArray jsonBtns = json.getJSONArray("button");
 
         List<Button> btns = new ArrayList<>();
-        if (jbtns != null) {
-            for (int i = 0; i < jbtns.size(); i++) {
-                Button button = buildBtn(jbtns.getJSONObject(i));
+        if (jsonBtns != null) {
+            for (int i = 0; i < jsonBtns.size(); i++) {
+                Button button = buildBtn(jsonBtns.getJSONObject(i));
                 btns.add(button);
             }
         }
         cfg.setButtons(btns);
-        JSONArray jtables = json.getJSONArray("table");
-        AssertUtils.isNull(jtables);
+        JSONArray jsonTables = json.getJSONArray("table");
+        AssertUtils.isNull(jsonTables);
         List<Table> tables = new ArrayList<>();
-        for (int i = 0; i < jtables.size(); i++) {
-            tables.add(buildTable(jtables.getJSONObject(i)));
+        for (int i = 0; i < jsonTables.size(); i++) {
+            tables.add(buildTable(jsonTables.getJSONObject(i)));
         }
 
         cfg.setTables(tables);
@@ -85,10 +85,10 @@ public class TableConfigurationBuilder {
         table.setTableName(json.getString("tableName"));
         table.setTableDesc(json.getString("tableDesc"));
 
-        JSONArray jfields = json.getJSONArray("fields");
+        JSONArray jsonFields = json.getJSONArray("fields");
         List<Field> fields = new ArrayList<>();
-        for (int i = 0; i < jfields.size(); i++) {
-            fields.add(buildField(jfields.getJSONObject(i)));
+        for (int i = 0; i < jsonFields.size(); i++) {
+            fields.add(buildField(jsonFields.getJSONObject(i)));
         }
         table.setFields(fields);
         return table;

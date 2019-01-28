@@ -43,7 +43,7 @@ public class StatementBuilder {
                 Field fd = FieldDecoration.statementDecorate(field);
                 String fieldAlias = fd.getFieldAlias();
                 String fieldName = fd.getFieldName();
-                String column = fieldAlias + " as '" + fieldName + "'";
+                String column = fieldAlias + " AS '" + fieldName + "'";
                 sql.SELECT(column);
             }
             //处理where

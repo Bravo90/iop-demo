@@ -26,7 +26,6 @@ public class MultiSqlBuilder {
     public static Map<String, String> initQuerySql(TableConfiguration cfg, List<FieldValue> fieldValues,
                                                    List<FieldOrder> fieldOrders, RequestPageInfo pageInfo) {
 
-
         List<Table> tables = cfg.getTables();
         if (tables.size() < 2 && tables.size() > 2) {
             throw new RuntimeException("配置信息错误");

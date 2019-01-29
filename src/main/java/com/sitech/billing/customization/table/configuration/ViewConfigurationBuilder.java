@@ -59,8 +59,9 @@ public class ViewConfigurationBuilder {
                     col.setFieldMapping(getMapping(json));
                     fieldMap.put(field.getFieldName(), getMapping(json));
                 }
-                cols.add(col);
-
+                if (col.getViewable()) {
+                    cols.add(col);
+                }
                 if (field.getSearcher().getSearchable()) {
                     searchCols.add(col);
                 }

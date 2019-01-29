@@ -53,13 +53,15 @@ public class MultiExcute extends BaseExecute {
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             List<Map<String, Object>> list1 = pageHandler.pageResult();
-            for (Map<String, Object> map : list1) {
+            for (int i = 0; i < list1.size(); i++) {
+                Map<String, Object> map = list1.get(i);
                 Object obj = map.get(linkedField1);
                 Map<String, Object> linkedMap = jdbcTemplate.queryForMap(sql1, obj.toString());
                 map.putAll(linkedMap);
-                list.add(map);
+                list1.remove(i);
+                list1.add(i, map);
             }
-            PageInfo pageInfo = new PageInfo(list);
+            PageInfo pageInfo = new PageInfo(list1);
             return pageInfo;
         } catch (Exception e) {
             throw new RuntimeException(e);

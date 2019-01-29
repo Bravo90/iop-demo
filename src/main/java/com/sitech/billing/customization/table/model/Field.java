@@ -37,5 +37,7 @@ public class Field {
     private Boolean keyFiled;
     /* 字段映射（考虑多级联动的实现） */
     private JSONObject mapJson;
+    /* 关联字段(两表关联查询) */
+    private Boolean linked;
 
 }

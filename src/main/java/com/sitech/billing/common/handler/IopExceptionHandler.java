@@ -32,6 +32,7 @@ public class IopExceptionHandler {
 
     @ExceptionHandler(IopException.class)
     public Object exceptionHand(IopException e, HttpServletRequest request) {
+        e.printStackTrace();
         log.error(e.getMessage());
         String requestType = request.getHeader(X_REQUESTED_WITH);
         if (XML_HTTP_REQUEST.equalsIgnoreCase(requestType)) {

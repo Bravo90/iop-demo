@@ -36,7 +36,8 @@ public class ExecuteBuilder {
                         fieldValues, fieldOrders, pageInfo, dbDialect);
                 break;
             case DataSourceType.MULTI_TABLE:
-                execute = new MultiExcute();
+                execute = new MultiExcute(tableConfiguration, jdbcTemplate,
+                        fieldValues, fieldOrders, pageInfo, dbDialect);
                 break;
             case DataSourceType.FILE:
                 execute = new FileExecute();

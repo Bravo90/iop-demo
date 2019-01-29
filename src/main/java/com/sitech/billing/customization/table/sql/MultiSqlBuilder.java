@@ -89,7 +89,7 @@ public class MultiSqlBuilder {
                 where(sql, fieldValue, fd);
             }
             //处理order
-            if (fieldOrderMap != null && fieldOrderMap.size() > 0) {
+            if (fieldOrder != null && fieldOrderMap.size() > 0) {
                 order(sql, fieldOrder);
             }
 

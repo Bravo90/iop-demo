@@ -10,6 +10,7 @@ public enum ErrorMsgEnum {
 
     SYSTEM_ERROR(9999, "系统内部异常，请联系管理员"),
     OBJECT_EMPTY_ERROR(9001, "对象为空"),
+    COLLECTION_EMPTY_ERROR(9002, "集合为空"),
 
     USERNAME_OR_PASSWORD_IS_EMPTY(1001, "用户名密码为空"),
     UNKNOWN_ACCOUNT(1002, "用户不存在"),

@@ -9,7 +9,7 @@ import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import com.sitech.billing.customization.table.pagehelper.PageResultHandler;
-import com.sitech.billing.customization.table.sql.StatementBuilder;
+import com.sitech.billing.customization.table.sql.builder.StatementBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;

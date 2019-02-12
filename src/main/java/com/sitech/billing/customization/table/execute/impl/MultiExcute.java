@@ -9,11 +9,9 @@ import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 import com.sitech.billing.customization.table.pagehelper.PageResultHandler;
-import com.sitech.billing.customization.table.sql.MultiSqlBuilder;
-import com.sitech.billing.customization.table.sql.SampleSqlBuilder;
+import com.sitech.billing.customization.table.sql.builder.MultiSqlBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +48,6 @@ public class MultiExcute extends BaseExecute {
         String sql2 = sqlMap.get("sql2");
         String linkedField1 = sqlMap.get("linkedField1");
         PageResultHandler pageHandler = new PageResultHandler(sql2, pageInfo, dbDialect, jdbcTemplate);
-        List<Map<String, Object>> list = new ArrayList<>();
         try {
             List<Map<String, Object>> list1 = pageHandler.pageResult();
             for (int i = 0; i < list1.size(); i++) {

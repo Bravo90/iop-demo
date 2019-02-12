@@ -1,4 +1,4 @@
-package com.sitech.billing.customization.table.sql;
+package com.sitech.billing.customization.table.sql.builder;
 
 import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
@@ -9,6 +9,9 @@ import com.sitech.billing.customization.table.model.Table;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
+import com.sitech.billing.customization.table.sql.FieldDecoration;
+import com.sitech.billing.customization.table.sql.OrderDecoration;
+import com.sitech.billing.customization.table.sql.WhereDecoration;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.HashMap;
@@ -27,7 +30,7 @@ public class MultiSqlBuilder {
                                                    List<FieldOrder> fieldOrders, RequestPageInfo pageInfo) {
 
         List<Table> tables = cfg.getTables();
-        if (tables.size() < 2 && tables.size() > 2) {
+        if (tables.size() != 2) {
             throw new RuntimeException("配置信息错误");
         }
 
@@ -86,11 +89,11 @@ public class MultiSqlBuilder {
             FieldOrder fieldOrder = fieldOrderMap.get(field.getFieldName());
             if (fieldValue != null && fieldValueMap.size() > 0) {
                 Field fd = FieldDecoration.decorateWhere(field);
-                where(sql, fieldValue, fd);
+                WhereDecoration.decoration(sql, fieldValue, fd);
             }
             //处理order
             if (fieldOrder != null && fieldOrderMap.size() > 0) {
-                order(sql, fieldOrder);
+                OrderDecoration.decoration(sql, fieldOrder);
             }
 
             if (isAllField) {
@@ -104,23 +107,5 @@ public class MultiSqlBuilder {
                 }
             }
         }
-    }
-
-    //处理where语句
-    private static SQL where(SQL sql, FieldValue fieldValue, Field field) {
-        Searcher searcher = field.getSearcher();
-        if (searcher.getSearchable() != null && searcher.getSearchable()) {
-            if (fieldValue.getValue() != null && fieldValue.getValue().size() >= 1) {
-                String where = OperatorHandler.handler(field, fieldValue);
-                sql.WHERE(where);
-            }
-        }
-        return sql;
-    }
-
-    //处理排序
-    private static SQL order(SQL sql, FieldOrder fieldOrder) {
-        sql.ORDER_BY(fieldOrder.getField() + " " + fieldOrder.getType());
-        return sql;
     }
 }

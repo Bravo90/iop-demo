@@ -18,7 +18,7 @@ import java.util.Map;
 public class DateUtils {
 
     public static final String DATE_TIME_STANDARD_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    public static final String DATE_TIME_STRING_PATTERM = "yyyyMMddHHmmss";
+    public static final String DATE_TIME_STRING_PATTERN = "yyyyMMddHHmmss";
     public static final String DATE_STANDARD_PATTERN = "yyyy-MM-dd";
     public static final String DATE_STRING_PATTERN = "yyyyMMdd";
 

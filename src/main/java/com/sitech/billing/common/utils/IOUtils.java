@@ -15,9 +15,9 @@ import java.util.List;
  */
 public abstract class IOUtils {
 
-    public static String toString(InputStream is) {
-
-        return "";
+    public static String toString(InputStream is) throws IOException {
+        List<String> list = toList(is, "utf-8");
+        return String.join(" ",list);
     }
 
     public static List<String> toList(InputStream is) throws IOException {

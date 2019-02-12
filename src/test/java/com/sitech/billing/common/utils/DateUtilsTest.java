@@ -21,19 +21,19 @@ public class DateUtilsTest {
 
     @Test
     public void dateParse() throws ParseException{
-        Date date = DateUtils.dateParse("20181202203212", DateUtils.DATE_TIME_STRING_PATTERM);
+        Date date = DateUtils.dateParse("20181202203212", DateUtils.DATE_TIME_STRING_PATTERN);
         logger.info(date.toString());
     }
 
     @Test
     public void datePatternExchange() throws ParseException {
-        String s = DateUtils.datePatternExchange("20181202203212", DateUtils.DATE_TIME_STRING_PATTERM, DateUtils.DATE_TIME_STANDARD_PATTERN);
+        String s = DateUtils.datePatternExchange("20181202203212", DateUtils.DATE_TIME_STRING_PATTERN, DateUtils.DATE_TIME_STANDARD_PATTERN);
         logger.info(s);
     }
 
     @Test
     public void offsetDate()throws ParseException {
-        Date dateFrom = DateUtils.dateParse("20180228203212", DateUtils.DATE_TIME_STRING_PATTERM);
+        Date dateFrom = DateUtils.dateParse("20180228203212", DateUtils.DATE_TIME_STRING_PATTERN);
         Date date = DateUtils.offsetDate(dateFrom, Calendar.YEAR, -1);
         String s = DateUtils.dateFormat(date, DateUtils.DATE_TIME_STANDARD_PATTERN);
         logger.info(s);

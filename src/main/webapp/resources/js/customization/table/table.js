@@ -29,7 +29,8 @@ var Table = {
                         fieldMap: result.data.fieldMap,
                         btns: result.data.btns,
                         url: {
-                            query: Globals.contextPath() + '/table/query'
+                            query: Globals.contextPath() + '/table/query',
+                            update: Globals.contextPath() + '/table/update'
                         }
                     });
                 } else {

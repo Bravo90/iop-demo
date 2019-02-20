@@ -386,6 +386,9 @@
                     if (checked.length <= 0) {
                         layer.msg('请至少选择一个删除项', {icon: 2})
                     } else {
+                        var tds = $('.checkItem:checked').parent().siblings();
+                        var ths = $('.check-all').parent().siblings();
+                        console.log(tds)
                         layer.msg('删除记录成功', {icon: 1});
                     }
                 } else if (className == 'layui-icon layui-icon-edit') {
@@ -421,6 +424,7 @@
             });
             //更新确定
             $(document).on('click', '.update-confirm', function () {
+                console.log()
                 var inputs = $('.insert-update-container').find('input');
                 var selects = $('.insert-update-container').find('select');
                 var kvArr = new Array();
@@ -449,8 +453,15 @@
                     }
                     kvArr.push(kv);
                 }
-
-                console.log(kvArr);
+                var param = {
+                    'tableId': _this.option['tableId'],
+                    'requestParam': kvArr
+                }
+                console.log(_this.option.url.update)
+                $.get(_this.option.url.update,
+                    {'param': JSON.stringify(param)},
+                    function (result) {
+                    });
                 layer.msg(inputs.length);
             });
         },

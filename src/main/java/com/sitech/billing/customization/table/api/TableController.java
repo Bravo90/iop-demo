@@ -58,19 +58,14 @@ public class TableController extends BaseController {
 
     }
 
-    @GetMapping("/insert")
-    public JsonResult insert(@RequestParam String param) {
-        return JsonResult.success();
-    }
-
     @DeleteMapping("/delete")
     public JsonResult delete(@RequestParam String param) {
         return JsonResult.success();
     }
 
-    @PutMapping("/update")
+    @GetMapping("/update")
     public JsonResult update(@RequestParam String param) {
+        System.out.println(param);
         return JsonResult.success();
     }
-
 }

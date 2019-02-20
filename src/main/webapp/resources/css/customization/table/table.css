@@ -101,6 +101,11 @@
     height: 28px;
 }
 
+.insert-update-container div > select {
+    width: 180px;
+    height: 28px;
+}
+
 .insert-update-container div > button {
     margin-left: 85px;
 }

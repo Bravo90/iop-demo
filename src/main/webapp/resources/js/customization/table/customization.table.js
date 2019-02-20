@@ -75,7 +75,8 @@
         renderHeadTh: function (field) {
             var th = $('<th></th>')
                 .html(field['fieldDesc'])
-                .attr('field-name', field['fieldName']);
+                .attr('field-name', field['fieldName'])
+                .attr('field-type', field['fieldType']);
             if (field['keyFiled']) {
                 th.attr('field', 'key')
             }
@@ -127,7 +128,7 @@
             _this.laypage.render({
                 elem: 'page-id',
                 count: count,
-                limits:[5,10,50],
+                limits: [5, 10, 50],
                 limit: limit,
                 curr: pageNum,
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
@@ -175,7 +176,7 @@
                 case 101: {
                     var fieldMap = _this.option.fieldMap[field['fieldName']];
                     if (fieldMap != undefined) {
-                        var select = _this.buildSeletMap(fieldMap);
+                        var select = _this.buildSelectMap(fieldMap);
                         div.append(select);
                     } else {
                         var input = $('<input>');
@@ -420,7 +421,37 @@
             });
             //更新确定
             $(document).on('click', '.update-confirm', function () {
-                layer.msg('1');
+                var inputs = $('.insert-update-container').find('input');
+                var selects = $('.insert-update-container').find('select');
+                var kvArr = new Array();
+                for (var i = 0; i < inputs.length; i++) {
+                    var input = inputs[i];
+                    var fieldName = $(input).attr('field-name');
+                    var fieldValue = $(input).val();
+                    var oldValue = $(input).attr('old-value');
+                    var kv = {
+                        'fieldName': fieldName,
+                        'fieldValue': fieldValue,
+                        'oldValue': oldValue
+                    }
+                    kvArr.push(kv);
+                }
+                for (var i = 0; i < selects.length; i++) {
+                    var select = selects[i];
+                    var fieldName = $(select).attr('field-name');
+                    var fieldValue = $(select).find('option:selected').val();
+                    var oldValue = $(select).attr('old-value');
+
+                    var kv = {
+                        'fieldName': fieldName,
+                        'fieldValue': fieldValue,
+                        'oldValue': oldValue
+                    }
+                    kvArr.push(kv);
+                }
+
+                console.log(kvArr);
+                layer.msg(inputs.length);
             });
         },
         handleFieldMap: function (list, value) {
@@ -432,30 +463,69 @@
             return value;
         },
         getUpdateContent: function (ths, tds) {
-            var content = '<div class="insert-update-container">';
+            var _this = this;
+            var content = '';
+            if (tds != undefined) {
+                content = '<div class="insert-update-container" up-crt="1">';
+            } else {
+                content = '<div class="insert-update-container">';
+            }
+
             $(ths).each(function (index) {
                 var value = "";
+                var fieldName = $(this).attr('field-name');
+                var fieldType = $(this).attr('field-type');
                 if (tds != undefined) {
                     value = $(tds[index]).text();
                 }
-
                 //先判断是否为映射值
-
-                content += ('<span >' +
-                    $(this).text() + '</span><div><input field-name="' +
-                    $(this).attr('field-name') + '" ' + 'value="' + value + '"></div>');
+                var fieldMap = _this.option.fieldMap[fieldName];
+                if (fieldMap != undefined) {
+                    var select = _this.buildSelectMap(fieldMap, value);
+                    var key = '';
+                    for (var i = 0; i < fieldMap.length; i++) {
+                        var k = fieldMap[i].key;
+                        var v = fieldMap[i].value;
+                        if (v == value) {
+                            key = k;
+                        }
+                    }
+                    content += ('<span >' +
+                        $(this).text() + '</span><div>' +
+                        '<select old-value="' + key + '" field-name="' + fieldName + '">' + select.html() + '</select>' +
+                        '</div>');
+                } else {
+                    if (fieldType == 3) {
+                        var timeInput = '<input field-name="' + fieldName + '" old-value="' + value + '" value="' + value + '" class="Wdate select-control" onclick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})">';
+                        content += ('<span >' +
+                            $(this).text() + '</span><div>' +
+                            timeInput +
+                            '</div>');
+                    } else {
+                        content += ('<span >' +
+                            $(this).text() + '</span><div>' +
+                            '<input old-value="' + value + '" field-name="' + fieldName + '" ' + 'value="' + value + '">' +
+                            '</div>');
+                    }
+                }
             });
             content += '<div></div>' +
                 '<div><button class="layui-btn layui-btn-sm update-confirm">确定</button></div>';
             return content + '</div>';
         },
-        buildSeletMap: function (fieldMap) {
+        buildSelectMap: function (fieldMap, selected) {
             var select = $('<select></select>');
             select.append('<option value="none">--请选择--</option>');
             for (var i = 0; i < fieldMap.length; i++) {
                 var key = fieldMap[i].key;
                 var value = fieldMap[i].value;
-                var option = $('<option value="' + key + '">' + value + '</option>');
+                var option = $('<option></option>');
+                if (selected == value) {
+                    option.attr("selected", true);
+                }
+                /* var option = $('<option value="' + key + '">' + value + '</option>');*/
+                option.attr('value', key);
+                option.text(value);
                 select.append(option);
             }
             return select;

@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import javax.swing.undo.AbstractUndoableEdit;
 import java.util.List;
 
-@Mapper
 public interface AuthcMapper {
 
     List<Authc> listAllAuthc();

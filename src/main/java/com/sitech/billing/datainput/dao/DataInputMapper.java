@@ -11,7 +11,6 @@ import java.util.Map;
  * @author sunzhen
  * @date 2019/1/24 14:12
  */
-@Mapper
 public interface DataInputMapper {
 
     int oracleBatchInsert(@Param("sql") String sql, @Param("list") List<Map<String, String>> list);

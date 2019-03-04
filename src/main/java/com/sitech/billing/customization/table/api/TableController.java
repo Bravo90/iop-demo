@@ -40,13 +40,13 @@ public class TableController extends BaseController {
         RequestPageInfo pageInfo = JSON.parseObject(jsonObject.getString("page"), RequestPageInfo.class);
 
         //获得context
-        TableContext context =
-                new TableContext.Builder().dbDialect(DialectType.MYSQL).jdbc(jdbcTemplate)
-                        .tableConfig(tableId)
-                        .fieldValues(fieldValues)
-                        .fieldOrders(fieldOrders)
-                        .pageInfo(pageInfo)
-                        .build();
+        TableContext context = new TableContext.Builder()
+                .dbDialect(DialectType.MYSQL).jdbc(jdbcTemplate)
+                .tableConfig(tableId)
+                .fieldValues(fieldValues)
+                .fieldOrders(fieldOrders)
+                .pageInfo(pageInfo)
+                .build();
         //查询
         try {
             PageInfo<Map<String, Object>> pageResult = context.queryByPage();
@@ -60,12 +60,17 @@ public class TableController extends BaseController {
 
     @DeleteMapping("/delete")
     public JsonResult delete(@RequestParam String param) {
+        System.out.println(param);
+
         return JsonResult.success();
     }
 
     @GetMapping("/update")
     public JsonResult update(@RequestParam String param) {
         System.out.println(param);
+        JSONObject paramObject = JSONObject.parseObject(param);
+        Integer isUpdate = paramObject.getInteger("isUpdate");
+        System.out.println(isUpdate);
         return JsonResult.success();
     }
 }

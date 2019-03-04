@@ -388,7 +388,33 @@
                     } else {
                         var tds = $('.checkItem:checked').parent().siblings();
                         var ths = $('.check-all').parent().siblings();
-                        console.log(tds)
+                        var kvArr = new Array();
+                        var delParam = new Array();
+                        for (var i = 0; i < tds.length; i++) {
+                            var field = ths[i % ths.length];
+                            var key = $(field).attr('field');
+                            if (key == 'key') {
+                                var kv = {
+                                    'fieldName': $(ths[i % ths.length]).attr('field-name'),
+                                    'fieldValue': $(tds[i]).text()
+                                }
+                                kvArr.push(kv)
+                            }
+                            if ((i + 1) % ths.length == 0) {
+                                delParam.push(kvArr);
+                                kvArr.length == 0;
+                            }
+                        }
+                        console.log(delParam);
+                        $.ajax({
+                            type: 'delete',
+                            url: _this.option.url.del,
+                            data: {'param': JSON.stringify(delParam)},
+                            dataType: "json",
+                            success: function (result) {
+                            }
+                        });
+
                         layer.msg('删除记录成功', {icon: 1});
                     }
                 } else if (className == 'layui-icon layui-icon-edit') {
@@ -424,7 +450,9 @@
             });
             //更新确定
             $(document).on('click', '.update-confirm', function () {
-                console.log()
+                var isUpdate = $(".insert-update-container").attr("up-crt");
+                console.log(isUpdate);
+
                 var inputs = $('.insert-update-container').find('input');
                 var selects = $('.insert-update-container').find('select');
                 var kvArr = new Array();
@@ -453,17 +481,29 @@
                     }
                     kvArr.push(kv);
                 }
-                var param = {
-                    'tableId': _this.option['tableId'],
-                    'requestParam': kvArr
+                //这里需要做比较
+                if (_this.isChanged(kvArr)) {
+                    alert("changed");
+                    var param = {
+                        'tableId': _this.option['tableId'],
+                        'requestParam': kvArr,
+                        'isUpdate': isUpdate
+                    }
+                    $.get(_this.option.url.update,
+                        {'param': JSON.stringify(param)},
+                        function (result) {
+                        });
+                } else {
+                    layer.msg('未有更改！');
                 }
-                console.log(_this.option.url.update)
-                $.get(_this.option.url.update,
-                    {'param': JSON.stringify(param)},
-                    function (result) {
-                    });
-                layer.msg(inputs.length);
             });
+        },
+        isChanged: function (arr) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i]['oldValue'] != arr[i]['fieldValue'])
+                    return true;
+            }
+            return false;
         },
         handleFieldMap: function (list, value) {
             for (var i = 0; i < list.length; i++) {
@@ -479,7 +519,7 @@
             if (tds != undefined) {
                 content = '<div class="insert-update-container" up-crt="1">';
             } else {
-                content = '<div class="insert-update-container">';
+                content = '<div class="insert-update-container" up-crt="0">';
             }
 
             $(ths).each(function (index) {

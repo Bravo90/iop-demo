@@ -30,7 +30,8 @@ var Table = {
                         btns: result.data.btns,
                         url: {
                             query: Globals.contextPath() + '/table/query',
-                            update: Globals.contextPath() + '/table/update'
+                            update: Globals.contextPath() + '/table/update',
+                            del: Globals.contextPath() + '/table/delete'
                         }
                     });
                 } else {

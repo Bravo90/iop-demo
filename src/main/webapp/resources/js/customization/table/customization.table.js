@@ -451,8 +451,6 @@
             //更新确定
             $(document).on('click', '.update-confirm', function () {
                 var isUpdate = $(".insert-update-container").attr("up-crt");
-                console.log(isUpdate);
-
                 var inputs = $('.insert-update-container').find('input');
                 var selects = $('.insert-update-container').find('select');
                 var kvArr = new Array();
@@ -483,7 +481,6 @@
                 }
                 //这里需要做比较
                 if (_this.isChanged(kvArr)) {
-                    alert("changed");
                     var param = {
                         'tableId': _this.option['tableId'],
                         'requestParam': kvArr,
@@ -492,6 +489,16 @@
                     $.get(_this.option.url.update,
                         {'param': JSON.stringify(param)},
                         function (result) {
+                            var success = result['success'];
+                            var msg = result['message'];
+                            if (success == 1) {
+                                layer.closeAll();
+                                layer.msg(msg, {icon: 1});
+                                //重绘
+                                _this.query();
+                            } else {
+                                layer.msg(msg, {icon: 2});
+                            }
                         });
                 } else {
                     layer.msg('未有更改！');

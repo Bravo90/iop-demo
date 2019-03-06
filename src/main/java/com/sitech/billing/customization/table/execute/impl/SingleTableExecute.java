@@ -3,13 +3,19 @@ package com.sitech.billing.customization.table.execute.impl;
 import com.github.pagehelper.PageInfo;
 import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.execute.BaseExecute;
+import com.sitech.billing.customization.table.handler.type.FieldTypeHandler;
+import com.sitech.billing.customization.table.model.Field;
+import com.sitech.billing.customization.table.model.Table;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
+import com.sitech.billing.customization.table.model.request.UpdateAndInsertParam;
 import com.sitech.billing.customization.table.pagehelper.PageResultHandler;
 import com.sitech.billing.customization.table.sql.builder.SampleSqlBuilder;
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -51,13 +57,37 @@ public class SingleTableExecute extends BaseExecute {
     }
 
     @Override
-    public void insert() {
-
+    public void insert(List<UpdateAndInsertParam> list) {
+        Table table = this.tableConfiguration.getTables().get(0);
+        String tableName = table.getTableName();
+        SQL sql = new SQL();
+        sql.INSERT_INTO(tableName);
+        for (UpdateAndInsertParam param : list) {
+            Field field = table.getFieldByFieldName(param.getFieldName());
+            String fieldValue = param.getFieldValue();
+            if (fieldValue != null) {
+                sql.VALUES(field.getFieldName(), FieldTypeHandler.handler(field.getFieldType(), fieldValue));
+            }
+        }
+        System.out.println(sql.toString());
+        this.jdbcTemplate.update(sql.toString());
     }
 
     @Override
-    public void update() {
-
+    public void update(List<UpdateAndInsertParam> list) {
+        Table table = this.tableConfiguration.getTables().get(0);
+        String tableName = table.getTableName();
+        SQL sql = new SQL();
+        sql.UPDATE(tableName);
+        for (UpdateAndInsertParam param : list) {
+            Field field = table.getFieldByFieldName(param.getFieldName());
+            String fieldValue = param.getFieldValue();
+            String oldValue = param.getOldValue();
+            sql.SET(field.getFieldName() + "=" + FieldTypeHandler.handler(field.getFieldType(), fieldValue));
+            sql.WHERE(field.getFieldName() + "=" + FieldTypeHandler.handler(field.getFieldType(), oldValue));
+        }
+        System.out.println(sql);
+        this.jdbcTemplate.update(sql.toString());
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
 
+import com.sitech.billing.customization.table.model.request.UpdateAndInsertParam;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -42,12 +43,12 @@ public class TableContext {
         return this.viewConfiguration;
     }
 
-    public void insert() {
-        execute.insert();
+    public void insert(List<UpdateAndInsertParam> list) {
+        execute.insert(list);
     }
 
-    public void update() {
-        execute.update();
+    public void update(List<UpdateAndInsertParam> list) {
+        execute.update(list);
     }
 
     public void delete() {

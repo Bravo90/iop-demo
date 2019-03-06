@@ -5,6 +5,7 @@ import com.sitech.billing.customization.table.configuration.TableConfiguration;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
+import com.sitech.billing.customization.table.model.request.UpdateAndInsertParam;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -34,9 +35,9 @@ public abstract class BaseExecute {
 
     public abstract PageInfo<Map<String, Object>> queryByPage();
 
-    public abstract void insert();
+    public abstract void insert(List<UpdateAndInsertParam> list);
 
-    public abstract void update();
+    public abstract void update(List<UpdateAndInsertParam> list);
 
     public abstract void delete();
 }

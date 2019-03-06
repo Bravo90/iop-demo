@@ -38,8 +38,18 @@ public class MenuController extends BaseController {
         menu.setParentMenuId(0);
         menu.setMenuOrder(1);
         menu.setAucthcId(0);
-
         menus.add(menu);
+
+        Menu menu2 = new Menu();
+        menu2.setMenuId(1002);
+        menu2.setMenuName("系统管理");
+        menu2.setMenuUrl("#");
+        menu2.setMenuLevel(1);
+        menu2.setParentMenuId(0);
+        menu2.setMenuOrder(1);
+        menu2.setAucthcId(0);
+
+        menus.add(menu2);
         return JsonResult.success(menus);
     }
 

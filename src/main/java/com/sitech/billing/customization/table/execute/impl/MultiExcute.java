@@ -8,6 +8,7 @@ import com.sitech.billing.customization.table.execute.BaseExecute;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
+import com.sitech.billing.customization.table.model.request.UpdateAndInsertParam;
 import com.sitech.billing.customization.table.pagehelper.PageResultHandler;
 import com.sitech.billing.customization.table.sql.builder.MultiSqlBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -66,12 +67,12 @@ public class MultiExcute extends BaseExecute {
     }
 
     @Override
-    public void insert() {
+    public void insert(List<UpdateAndInsertParam> list) {
         throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 
     @Override
-    public void update() {
+    public void update(List<UpdateAndInsertParam> list) {
         throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 

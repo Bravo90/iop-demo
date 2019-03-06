@@ -1,13 +1,17 @@
 package com.sitech.billing.customization.table.api;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.sitech.billing.common.bean.JsonResult;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
+import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.customization.table.context.TableContext;
 import com.sitech.billing.customization.table.model.request.FieldOrder;
 import com.sitech.billing.customization.table.model.request.FieldValue;
 import com.sitech.billing.customization.table.model.request.RequestPageInfo;
+import com.sitech.billing.customization.table.model.request.UpdateAndInsertParam;
 import com.sitech.billing.customization.table.type.DialectType;
 import com.sitech.billing.system.base.BaseController;
 import lombok.extern.slf4j.Slf4j;
@@ -62,15 +66,34 @@ public class TableController extends BaseController {
     public JsonResult delete(@RequestParam String param) {
         System.out.println(param);
 
+
         return JsonResult.success();
     }
 
     @GetMapping("/update")
     public JsonResult update(@RequestParam String param) {
-        System.out.println(param);
         JSONObject paramObject = JSONObject.parseObject(param);
         Integer isUpdate = paramObject.getInteger("isUpdate");
-        System.out.println(isUpdate);
-        return JsonResult.success();
+        Integer viewId = paramObject.getInteger("tableId");
+
+        String requestParam = paramObject.getString("requestParam");
+
+        List<UpdateAndInsertParam> list = JSONObject.parseArray(requestParam, UpdateAndInsertParam.class);
+
+        System.out.println(list);
+
+        TableContext context = new TableContext.Builder()
+                .tableConfig(viewId)
+                .jdbc(jdbcTemplate)
+                .build();
+        if (isUpdate == 0) {
+            context.insert(list);
+            return JsonResult.success("新增成功");
+        } else if (isUpdate == 1) {
+            context.update(list);
+            return JsonResult.success("更新成功");
+        } else {
+            throw new IopException(ErrorMsgEnum.CONFIGURATION_NOT_EXIST);
+        }
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 处理字段类型
+ *
  * @author sunzhen
  * @date 2019/1/10 10:36
  */
@@ -26,5 +27,11 @@ public class FieldTypeHandler {
                 break;
         }
         return list;
+    }
+
+    public static String handler(int fieldType, String value) {
+        List<String> list = new ArrayList<>();
+        list.add(value);
+        return handler(fieldType, list).get(0);
     }
 }

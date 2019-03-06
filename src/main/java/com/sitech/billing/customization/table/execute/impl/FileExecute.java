@@ -1,7 +1,10 @@
 package com.sitech.billing.customization.table.execute.impl;
 
 import com.github.pagehelper.PageInfo;
+import com.sitech.billing.common.enums.ErrorMsgEnum;
+import com.sitech.billing.common.exception.IopException;
 import com.sitech.billing.customization.table.execute.BaseExecute;
+import com.sitech.billing.customization.table.model.request.UpdateAndInsertParam;
 
 import java.util.List;
 import java.util.Map;
@@ -24,17 +27,17 @@ public class FileExecute extends BaseExecute {
     }
 
     @Override
-    public void insert() {
-
+    public void insert(List<UpdateAndInsertParam> list) {
+        throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 
     @Override
-    public void update() {
-
+    public void update(List<UpdateAndInsertParam> list) {
+        throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 
     @Override
     public void delete() {
-
+        throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 }

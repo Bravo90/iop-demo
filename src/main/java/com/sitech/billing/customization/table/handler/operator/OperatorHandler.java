@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 处理处理运算符
+ * 处理运算符
  *
  * @author sunzhen
  * @date 2019/1/10 10:32

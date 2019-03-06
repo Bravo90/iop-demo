@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.JDBCType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -65,9 +66,23 @@ public class TableController extends BaseController {
     @DeleteMapping("/delete")
     public JsonResult delete(@RequestParam String param) {
         System.out.println(param);
+        JSONObject paramObject = JSONObject.parseObject(param);
+        Integer viewId = paramObject.getInteger("tableId");
+        TableContext context = new TableContext.Builder()
+                .tableConfig(viewId)
+                .jdbc(jdbcTemplate)
+                .build();
 
+        JSONArray delParam = paramObject.getJSONArray("delParam");
+        List<List<UpdateAndInsertParam>> pList = new ArrayList<>();
+        for (int i = 0; i < delParam.size(); i++) {
+            List<UpdateAndInsertParam> list = JSONObject.parseArray(delParam.getString(i), UpdateAndInsertParam.class);
+            pList.add(list);
+        }
 
-        return JsonResult.success();
+        context.delete(pList);
+
+        return JsonResult.success("删除成功");
     }
 
     @GetMapping("/update")
@@ -75,13 +90,8 @@ public class TableController extends BaseController {
         JSONObject paramObject = JSONObject.parseObject(param);
         Integer isUpdate = paramObject.getInteger("isUpdate");
         Integer viewId = paramObject.getInteger("tableId");
-
         String requestParam = paramObject.getString("requestParam");
-
         List<UpdateAndInsertParam> list = JSONObject.parseArray(requestParam, UpdateAndInsertParam.class);
-
-        System.out.println(list);
-
         TableContext context = new TableContext.Builder()
                 .tableConfig(viewId)
                 .jdbc(jdbcTemplate)

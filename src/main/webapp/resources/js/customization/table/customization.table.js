@@ -383,8 +383,8 @@
                     });
                 } else if (className == 'layui-icon layui-icon-delete') {
                     var checked = $('.checkItem:checked');
-                    if (checked.length <= 0) {
-                        layer.msg('请至少选择一个删除项', {icon: 2})
+                    if (checked.length != 1) {
+                        layer.msg('请选择一项删除', {icon: 2})
                     } else {
                         var tds = $('.checkItem:checked').parent().siblings();
                         var ths = $('.check-all').parent().siblings();
@@ -394,28 +394,54 @@
                             var field = ths[i % ths.length];
                             var key = $(field).attr('field');
                             if (key == 'key') {
-                                var kv = {
-                                    'fieldName': $(ths[i % ths.length]).attr('field-name'),
-                                    'fieldValue': $(tds[i]).text()
+
+                                var fieldName = $(ths[i % ths.length]).attr('field-name');
+                                var fieldMap = _this.option.fieldMap[fieldName];
+                                var fieldValue = $(tds[i]).text();
+
+                                if (fieldMap != undefined) {
+                                    for (var j = 0; j < fieldMap.length; j++) {
+                                        var k = fieldMap[j].key;
+                                        var v = fieldMap[j].value;
+                                        if (fieldValue == v) {
+                                            fieldValue = k;
+                                        }
+                                    }
                                 }
-                                kvArr.push(kv)
+                                var kv = {
+                                    'fieldName': fieldName,
+                                    'fieldValue': fieldValue
+                                }
+                                kvArr.push(kv);
                             }
                             if ((i + 1) % ths.length == 0) {
                                 delParam.push(kvArr);
                                 kvArr.length == 0;
                             }
                         }
-                        console.log(delParam);
+                        var param = {
+                            'delParam': delParam,
+                            'tableId': _this.option['tableId']
+                        }
+
                         $.ajax({
                             type: 'delete',
                             url: _this.option.url.del,
-                            data: {'param': JSON.stringify(delParam)},
+                            data: {'param': JSON.stringify(param)},
                             dataType: "json",
                             success: function (result) {
+                                var success = result['success'];
+                                var msg = result['message'];
+                                if (success == 1) {
+                                    layer.closeAll();
+                                    layer.msg(msg, {icon: 1});
+                                    //重绘
+                                    _this.query();
+                                } else {
+                                    layer.msg(msg, {icon: 2});
+                                }
                             }
                         });
-
-                        layer.msg('删除记录成功', {icon: 1});
                     }
                 } else if (className == 'layui-icon layui-icon-edit') {
                     var checked = $('.checkItem:checked');

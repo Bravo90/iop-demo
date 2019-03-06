@@ -39,5 +39,5 @@ public abstract class BaseExecute {
 
     public abstract void update(List<UpdateAndInsertParam> list);
 
-    public abstract void delete();
+    public abstract void delete(List<List<UpdateAndInsertParam>> list);
 }

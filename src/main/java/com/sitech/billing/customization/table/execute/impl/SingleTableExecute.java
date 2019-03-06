@@ -15,7 +15,6 @@ import com.sitech.billing.customization.table.sql.builder.SampleSqlBuilder;
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -91,8 +90,21 @@ public class SingleTableExecute extends BaseExecute {
     }
 
     @Override
-    public void delete() {
-
+    public void delete(List<List<UpdateAndInsertParam>> list) {
+        Table table = this.tableConfiguration.getTables().get(0);
+        String tableName = table.getTableName();
+        for (List<UpdateAndInsertParam> li : list) {
+            System.out.println(li);
+            SQL sql = new SQL();
+            sql.DELETE_FROM(tableName);
+            for (UpdateAndInsertParam param : li) {
+                Field field = table.getFieldByFieldName(param.getFieldName());
+                String fieldValue = param.getFieldValue();
+                sql.WHERE(field.getFieldName() + "=" + FieldTypeHandler.handler(field.getFieldType(), fieldValue));
+            }
+            System.out.println(sql);
+            this.jdbcTemplate.update(sql.toString());
+        }
     }
 
     private String querySqlInit() {

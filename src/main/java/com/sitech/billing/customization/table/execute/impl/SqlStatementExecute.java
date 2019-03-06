@@ -68,7 +68,7 @@ public class SqlStatementExecute extends BaseExecute {
     }
 
     @Override
-    public void delete() {
+    public void delete(List<List<UpdateAndInsertParam>> list) {
         throw new IopException(ErrorMsgEnum.OPERATION_NOT_SUPPORT);
     }
 }

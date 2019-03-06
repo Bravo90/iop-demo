@@ -51,8 +51,8 @@ public class TableContext {
         execute.update(list);
     }
 
-    public void delete() {
-        execute.delete();
+    public void delete(List<List<UpdateAndInsertParam>> list) {
+        execute.delete(list);
     }
 
     public List<Map<String, Object>> query() {

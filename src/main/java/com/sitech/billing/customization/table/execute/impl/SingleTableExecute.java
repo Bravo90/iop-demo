@@ -57,36 +57,14 @@ public class SingleTableExecute extends BaseExecute {
 
     @Override
     public void insert(List<UpdateAndInsertParam> list) {
-        Table table = this.tableConfiguration.getTables().get(0);
-        String tableName = table.getTableName();
-        SQL sql = new SQL();
-        sql.INSERT_INTO(tableName);
-        for (UpdateAndInsertParam param : list) {
-            Field field = table.getFieldByFieldName(param.getFieldName());
-            String fieldValue = param.getFieldValue();
-            if (fieldValue != null) {
-                sql.VALUES(field.getFieldName(), FieldTypeHandler.handler(field.getFieldType(), fieldValue));
-            }
-        }
-        System.out.println(sql.toString());
-        this.jdbcTemplate.update(sql.toString());
+        String sql = insertSqlInit(list);
+        this.jdbcTemplate.update(sql);
     }
 
     @Override
     public void update(List<UpdateAndInsertParam> list) {
-        Table table = this.tableConfiguration.getTables().get(0);
-        String tableName = table.getTableName();
-        SQL sql = new SQL();
-        sql.UPDATE(tableName);
-        for (UpdateAndInsertParam param : list) {
-            Field field = table.getFieldByFieldName(param.getFieldName());
-            String fieldValue = param.getFieldValue();
-            String oldValue = param.getOldValue();
-            sql.SET(field.getFieldName() + "=" + FieldTypeHandler.handler(field.getFieldType(), fieldValue));
-            sql.WHERE(field.getFieldName() + "=" + FieldTypeHandler.handler(field.getFieldType(), oldValue));
-        }
-        System.out.println(sql);
-        this.jdbcTemplate.update(sql.toString());
+        String sql = updateSqlInit(list);
+        this.jdbcTemplate.update(sql);
     }
 
     @Override
@@ -94,7 +72,6 @@ public class SingleTableExecute extends BaseExecute {
         Table table = this.tableConfiguration.getTables().get(0);
         String tableName = table.getTableName();
         for (List<UpdateAndInsertParam> li : list) {
-            System.out.println(li);
             SQL sql = new SQL();
             sql.DELETE_FROM(tableName);
             for (UpdateAndInsertParam param : li) {
@@ -112,19 +89,43 @@ public class SingleTableExecute extends BaseExecute {
                 this.fieldOrders, this.pageInfo);
         return sql;
     }
+    
+    private String insertSqlInit(List<UpdateAndInsertParam> list) {
+        Table table = this.tableConfiguration.getTables().get(0);
+        String tableName = table.getTableName();
+        SQL sql = new SQL();
+        sql.INSERT_INTO(tableName);
 
-
-    private String insertSqlInit() {
-        return null;
+        for (UpdateAndInsertParam param : list) {
+            Field field = table.getFieldByFieldName(param.getFieldName());
+            String fieldValue = param.getFieldValue();
+            if (fieldValue != null) {
+                sql.VALUES(field.getFieldName(), FieldTypeHandler.handler(field.getFieldType(), fieldValue));
+            }
+        }
+        System.out.println(sql.toString());
+        return sql.toString();
     }
 
+    private String updateSqlInit(List<UpdateAndInsertParam> list) {
+        Table table = this.tableConfiguration.getTables().get(0);
+        String tableName = table.getTableName();
+        SQL sql = new SQL();
+        sql.UPDATE(tableName);
+        for (UpdateAndInsertParam param : list) {
+            Field field = table.getFieldByFieldName(param.getFieldName());
+            String fieldValue = param.getFieldValue();
+            String oldValue = param.getOldValue();
+            sql.SET(field.getFieldName() + "=" + FieldTypeHandler.handler(field.getFieldType(), fieldValue));
+            sql.WHERE(field.getFieldName() + "=" + FieldTypeHandler.handler(field.getFieldType(), oldValue));
+        }
+        System.out.println(sql);
+        return sql.toString();
+    }
 
     private String deleteSqlInit() {
         return null;
     }
 
 
-    private String updateSqlInit() {
-        return null;
-    }
 }

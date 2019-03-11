@@ -128,7 +128,7 @@
             _this.laypage.render({
                 elem: 'page-id',
                 count: count,
-                limits: [5, 10, 50],
+                limits: [5, 10, 20, 30, 40, 50],
                 limit: limit,
                 curr: pageNum,
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
@@ -240,6 +240,11 @@
                         case 'update':
                             var update = ' <i title="' + btnName + '" class="layui-icon layui-icon-edit" style="' + style1 + '" ></i>';
                             div.append(update);
+                            break;
+                        //新增复制功能
+                        case 'copy':
+                            var copy = ' <i title="' + btnName + '" class="layui-icon layui-icon-file" style="' + style1 + '" ></i>';
+                            div.append(copy);
                             break;
                         case 'dataOutput':
                             var dataOutput = '<i title="' + btnName + '" class="layui-icon layui-icon-download-circle"  style="' + style2 + '" ></i>';
@@ -450,7 +455,9 @@
                     } else {
                         var tds = $('.checkItem:checked').parent().siblings();
                         var ths = $('.check-all').parent().siblings();
-                        var content = _this.getUpdateContent(ths, tds);
+                        var copied = tds.parent().hasClass('copied');
+                        console.log(copied)
+                        var content = _this.getUpdateContent(ths, tds, copied);
                         layer.open({
                             type: 1,
                             title: '更新数据',
@@ -460,10 +467,41 @@
                             content: content
                         });
                     }
-                } else if (className == 'layui-icon layui-icon-upload-drag') {
+                    //复制功能
+                } else if (className == 'layui-icon layui-icon-file') {
+                    var checked = $('.checkItem:checked');
+                    if (checked.length < 1) {
+                        layer.msg('请至少选择一项进行复制', {icon: 2});
+                    } else {
+                        $('.copied').remove();
+                        $(checked).each(function () {
+                            var html = $(this).parent().parent().html();
+                            var tr = $('<tr></tr>').append(html).css('color', 'red').addClass('copied');
+                            $(this).parent().parent().after(tr);
+                        });
+                        $('.checkItem').prop('checked', false);
+                        layer.msg('复制成功，请选择编辑', {icon: 1});
+                    }
+                }
+                else if (className == 'layui-icon layui-icon-upload-drag') {
+
                     layer.msg('导入记录', {icon: 2});
                 } else if (className == 'layui-icon layui-icon-download-circle') {
-                    layer.msg('导出记录', {icon: 2});
+                    layer.confirm('导出方式选择', {
+                        btn: ['当前页', '全量数据'] //按钮
+                    }, function () {
+                        $(".table-css").table2excel({
+                            exclude : ".noExl",
+                            name : "Excel Document Name",
+                            filename : "日统计" + new Date().toISOString().replace(/[\-\:\.]/g, ""),
+                            fileext : ".xls",
+                            exclude_img : true,
+                            exclude_links : true,
+                            exclude_inputs : false
+                        });
+                    }, function () {
+                        layer.msg('全量导出', {icon: 1});
+                    });
                 }
             });
             $('input[type=checkbox]').on('change', function () {
@@ -477,6 +515,7 @@
             //更新确定
             $(document).on('click', '.update-confirm', function () {
                 var isUpdate = $(".insert-update-container").attr("up-crt");
+                var isCopied = $(".insert-update-container").attr("copy");
                 var inputs = $('.insert-update-container').find('input');
                 var selects = $('.insert-update-container').find('select');
                 var kvArr = new Array();
@@ -510,7 +549,8 @@
                     var param = {
                         'tableId': _this.option['tableId'],
                         'requestParam': kvArr,
-                        'isUpdate': isUpdate
+                        'isUpdate': isUpdate,
+                        'isCopied': isCopied
                     }
                     $.get(_this.option.url.update,
                         {'param': JSON.stringify(param)},
@@ -519,9 +559,14 @@
                             var msg = result['message'];
                             if (success == 1) {
                                 layer.closeAll();
-                                layer.msg(msg, {icon: 1});
                                 //重绘
-                                _this.query();
+                                if (isCopied != 'copied') {
+                                    layer.msg(msg, {icon: 1});
+                                    _this.query();
+                                } else {
+                                    //修改界面展示
+                                    layer.msg('修改成功，刷新后展示生效', {icon: 1});
+                                }
                             } else {
                                 layer.msg(msg, {icon: 2});
                             }
@@ -546,11 +591,15 @@
             }
             return value;
         },
-        getUpdateContent: function (ths, tds) {
+        getUpdateContent: function (ths, tds, copied) {
             var _this = this;
             var content = '';
             if (tds != undefined) {
-                content = '<div class="insert-update-container" up-crt="1">';
+                if (copied) {
+                    content = '<div class="insert-update-container" up-crt="1" copy="copied">';
+                } else {
+                    content = '<div class="insert-update-container" up-crt="1">';
+                }
             } else {
                 content = '<div class="insert-update-container" up-crt="0">';
             }

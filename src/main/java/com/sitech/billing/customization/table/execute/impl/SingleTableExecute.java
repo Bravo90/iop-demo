@@ -89,7 +89,7 @@ public class SingleTableExecute extends BaseExecute {
                 this.fieldOrders, this.pageInfo);
         return sql;
     }
-    
+
     private String insertSqlInit(List<UpdateAndInsertParam> list) {
         Table table = this.tableConfiguration.getTables().get(0);
         String tableName = table.getTableName();

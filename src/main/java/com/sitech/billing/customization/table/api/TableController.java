@@ -91,15 +91,16 @@ public class TableController extends BaseController {
         Integer isUpdate = paramObject.getInteger("isUpdate");
         Integer viewId = paramObject.getInteger("tableId");
         String requestParam = paramObject.getString("requestParam");
+        String isCopied = paramObject.getString("isCopied");
         List<UpdateAndInsertParam> list = JSONObject.parseArray(requestParam, UpdateAndInsertParam.class);
         TableContext context = new TableContext.Builder()
                 .tableConfig(viewId)
                 .jdbc(jdbcTemplate)
                 .build();
-        if (isUpdate == 0) {
+        if (isUpdate == 0 || isCopied.equalsIgnoreCase("copied")) {
             context.insert(list);
             return JsonResult.success("新增成功");
-        } else if (isUpdate == 1) {
+        } else if (isUpdate == 1 && !isCopied.equalsIgnoreCase("copied")) {
             context.update(list);
             return JsonResult.success("更新成功");
         } else {
